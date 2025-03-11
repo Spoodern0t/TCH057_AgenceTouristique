@@ -1,4 +1,4 @@
-package com.Alexis_Jimmy_Yasmine.agencetouristique7;
+package com.alexis_jimmy_yasmine.agencetouristique7.vue.activites;
 //
 
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.alexis_jimmy_yasmine.agencetouristique7.R;
 
 public class MainActivity extends AppCompatActivity {
 

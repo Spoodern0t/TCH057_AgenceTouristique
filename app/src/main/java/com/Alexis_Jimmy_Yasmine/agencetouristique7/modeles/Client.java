@@ -1,4 +1,4 @@
-package com.Alexis_Jimmy_Yasmine.agencetouristique7.entitee;
+package com.alexis_jimmy_yasmine.agencetouristique7.modeles;
 //
 
 public class Client {

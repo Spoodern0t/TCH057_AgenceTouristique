@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.agencetouristique7"
+    namespace = "com.alexis_jimmy_yasmine.agencetouristique7"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.agencetouristique7"
+        applicationId = "com.alexis_jimmy_yasmine.agencetouristique7"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

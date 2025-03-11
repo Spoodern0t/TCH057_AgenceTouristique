@@ -1,4 +1,4 @@
-package com.Alexis_Jimmy_Yasmine.agencetouristique7;
+package com.alexis_jimmy_yasmine.agencetouristique7.vue.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.Alexis_Jimmy_Yasmine.agencetouristique7.entitee.Voyage;
+import com.alexis_jimmy_yasmine.agencetouristique7.R;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.Voyage;
 
 import java.util.List;
 
