@@ -1,4 +1,4 @@
-package com.example.agencetouristique7;
+package com.Alexis_Jimmy_Yasmine.agencetouristique7.entitee;
 //
 
 public class Client {

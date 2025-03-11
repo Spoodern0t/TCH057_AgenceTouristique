@@ -1,5 +1,8 @@
-package com.example.agencetouristique7;
+package com.Alexis_Jimmy_Yasmine.agencetouristique7;
 //
+
+import com.Alexis_Jimmy_Yasmine.agencetouristique7.entitee.Client;
+import com.Alexis_Jimmy_Yasmine.agencetouristique7.entitee.Voyage;
 
 import java.util.List;
 

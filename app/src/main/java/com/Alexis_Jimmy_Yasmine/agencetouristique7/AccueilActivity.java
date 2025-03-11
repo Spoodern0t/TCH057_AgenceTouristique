@@ -1,4 +1,4 @@
-package com.example.agencetouristique7;
+package com.Alexis_Jimmy_Yasmine.agencetouristique7;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.Alexis_Jimmy_Yasmine.agencetouristique7.entitee.Voyage;
+
 import java.util.List;
 
 public class AccueilActivity extends AppCompatActivity implements View.OnClickListener {
