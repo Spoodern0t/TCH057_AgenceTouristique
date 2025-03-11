@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E72C3834"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AccueilActivity">
+
+    <ImageView
+        android:id="@+id/logoImageView"
+    android:layout_width="wrap_content"
+    android:layout_height="100dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="8dp"
+    android:contentDescription="@string/logotravel"
+    android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/companyNameTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="24dp"
+    android:text="@string/planed"
+    android:textColor="@color/colorPrimary"
+    android:textSize="30sp"
+    android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/searchEditText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:hint="@string/ou_voulez_vous_aller"
+    android:imeOptions="actionSearch"
+    android:inputType="text"
+    android:minHeight="48dp"
+    android:singleLine="true"
+    android:textColor="@color/white"
+    android:textSize="20sp"
+    android:textColorHint="@color/colorSecondaire"
+    android:textColorLink="@color/colorPrimary"
+    android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/budgetSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:entries="@array/budget_options"
+        android:minHeight="48dp"
+        android:prompt="@string/budget_filter"
+        android:spinnerMode="dropdown" />
+
+        <Spinner
+            android:id="@+id/typeSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:entries="@array/type_options"
+        android:minHeight="48dp"
+        android:prompt="@string/type_filter"
+        android:spinnerMode="dialog" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/voyagesListView"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
+
+        <LinearLayout
+            android:id="@+id/bottomNavHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:contentDescription="@string/accueil"
+            android:src="@drawable/home" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomNavHistorique"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:minHeight="48dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/historique"
+        android:src="@drawable/reservation" />
+
+</LinearLayout>
+
+<LinearLayout
+android:id="@+id/bottomNavLogout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:minHeight="48dp"
+    android:orientation="vertical">
+
+<ImageView
+android:layout_width="50dp"
+android:layout_height="45dp"
+android:contentDescription="@string/log_out"
+android:src="@drawable/quit" />
+
+    </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>

@@ -1,0 +1,246 @@
+{
+  "voyages": [
+      {
+          "id": 1,
+          "nom_voyage": "Exploration de Montréal",
+          "description": "Découvrez la culture vibrante de Montréal.",
+          "prix": 150,
+          "destination": "Montréal, Québec",
+          "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Mtl_from_mont_royal_%28cropped%29.jpg/288px-Mtl_from_mont_royal_%28cropped%29.jpg",
+          "duree_jours": 3,
+          "trips": [
+              {
+                  "date": "2025-04-10",
+                  "nb_places_disponibles": 20
+              },
+              {
+                  "date": "2025-05-10",
+                  "nb_places_disponibles": 20
+              }
+          ],
+          "type_de_voyage": "Culturel",
+          "activites_incluses": "Visite du Vieux-Montréal, Dégustation de poutine, Tour du Mont-Royal"
+      },
+      {
+          "id": 2,
+          "nom_voyage": "Découverte de Québec",
+          "description": "Visitez la vieille capitale avec son charme historique.",
+          "prix": 250,
+          "destination": "Québec, Québec",
+          "image_url": "https://www.quebec-cite.com/sites/otq/files/styles/gallery_desktop/public/media/image/VQ_automne.jpg?itok=l6PDlEUH",
+          "duree_jours": 2,
+          "trips": [
+              {
+                  "date": "2025-05-10",
+                  "nb_places_disponibles": 8
+              }
+          ],
+          "type_de_voyage": "Culturel",
+          "activites_incluses": "Visite du Château Frontenac, Balade en calèche, Dégustation de spécialités locales"
+      },
+      {
+          "id": 3,
+          "nom_voyage": "Aventure en Gaspésie",
+          "description": "Randonnée et découverte des paysages époustouflants.",
+          "prix": 500,
+          "destination": "Gaspésie, Québec",
+          "image_url": "https://images.radio-canada.ca/w_635,h_357/v1/ici-tele/16x9/tourisme-contre-nature-doc-humanite.jpg",
+          "duree_jours": 5,
+          "trips": [
+              {
+                  "date": "2025-07-10",
+                  "nb_places_disponibles": 12
+              }
+          ],
+          "type_de_voyage": "Aventure",
+          "activites_incluses": "Randonnée au Parc Forillon, Observation de la faune, Kayak en mer"
+      },
+      {
+          "id": 4,
+          "nom_voyage": "Séjour détente aux Laurentides",
+          "description": "Relaxation et nature dans les montagnes.",
+          "prix": 400,
+          "destination": "Laurentides, Québec",
+          "image_url": "https://www.quebecvacances.com/images/photos/photos_320_240/strom_spa_nordique_saint_sauveur_1_h.jpg",
+          "duree_jours": 4,
+          "trips": [
+              {
+                  "date": "2025-03-10",
+                  "nb_places_disponibles": 7
+              }
+          ],
+          "type_de_voyage": "Bien-être",
+          "activites_incluses": "Spa et massages, Randonnée en forêt, Yoga et méditation"
+      },
+      {
+          "id": 5,
+          "nom_voyage": "Aventure dans les Rocheuses",
+          "description": "Expédition immersive dans les Rocheuses canadiennes.",
+          "prix": 800,
+          "destination": "Banff, Alberta",
+          "image_url": "https://www.guidesulysse.com/images/destinations/iStock-471926619.jpg",
+          "duree_jours": 7,
+          "trips": [
+              {
+                  "date": "2025-09-20",
+                  "nb_places_disponibles": 10
+              }
+          ],
+          "type_de_voyage": "Aventure",
+          "activites_incluses": "Randonnée au lac Louise, Escalade, Observation des glaciers"
+      },
+      {
+          "id": 6,
+          "nom_voyage": "Exploration de Vancouver",
+          "description": "Beauté naturelle et culture urbaine.",
+          "prix": 600,
+          "destination": "Vancouver, Colombie-Britannique",
+          "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Concord_Pacific_Master_Plan_Area.jpg/1200px-Concord_Pacific_Master_Plan_Area.jpg",
+          "duree_jours": 3,
+          "trips": [
+              {
+                  "date": "2025-08-12",
+                  "nb_places_disponibles": 8
+              }
+          ],
+          "type_de_voyage": "Culturel",
+          "activites_incluses": "Balade à Stanley Park, Visite de Granville Island, Dégustation de fruits de mer"
+      },
+      {
+          "id": 7,
+          "nom_voyage": "Chutes du Niagara",
+          "description": "Admirez l'une des merveilles naturelles du monde.",
+          "prix": 300,
+          "destination": "Niagara Falls, Ontario",
+          "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/3Falls_Niagara.jpg",
+          "duree_jours": 2,
+          "trips": [
+              {
+                  "date": "2025-06-25",
+                  "nb_places_disponibles": 20
+              }
+          ],
+          "type_de_voyage": "Nature",
+          "activites_incluses": "Croisière au pied des chutes, Balade sur Clifton Hill, Visite des vignobles"
+      },
+      {
+          "id": 8,
+          "nom_voyage": "Séjour à Ottawa",
+          "description": "Découvrez la capitale canadienne et ses institutions.",
+          "prix": 200,
+          "destination": "Ottawa, Ontario",
+          "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/22/Parliament-Ottawa.jpg",
+          "duree_jours": 2,
+          "trips": [
+              {
+                  "date": "2025-05-30",
+                  "nb_places_disponibles": 12
+              }
+          ],
+          "type_de_voyage": "Culturel",
+          "activites_incluses": "Visite du Parlement, Promenade le long du canal Rideau, Musée des civilisations"
+      }
+  ],
+  "clients": [
+      {
+          "id": 1,
+          "nom": "Lavoie",
+          "prenom": "Sophie",
+          "email": "sophie.lavoie@example.com",
+          "mdp": "sophie123!",
+          "age": 29,
+          "telephone": "+1 514-123-4567",
+          "adresse": "345 Rue Sherbrooke, Montréal, QC"
+      },
+      {
+          "id": 2,
+          "nom": "Tremblay",
+          "prenom": "Marc",
+          "email": "marc.tremblay@example.com",
+          "mdp": "marc@tremblay",
+          "age": 35,
+          "telephone": "+1 418-555-7890",
+          "adresse": "1200 Avenue Cartier, Québec, QC"
+      },
+      {
+          "id": 3,
+          "nom": "Gagnon",
+          "prenom": "Émilie",
+          "email": "emilie.gagnon@example.com",
+          "mdp": "Emi!9876",
+          "age": 26,
+          "telephone": "+1 450-222-3333",
+          "adresse": "670 Boulevard Curé-Labelle, Laval, QC"
+      },
+      {
+          "id": 4,
+          "nom": "Roy",
+          "prenom": "Jonathan",
+          "email": "jonathan.roy@example.com",
+          "mdp": "JonR0y$2025",
+          "age": 40,
+          "telephone": "+1 613-876-5432",
+          "adresse": "33 Rue Wellington, Ottawa, ON"
+      },
+      {
+          "id": 5,
+          "nom": "Bouchard",
+          "prenom": "Camille",
+          "email": "camille.bouchard@example.com",
+          "mdp": "Bouchard*Pass",
+          "age": 31,
+          "telephone": "+1 581-432-8765",
+          "adresse": "890 Rue St-Jean, Québec, QC"
+      },
+      {
+          "id": 6,
+          "nom": "Fortin",
+          "prenom": "Alexandre",
+          "email": "alexandre.fortin@example.com",
+          "mdp": "Alex987654",
+          "age": 28,
+          "telephone": "+1 514-999-1111",
+          "adresse": "100 Rue Ste-Catherine, Montréal, QC"
+      },
+      {
+          "id": 7,
+          "nom": "Lemieux",
+          "prenom": "Julie",
+          "email": "julie.lemieux@example.com",
+          "mdp": "JulieLem456",
+          "age": 33,
+          "telephone": "+1 819-765-4321",
+          "adresse": "290 Boulevard des Laurentides, Gatineau, QC"
+      },
+      {
+          "id": 8,
+          "nom": "Côté",
+          "prenom": "Maxime",
+          "email": "maxime.cote@example.com",
+          "mdp": "MaxC0t3!23",
+          "age": 27,
+          "telephone": "+1 450-654-9876",
+          "adresse": "76 Chemin du Roy, Trois-Rivières, QC"
+      },
+      {
+          "id": 9,
+          "nom": "Morin",
+          "prenom": "Caroline",
+          "email": "caroline.morin@example.com",
+          "mdp": "CaroM%2025",
+          "age": 30,
+          "telephone": "+1 581-222-6543",
+          "adresse": "567 Avenue Laurier, Québec, QC"
+      },
+      {
+          "id": 10,
+          "nom": "Dubois",
+          "prenom": "François",
+          "email": "francois.dubois@example.com",
+          "mdp": "Dubois!456",
+          "age": 45,
+          "telephone": "+1 514-876-1234",
+          "adresse": "1500 Boulevard René-Lévesque, Montréal, QC"
+      }
+  ]
+}

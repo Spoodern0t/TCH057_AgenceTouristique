@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <string-array name="budget_options">
+        <item>Tous les budgets</item>
+        <item>Moins de 300$</item>
+        <item>300$ - 600$</item>
+        <item>Plus de 600$</item>
+    </string-array>
+
+    <string-array name="type_options">
+        <item>Tous les types</item>
+        <item>Culturel</item>
+        <item>Aventure</item>
+        <item>Bien-être</item>
+        <item>Nature</item>
+    </string-array>
+</resources>
