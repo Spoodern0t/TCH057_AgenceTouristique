@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
-import com.alexis_jimmy_yasmine.agencetouristique7.modeles.Voyage;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 
 import java.util.List;
 
@@ -40,6 +40,13 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
          bottomNavHome.setOnClickListener(this);
         bottomNavHistorique.setOnClickListener(this);
         bottomNavLogout.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
     }
 
     @Override

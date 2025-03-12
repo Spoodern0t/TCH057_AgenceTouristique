@@ -1,8 +1,8 @@
 package com.alexis_jimmy_yasmine.agencetouristique7;
 //
 
-import com.alexis_jimmy_yasmine.agencetouristique7.modeles.Client;
-import com.alexis_jimmy_yasmine.agencetouristique7.modeles.Voyage;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 
 import java.util.List;
 
