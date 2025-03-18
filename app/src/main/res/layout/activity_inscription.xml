@@ -7,7 +7,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".InscriptionActivity">
+    tools:context=".vue.activites.InscriptionActivity">
 
     <TextView
         android:id="@+id/tv_inscription_titre"

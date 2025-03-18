@@ -1,56 +1,84 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.vue.activites;
 //
 
+ import android.content.Intent;
  import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+ import android.widget.Spinner;
  import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+ import androidx.lifecycle.ViewModelProvider;
 
  import com.alexis_jimmy_yasmine.agencetouristique7.R;
+ import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
+ import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
+
+ import org.json.JSONException;
 
 public class InscriptionActivity extends AppCompatActivity {
-    private EditText editTextFirstNameInscription;
-    private EditText editTextLastNameInscription;
-    private EditText editTextAgeInscription;
-    private EditText editTextPhoneInscription;
-    private EditText editTextAddressInscription;
-    private EditText editTextCityInscription;
-    private EditText editTextProvinceInscription;
-    private EditText editTextEmailRegisterInscription;
-    private EditText editTextPasswordRegisterInscription;
-    private Button buttonSignUpInscription;
-    private Button buttonReturnLoginInscription;
+
+    private ModelView modelView;
+    private EditText editFirstName, editLastName, editAge, editPhone, editAddress,
+            editCity, editProvince, editEmail, editPassword;
+    private Button btnSignUp, btnAnnuler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inscription);
-        editTextFirstNameInscription = findViewById(R.id.editTextFirstNameInscription);
-        editTextLastNameInscription = findViewById(R.id.editTextLastNameInscription);
-        editTextAgeInscription = findViewById(R.id.editTextAgeInscription);
-        editTextPhoneInscription = findViewById(R.id.editTextPhoneInscription);
-        editTextAddressInscription = findViewById(R.id.editTextAddressInscription);
-        editTextCityInscription = findViewById(R.id.editTextCityInscription);
-        editTextProvinceInscription = findViewById(R.id.editTextProvinceInscription);
-        editTextEmailRegisterInscription = findViewById(R.id.editTextEmailRegisterInscription);
-        editTextPasswordRegisterInscription = findViewById(R.id.editTextPasswordRegisterInscription);
-        buttonSignUpInscription = findViewById(R.id.buttonSignUpInscription);
-        buttonReturnLoginInscription = findViewById(R.id.buttonReturnLoginInscription);
 
+        editFirstName = findViewById(R.id.editTextFirstNameInscription);
+        editLastName = findViewById(R.id.editTextLastNameInscription);
+        editAge = findViewById(R.id.editTextAgeInscription);
+        editPhone = findViewById(R.id.editTextPhoneInscription);
+        editAddress = findViewById(R.id.editTextAddressInscription);
+        editCity = findViewById(R.id.editTextCityInscription);
+        editProvince = findViewById(R.id.editTextProvinceInscription);
+        editEmail = findViewById(R.id.editTextEmailRegisterInscription);
+        editPassword = findViewById(R.id.editTextPasswordRegisterInscription);
+        btnSignUp = findViewById(R.id.buttonSignUpInscription);
+        btnAnnuler = findViewById(R.id.buttonReturnLoginInscription);
 
-        buttonSignUpInscription.setOnClickListener(v -> {
-            String firstName = editTextFirstNameInscription.getText().toString();
-            String lastName = editTextLastNameInscription.getText().toString();
-            String ageString = editTextAgeInscription.getText().toString();
-            String phone = editTextPhoneInscription.getText().toString();
-            String address = editTextAddressInscription.getText().toString();
-            String city = editTextCityInscription.getText().toString();
-            String province = editTextProvinceInscription.getText().toString();
-            String email = editTextEmailRegisterInscription.getText().toString();
-            String password = editTextPasswordRegisterInscription.getText().toString();
+        btnSignUp.setOnClickListener(v -> {
 
+                    String firstName = editFirstName.getText().toString();
+                    String lastName = editLastName.getText().toString();
+                    String ageString = editAge.getText().toString();
+                    String phone = editPhone.getText().toString();
+                    String address = editAddress.getText().toString();
+                    String city = editCity.getText().toString();
+                    String province = editProvince.getText().toString();
+                    String email = editEmail.getText().toString();
+                    String password = editPassword.getText().toString();
+
+                    if (lastName.isEmpty() || firstName.isEmpty() || email.isEmpty() || password.isEmpty() ||
+                            ageString.isEmpty() || phone.isEmpty() || address.isEmpty() || city.isEmpty() || province.isEmpty()) {
+
+                        Toast.makeText(InscriptionActivity.this, "Veuillez remplir tous les champs !", Toast.LENGTH_LONG).show();
+                    } else {
+
+                        int age = Integer.parseInt(ageString);
+                        String adresse = address + ", " + city + ", " + province;
+
+                        Client client = new Client(0, lastName, firstName, email, password, age, phone, adresse);
+
+                        modelView = new ViewModelProvider(this).get(ModelView.class);
+
+                        try {
+
+                            modelView.postClient(client);
+                            setResult(RESULT_OK);
+                            finish();
+
+                        } catch (JSONException e) {
+
+                            Toast.makeText(InscriptionActivity.this, "Une erreur s'est produite !", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+            /*
             if (firstName.isEmpty() ) {
                 Toast.makeText(InscriptionActivity.this, "Please fill in first name...", Toast.LENGTH_LONG).show();
                 return;
@@ -86,8 +114,11 @@ public class InscriptionActivity extends AppCompatActivity {
             }
               Toast.makeText(InscriptionActivity.this, "Account created successfully! :)", Toast.LENGTH_SHORT).show();
             finish();
+             */
         });
-        buttonReturnLoginInscription.setOnClickListener(v -> {
+
+        btnAnnuler.setOnClickListener(v -> {
+            setResult(RESULT_CANCELED);
             finish();
         });
     }

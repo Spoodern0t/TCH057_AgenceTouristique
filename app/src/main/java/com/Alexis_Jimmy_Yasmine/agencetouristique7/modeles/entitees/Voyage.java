@@ -1,7 +1,11 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees;
-//
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+// FIXME: Ajouter les trips
+@JsonIgnoreProperties(value = {"trips"})
 public class Voyage {
     private int id;
     private String nom_voyage;
@@ -16,14 +20,14 @@ public class Voyage {
 
     public static class Trip {
         private String date;
-        private int nb_places_disponibles;
+        private int nbPlacesDisponibles;
 
         public Trip() {
          }
 
-        public Trip(String date, int nb_places_disponibles) {
+        public Trip(String date, int nbPlacesDisponibles) {
             this.date = date;
-            this.nb_places_disponibles = nb_places_disponibles;
+            this.nbPlacesDisponibles = nbPlacesDisponibles;
         }
 
         public String getDate() {
@@ -34,12 +38,12 @@ public class Voyage {
             this.date = date;
         }
 
-        public int getNb_places_disponibles() {
-            return nb_places_disponibles;
+        public int getNbPlacesDisponibles() {
+            return nbPlacesDisponibles;
         }
 
-        public void setNb_places_disponibles(int nb_places_disponibles) {
-            this.nb_places_disponibles = nb_places_disponibles;
+        public void setNbPlacesDisponibles(int nbPlacesDisponibles) {
+            this.nbPlacesDisponibles = nbPlacesDisponibles;
         }
     }
 
@@ -101,7 +105,7 @@ public class Voyage {
         this.destination = destination;
     }
 
-    public String getImage_url() {
+    public String getImageUrl() {
         return image_url;
     }
 

@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="#E72C3834"
+    android:orientation="horizontal"
+    android:padding="10dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/lvVoyageImage"
+        android:layout_width="150sp"
+        android:layout_height="120dp"
+        app:srcCompat="@drawable/mtl"
+        android:scaleType="fitCenter"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lvVoyageDestination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/colorSecondaire"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lvVoyagePrix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/colorSecondaire"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@id/lvVoyageDestination"/>
+
+        <TextView
+            android:id="@+id/lvVoyageDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|center_vertical"
+            android:textColor="@color/white"
+            android:textColorHint="@color/colorSecondaire"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

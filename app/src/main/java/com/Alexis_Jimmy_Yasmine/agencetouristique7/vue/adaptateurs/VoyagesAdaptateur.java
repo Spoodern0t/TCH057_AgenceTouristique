@@ -2,9 +2,12 @@ package com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.*;
@@ -12,9 +15,7 @@ import androidx.annotation.*;
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 
-import java.util.ConcurrentModificationException;
-
-public class VoyagesAdaptateur {
+public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
 
     private Voyage[] voyages;
     private Context contexte;
@@ -48,16 +49,20 @@ public class VoyagesAdaptateur {
         final Voyage voyage = this.voyages[position];
 
         if (voyage != null) {
-            final TextView tvImage = (TextView) view.findViewById(R.id.XXX);
-            final TextView tvDestination = (TextView) view.findViewById(R.id.XXX);
-            final TextView tvResume = (TextView) view.findViewById(R.id.XXX);
-            final TextView tvPrix = (TextView) view.findViewById(R.id.XXX);
+            final ImageView tvImage = (ImageView) view.findViewById(R.id.lvVoyageImage);
+            final TextView tvDestination = (TextView) view.findViewById(R.id.lvVoyageDestination);
+            final TextView tvResume = (TextView) view.findViewById(R.id.lvVoyageDescription);
+            final TextView tvPrix = (TextView) view.findViewById(R.id.lvVoyagePrix);
 
-            tvImage.setText(voyage.getImage_url());
+            // FIXME: Set l'image avec l'url
+            Uri u = Uri.parse("https://upload.wikimedia.org/wikipedia/commons/2/22/Parliament-Ottawa.jpg");
+
+            tvImage.setImageURI(u);
             tvDestination.setText(voyage.getDestination());
             tvResume.setText(voyage.getDescription());
             tvPrix.setText(voyage.getPrix()+" $");
         }
+
         return view;
     }
 }

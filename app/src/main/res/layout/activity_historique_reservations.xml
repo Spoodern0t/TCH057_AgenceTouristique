@@ -6,7 +6,7 @@
     android:background="#E72C3834"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".HistoriqueReservationsActivity">
+    tools:context=".vue.activites.HistoriqueReservationsActivity">
 
     <TextView
         android:layout_width="wrap_content"

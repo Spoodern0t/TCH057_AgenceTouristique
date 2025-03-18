@@ -45,5 +45,6 @@
     <string name="nom_du_voyage">Nom du Voyage</string>
 
     <string name="historique_des_reservations">Historique des Réservations</string>
+    <string name="nb_places_souhaitees">Nombre de places souhaitées</string>
 
 </resources>

@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     android:background="#E72C3834">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/iv_voyage_detail"
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:contentDescription="@string/image_du_voyage"
-            android:scaleType="centerCrop"
-            android:src="@drawable/logo" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tv_nom_voyage_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Nom du Voyage"
             android:textColor="#26A69A"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -34,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginBottom="8dp"
-            android:text="Description détaillée du voyage..."
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -43,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Destination: Lieu du voyage"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
@@ -52,7 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Durée: X jours"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
@@ -62,7 +62,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Prix par personne: XXX $"
             android:textColor="#26A69A"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -71,7 +70,6 @@
             android:id="@+id/tv_activites_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-             android:text="Activités Incluses:"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -81,7 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Liste des activités incluses dans le voyage..."
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -98,7 +95,7 @@
             android:id="@+id/spinner_date_depart_detail"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-             android:minHeight="48dp" />
+            android:minHeight="48dp" />
 
         <TextView
             android:id="@+id/tv_places_disponibles_detail"
@@ -113,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Nombre de places souhaitées"
+            android:hint="@string/nb_places_souhaitees"
             android:inputType="number"
             android:minHeight="48dp"
             android:textColor="@color/white"
@@ -138,73 +135,51 @@
             android:textColor="#000000"
             android:textSize="16sp" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingTop="16dp">
-
-            <LinearLayout
-                android:id="@+id/button_accueil_accueil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:minHeight="48dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="45dp"
-                    android:contentDescription="@string/accueil"
-                    android:src="@drawable/home" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/button_historique_accueil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:minHeight="48dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="45dp"
-                    android:contentDescription="@string/historique"
-                    android:src="@drawable/reservation" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/button_logout_accueil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:minHeight="48dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="45dp"
-                    android:contentDescription="@string/log_out"
-                    android:src="@drawable/quit" />
-
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
-</ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/buttonHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/accueil"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/home" />
+
+        <ImageButton
+            android:id="@+id/buttonHistorique"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/historique"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/reservation" />
+
+        <ImageButton
+            android:id="@+id/buttonLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/log_out"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/quit" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

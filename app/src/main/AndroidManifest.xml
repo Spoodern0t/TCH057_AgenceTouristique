@@ -32,6 +32,9 @@
 
         <activity android:name=".vue.activites.AccueilActivity"
             android:exported="false"/>
+
+        <activity android:name=".vue.activites.DetailActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>
