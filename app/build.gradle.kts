@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+    implementation("com.squareup.picasso:picasso:2.8")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

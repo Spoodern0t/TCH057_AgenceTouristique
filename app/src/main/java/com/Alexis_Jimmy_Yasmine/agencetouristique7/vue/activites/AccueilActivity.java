@@ -108,14 +108,15 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(this, DetailActivity.class);
         Voyage voyageClique = (Voyage) parent.getAdapter().getItem(i);
         intent.putExtra("ID", voyageClique.getId());
-        intent.putExtra("NOM", voyageClique.getNom_voyage());
+        /*
+        intent.putExtra("NOM", voyageClique.getNomVoyage());
         intent.putExtra("DESCRIPTION", voyageClique.getDescription());
         intent.putExtra("PRIX", voyageClique.getPrix());
         intent.putExtra("DESTINATION", voyageClique.getDestination());
         intent.putExtra("IMAGE", voyageClique.getImageUrl());
-        intent.putExtra("DUREE", voyageClique.getDuree_jours());
-        intent.putExtra("TYPE", voyageClique.getType_de_voyage());
-        intent.putExtra("ACTIVITES", voyageClique.getActivites_incluses());
+        intent.putExtra("DUREE", voyageClique.getDureeJours());
+        intent.putExtra("TYPE", voyageClique.getTypeDeVoyage());
+        intent.putExtra("ACTIVITES", voyageClique.getActivitesIncluses()); */
         startActivity(intent);
     }
 }

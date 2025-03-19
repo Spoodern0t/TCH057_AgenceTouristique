@@ -29,7 +29,7 @@ public class ModelView extends ViewModel {
     }
 
     public void chargerVoyages(String url) {
-        voyageRepository.chargerVoyage(url);
+        voyageRepository.chargerVoyages(url);
     }
 
     public LiveData<String> getConnexion() {

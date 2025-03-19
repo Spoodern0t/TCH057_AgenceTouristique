@@ -1,6 +1,5 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -22,24 +21,30 @@ public class VoyageRepository {
         return voyagesLiveData;
     }
 
-    public void chargerVoyage(String url) {
+    public void chargerVoyages(String url) {
 
-        Request requete = new Request.Builder().url(URL_POINT_ENTREE + url).build();
-
-        // Envoyer la requete en queue avec un callback lorsqu'il recoit une réponse
-        okHttpClient.newCall(requete).enqueue(new Callback() {
+        // Envoyer la requete dans un sidethread
+        (new Thread() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-            }
+            public void run() {
 
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if(response.body() != null) {
-                    Voyage[] voyages = mapper.readValue(response.body().string(), Voyage[].class);
-                    voyagesLiveData.postValue(voyages);
+                // Requete GET pour récupérer les voyages
+                Request requete = new Request.Builder().url(URL_POINT_ENTREE + url).build();
+                try (Response reponse = okHttpClient.newCall(requete).execute()) {
+
+                    ResponseBody corpsReponse = reponse.body();
+                    if(corpsReponse != null) {
+
+                        // Enregistrer les informations dans une liste de voyage
+                        Voyage[] voyages = mapper.readValue(corpsReponse.string(), Voyage[].class);
+                        voyagesLiveData.postValue(voyages);
+                    }
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
+
             }
-        });
+        }).start();
     }
 }

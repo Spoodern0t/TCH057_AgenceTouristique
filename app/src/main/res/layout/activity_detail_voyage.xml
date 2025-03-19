@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Date de Départ:"
+            android:text="@string/date_de_depart"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -95,13 +95,13 @@
             android:id="@+id/spinner_date_depart_detail"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:spinnerMode="dropdown"/>
 
         <TextView
             android:id="@+id/tv_places_disponibles_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Places Disponibles: XX"
             android:textColor="@color/white"
             android:textSize="18sp" />
 

@@ -3,26 +3,21 @@ package com.alexis_jimmy_yasmine.agencetouristique7.vue.activites;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
-import com.google.android.material.textfield.TextInputEditText;
+import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
+import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.TripsAdaptateur;
+import com.squareup.picasso.Picasso;
 
-import java.sql.ResultSet;
+public class DetailActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-import javax.xml.transform.Result;
-
-public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
-
+    private ModelView modelView;
     private ImageView imageVoyage;
     private TextView tNom, tDescription, tDestination, tDuree, tPrix, tActivites, tPlacesDisponible;
     Spinner spinDateDepart;
@@ -58,21 +53,31 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         btnReserver = (Button) findViewById(R.id.button_reserver_detail);
 
 
+        // Observer la liste des voyages
+        modelView = new ViewModelProvider(this).get(ModelView.class);
+        modelView.getVoyages().observe(this, new Observer<Voyage[]>() {
+            @Override
+            public void onChanged(Voyage[] voyages) {
+                // Picasso set l'image
+                Picasso.get().load(voyages[0].getImageUrl()).into(imageVoyage);
+                tNom.setText(voyages[0].getNomVoyage());
+                tDescription.setText(voyages[0].getDescription());
+                tDestination.setText(voyages[0].getDestination());
+                tDuree.setText(voyages[0].getStrDuree());
+                tPrix.setText(voyages[0].getStrPrix());
+                tActivites.setText(voyages[0].getActivitesIncluses());
+                // FIXME: La vue ne devrait pas parler au Model "getTrips"
+                spinDateDepart.setAdapter(new TripsAdaptateur(DetailActivity.this, R.layout.layout_trips, voyages[0].getTrips()));
+            }
+        });
+
         Intent intent = getIntent();
-        intent.getStringExtra("ID");
-        intent.getStringExtra("TYPE");
 
-        /* TODO: Image from URL
-        imageVoyage.setImageResource(intent.getStringExtra("IMAGE")); */
-        tNom.setText(intent.getStringExtra("NOM"));
-        tDescription.setText(intent.getStringExtra("DESCRIPTION"));
-        tDestination.setText("Destination : " + intent.getStringExtra("DESTINATION"));
-        tDuree.setText("Durée : " + intent.getIntExtra("DUREE", 0));
-        tPrix.setText("Prix par personne : " + intent.getIntExtra("PRIX", 0));
-        tActivites.setText("Activités Incluses : " + intent.getStringExtra("ACTIVITES"));
-        /* TODO: Trips from date de départ
-        tPlacesDisponible.setText(); */
+        // Lancer une nouvelle requete GET pour avoir seulement la destination choisie
+        modelView = new ViewModelProvider(this).get(ModelView.class);
+        modelView.chargerVoyages("/?id=" + intent.getIntExtra("ID", 0));
 
+        spinDateDepart.setOnItemSelectedListener(this);
 
         btnReserver.setOnClickListener(v -> {
             // TODO: POST SQLite local
@@ -81,6 +86,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             finish();
         });
     }
+
 
     @Override
     public void onClick(View view) {
@@ -98,5 +104,17 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+
+        Object tripChoisi = spinDateDepart.getItemAtPosition(i);
+        tPlacesDisponible.setText(((Voyage.Trip) tripChoisi).getStrNbPlacesDisponibles());
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Ne rien faire
     }
 }
