@@ -10,6 +10,8 @@ import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 
 import org.json.JSONException;
 
+import java.util.regex.Pattern;
+
 public class ModelView extends ViewModel {
 
     private final VoyageRepository voyageRepository;
@@ -30,6 +32,10 @@ public class ModelView extends ViewModel {
 
     public void chargerVoyages(String url) {
         voyageRepository.chargerVoyages(url);
+    }
+
+    public void chargerVoyages(String url, int[] budgetRange, Pattern regex) {
+        voyageRepository.chargerVoyages(url, budgetRange, regex);
     }
 
     public LiveData<String> getConnexion() {

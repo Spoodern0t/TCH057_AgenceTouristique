@@ -2,6 +2,8 @@ package com.alexis_jimmy_yasmine.agencetouristique7.vue.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.*;
 
@@ -14,12 +16,15 @@ import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.VoyagesAdaptateur;
 
-public class AccueilActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
+public class AccueilActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener, TextWatcher {
 
     private ModelView modelView;
     private EditText searchEditText;
     private Spinner spinBudgetAccueil, spinTypeAccueil;
-    private Button btnRechercher;
     private ListView voyagesListView;
     private ImageButton btnHome, btnHistorique, btnLogout;
 
@@ -42,13 +47,11 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         searchEditText = (EditText) findViewById(R.id.searchEditText);
         spinBudgetAccueil = (Spinner) findViewById(R.id.budgetSpinner);
         spinTypeAccueil = (Spinner) findViewById(R.id.typeSpinner);
-        btnRechercher = (Button) findViewById(R.id.buttonRechercher);
         voyagesListView = (ListView) findViewById(R.id.voyagesListView);
 
-
-        btnRechercher.setOnClickListener(this);
-
-        voyagesListView.setOnItemClickListener(this);
+        searchEditText.addTextChangedListener(this);
+        spinBudgetAccueil.setOnItemSelectedListener(this);
+        spinTypeAccueil.setOnItemSelectedListener(this);
 
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(ModelView.class);
@@ -77,29 +80,46 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
              Toast.makeText(this, "Accueil", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.buttonHistorique) {
-             Intent intent = new Intent(this, HistoriqueReservationsActivity.class);
+            Intent intent = new Intent(this, HistoriqueReservationsActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.buttonLogout) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.buttonRechercher) {
-            // contruit la requete GET
-            String url = "/?";
-            if (!searchEditText.getText().toString().isEmpty()) {
-                // TODO: REGEX
-            }
-            if (!spinBudgetAccueil.getSelectedItem().toString().equalsIgnoreCase("Tous les budgets")) {
-                url += "prix=" + spinBudgetAccueil.getSelectedItem().toString() + "&";
-            }
-            if (!spinTypeAccueil.getSelectedItem().toString().equalsIgnoreCase("Tous les types")) {
-                url += "type_de_voyage=" + spinTypeAccueil.getSelectedItem().toString() + "&";
-            }
-            url = url.substring(0, url.length() - 1);
-
-            modelView.chargerVoyages(url);
         }
+    }
+
+    // Gestion du filtre
+    public void filtrerVoyages() {
+        // contruit la requete GET
+        String nomLike = searchEditText.getText().toString();
+        String budget = spinBudgetAccueil.getSelectedItem().toString();
+        String type = spinTypeAccueil.getSelectedItem().toString();
+
+        String url = "/?";
+        int[] budgetRange = null;
+        Pattern regex = null;
+
+        // Barre de recherche
+        if (!nomLike.isEmpty()) {
+            regex = Pattern.compile(nomLike, Pattern.CASE_INSENSITIVE);
+        }
+        // Budget
+        if (!budget.equalsIgnoreCase("Tous les budgets")) {
+            switch (budget) {
+                case "Moins de 300$": budgetRange = new int[]{0, 300}; break;
+                case "300$ - 600$": budgetRange = new int[]{300, 600}; break;
+                case "Plus de 600$": budgetRange = new int[]{600, 2147483647}; break;
+            }
+        }
+        // Type
+        if (!type.equalsIgnoreCase("Tous les types")) {
+            url += "type_de_voyage=" + type + "&";
+        }
+        url = url.substring(0, url.length() - 1);
+
+        modelView.chargerVoyages(url, budgetRange, regex);
     }
 
     // Envoyer vers l'activité de détail
@@ -108,15 +128,32 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(this, DetailActivity.class);
         Voyage voyageClique = (Voyage) parent.getAdapter().getItem(i);
         intent.putExtra("ID", voyageClique.getId());
-        /*
-        intent.putExtra("NOM", voyageClique.getNomVoyage());
-        intent.putExtra("DESCRIPTION", voyageClique.getDescription());
-        intent.putExtra("PRIX", voyageClique.getPrix());
-        intent.putExtra("DESTINATION", voyageClique.getDestination());
-        intent.putExtra("IMAGE", voyageClique.getImageUrl());
-        intent.putExtra("DUREE", voyageClique.getDureeJours());
-        intent.putExtra("TYPE", voyageClique.getTypeDeVoyage());
-        intent.putExtra("ACTIVITES", voyageClique.getActivitesIncluses()); */
         startActivity(intent);
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        filtrerVoyages();
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        filtrerVoyages();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Ne rien faire
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        // Ne rien faire
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        // Ne rien faire
     }
 }
