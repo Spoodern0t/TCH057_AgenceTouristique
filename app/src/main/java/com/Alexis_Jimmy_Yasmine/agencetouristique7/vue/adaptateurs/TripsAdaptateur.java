@@ -6,33 +6,45 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
-import com.squareup.picasso.Picasso;
+import com.fasterxml.jackson.databind.ser.Serializers;
 
-public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
+public class TripsAdaptateur extends BaseAdapter {
 
-    private Voyage[] voyages;
+    private Voyage.Trip[] trips;
     private Context contexte;
     private int viewResourceId;
     private Resources resources;
+    LayoutInflater inflater;
 
-    public VoyagesAdaptateur(@NonNull Context context, int viewResourceId, @NonNull Voyage[] voyages) {
-        super(context, viewResourceId, voyages);
+    public TripsAdaptateur(@NonNull Context context, int viewResourceId, @NonNull Voyage.Trip[] trips) {
         this.contexte = context;
         this.viewResourceId = viewResourceId;
         this.resources = contexte.getResources();
-        this.voyages = voyages;
+        this.trips = trips;
+        inflater = (LayoutInflater.from(context.getApplicationContext()));
     }
 
     @Override
     public int getCount() {
-        return this.voyages.length;
+        return this.trips.length;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return this.trips[position];
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
     }
 
     @NonNull
@@ -46,19 +58,12 @@ public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
             view = layoutInflater.inflate(this.viewResourceId, parent, false);
         }
 
-        final Voyage voyage = this.voyages[position];
+        final Voyage.Trip trip = this.trips[position];
 
-        if (voyage != null) {
-            final ImageView tvImage = (ImageView) view.findViewById(R.id.lvVoyageImage);
-            final TextView tvDestination = (TextView) view.findViewById(R.id.lvVoyageDestination);
-            final TextView tvResume = (TextView) view.findViewById(R.id.lvVoyageDescription);
-            final TextView tvPrix = (TextView) view.findViewById(R.id.lvVoyagePrix);
+        if (trip != null) {
+            final TextView dateDepart = (TextView) view.findViewById(R.id.tripDate);
 
-            // Picasso set l'image
-            Picasso.get().load(voyage.getImageUrl()).into(tvImage);
-            tvDestination.setText(voyage.getDestination());
-            tvResume.setText(voyage.getDescription());
-            tvPrix.setText(voyage.getPrix()+" $");
+            dateDepart.setText(trip.getDate());
         }
 
         return view;

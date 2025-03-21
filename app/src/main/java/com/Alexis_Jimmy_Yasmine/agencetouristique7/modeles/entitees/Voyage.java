@@ -1,45 +1,60 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees;
-//
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
+// FIXME: Ajouter les trips
+//@JsonIgnoreProperties(value = {"trips"})
+@JsonFormat(shape = JsonFormat.Shape.STRING)
 public class Voyage {
+    @JsonProperty("id")
     private int id;
-    private String nom_voyage;
+
+    @JsonProperty("nom_voyage")
+    private String nomVoyage;
+
+    @JsonProperty("description")
     private String description;
-    private int prix;
+
+    @JsonProperty("prix")
+    private double prix;
+
+    @JsonProperty("destination")
     private String destination;
-    private String image_url;
-    private int duree_jours;
-    private List<Trip> trips;
-    private String type_de_voyage;
-    private String activites_incluses;
 
+    @JsonProperty("image_url")
+    private String imageUrl;
+
+    @JsonProperty("duree_jours")
+    private int dureeJours;
+
+    @JsonProperty("trips")
+    private Trip[] trips;
+
+    @JsonProperty("type_de_voyage")
+    private String typeDeVoyage;
+
+    @JsonProperty("activites_incluses")
+    private String activitesIncluses;
+
+    // La classe pour les trips
     public static class Trip {
+
+        @JsonProperty("date")
         private String date;
-        private int nb_places_disponibles;
 
-        public Trip() {
-         }
-
-        public Trip(String date, int nb_places_disponibles) {
-            this.date = date;
-            this.nb_places_disponibles = nb_places_disponibles;
-        }
+        @JsonProperty("nb_places_disponibles")
+        private int nbPlacesDisponibles;
 
         public String getDate() {
             return date;
         }
 
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        public int getNb_places_disponibles() {
-            return nb_places_disponibles;
-        }
-
-        public void setNb_places_disponibles(int nb_places_disponibles) {
-            this.nb_places_disponibles = nb_places_disponibles;
+        public String getStrNbPlacesDisponibles() {
+            return "Places disponibles : " + nbPlacesDisponibles;
         }
     }
 
@@ -47,20 +62,19 @@ public class Voyage {
     public Voyage() {
      }
 
-    public Voyage(int id, String nom_voyage, String description, int prix, String destination, String image_url, int duree_jours, List<Trip> trips, String type_de_voyage, String activites_incluses) {
+    public Voyage(int id, String nomVoyage, String description, int prix, String destination, String imageUrl, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
         this.id = id;
-        this.nom_voyage = nom_voyage;
+        this.nomVoyage = nomVoyage;
         this.description = description;
         this.prix = prix;
         this.destination = destination;
-        this.image_url = image_url;
-        this.duree_jours = duree_jours;
+        this.imageUrl = imageUrl;
+        this.dureeJours = dureeJours;
         this.trips = trips;
-        this.type_de_voyage = type_de_voyage;
-        this.activites_incluses = activites_incluses;
+        this.typeDeVoyage = typeDeVoyage;
+        this.activitesIncluses = activitesIncluses;
     }
 
-    // Getters and Setters for Voyage
     public int getId() {
         return id;
     }
@@ -69,12 +83,36 @@ public class Voyage {
         this.id = id;
     }
 
-    public String getNom_voyage() {
-        return nom_voyage;
+    public double getPrix() {
+        return prix;
     }
 
-    public void setNom_voyage(String nom_voyage) {
-        this.nom_voyage = nom_voyage;
+    public String getStrPrix() {
+        return "Prix par personne : " + prix + " $";
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+
+    public int getDureeJours() {
+        return dureeJours;
+    }
+
+    public String getStrDuree() {
+        return "Durée : " + dureeJours + " jours";
+    }
+
+    public void setDureeJours(int dureeJours) {
+        this.dureeJours = dureeJours;
+    }
+
+    public String getNomVoyage() {
+        return nomVoyage;
+    }
+
+    public void setNomVoyage(String nomVoyage) {
+        this.nomVoyage = nomVoyage;
     }
 
     public String getDescription() {
@@ -85,59 +123,43 @@ public class Voyage {
         this.description = description;
     }
 
-    public int getPrix() {
-        return prix;
-    }
-
-    public void setPrix(int prix) {
-        this.prix = prix;
-    }
-
     public String getDestination() {
-        return destination;
+        return "Destination : " + destination;
     }
 
     public void setDestination(String destination) {
         this.destination = destination;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public int getDuree_jours() {
-        return duree_jours;
+    public String getTypeDeVoyage() {
+        return typeDeVoyage;
     }
 
-    public void setDuree_jours(int duree_jours) {
-        this.duree_jours = duree_jours;
+    public void setTypeDeVoyage(String typeDeVoyage) {
+        this.typeDeVoyage = typeDeVoyage;
     }
 
-    public List<Trip> getTrips() {
+    public String getActivitesIncluses() {
+        return "Activités incluses : " + activitesIncluses;
+    }
+
+    public void setActivitesIncluses(String activitesIncluses) {
+        this.activitesIncluses = activitesIncluses;
+    }
+
+    public Trip[] getTrips() {
         return trips;
     }
 
-    public void setTrips(List<Trip> trips) {
+    public void setTrips(Trip[] trips) {
         this.trips = trips;
-    }
-
-    public String getType_de_voyage() {
-        return type_de_voyage;
-    }
-
-    public void setType_de_voyage(String type_de_voyage) {
-        this.type_de_voyage = type_de_voyage;
-    }
-
-    public String getActivites_incluses() {
-        return activites_incluses;
-    }
-
-    public void setActivites_incluses(String activites_incluses) {
-        this.activites_incluses = activites_incluses;
     }
 }
