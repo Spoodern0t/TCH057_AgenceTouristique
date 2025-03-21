@@ -12,9 +12,9 @@ public class Client {
     private String adresse;
 
     public Client() {
-     }
+    }
 
-     public Client(long id, String nom, String prenom, String email, String mdp, int age, String telephone, String adresse) {
+    public Client(long id, String nom, String prenom, String email, String mdp, int age, String telephone, String adresse) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -25,7 +25,7 @@ public class Client {
         this.adresse = adresse;
     }
 
-     public long getId() {
+    public long getId() {
         return id;
     }
 

@@ -8,6 +8,7 @@ import java.util.List;
 
 // FIXME: Ajouter les trips
 //@JsonIgnoreProperties(value = {"trips"})
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public class Voyage {
     @JsonProperty("id")
@@ -41,6 +42,7 @@ public class Voyage {
     private String activitesIncluses;
 
     // La classe pour les trips
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Trip {
 
         @JsonProperty("date")
@@ -56,11 +58,19 @@ public class Voyage {
         public String getStrNbPlacesDisponibles() {
             return "Places disponibles : " + nbPlacesDisponibles;
         }
+
+        public int getNbPlacesDisponibles() {
+            return nbPlacesDisponibles;
+        }
+
+        public void setNbPlacesDisponibles(int nbPlacesDisponibles) {
+            this.nbPlacesDisponibles = nbPlacesDisponibles;
+        }
     }
 
 
     public Voyage() {
-     }
+    }
 
     public Voyage(int id, String nomVoyage, String description, int prix, String destination, String imageUrl, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
         this.id = id;

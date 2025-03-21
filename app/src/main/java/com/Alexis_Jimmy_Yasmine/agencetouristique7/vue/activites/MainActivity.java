@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Veuillez remplir tous les champs !", Toast.LENGTH_SHORT).show();
             } else {
                 try {
-                   modelView.postConnexion(email, mdp);
+                    modelView.postConnexion(email, mdp);
                 } catch (JSONException e) {
                     //
                 }
