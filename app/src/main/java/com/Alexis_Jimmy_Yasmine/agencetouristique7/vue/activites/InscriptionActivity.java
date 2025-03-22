@@ -1,21 +1,21 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.vue.activites;
 //
 
- import android.content.Intent;
- import android.os.Bundle;
+import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
- import android.widget.Spinner;
- import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
- import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProvider;
 
- import com.alexis_jimmy_yasmine.agencetouristique7.R;
- import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
- import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
+import com.alexis_jimmy_yasmine.agencetouristique7.R;
+import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
 
- import org.json.JSONException;
+import org.json.JSONException;
 
 public class InscriptionActivity extends AppCompatActivity {
 
@@ -43,40 +43,40 @@ public class InscriptionActivity extends AppCompatActivity {
 
         btnSignUp.setOnClickListener(v -> {
 
-                    String firstName = editFirstName.getText().toString();
-                    String lastName = editLastName.getText().toString();
-                    String ageString = editAge.getText().toString();
-                    String phone = editPhone.getText().toString();
-                    String address = editAddress.getText().toString();
-                    String city = editCity.getText().toString();
-                    String province = editProvince.getText().toString();
-                    String email = editEmail.getText().toString();
-                    String password = editPassword.getText().toString();
+            String firstName = editFirstName.getText().toString();
+            String lastName = editLastName.getText().toString();
+            String ageString = editAge.getText().toString();
+            String phone = editPhone.getText().toString();
+            String address = editAddress.getText().toString();
+            String city = editCity.getText().toString();
+            String province = editProvince.getText().toString();
+            String email = editEmail.getText().toString();
+            String password = editPassword.getText().toString();
 
-                    if (lastName.isEmpty() || firstName.isEmpty() || email.isEmpty() || password.isEmpty() ||
-                            ageString.isEmpty() || phone.isEmpty() || address.isEmpty() || city.isEmpty() || province.isEmpty()) {
+            if (lastName.isEmpty() || firstName.isEmpty() || email.isEmpty() || password.isEmpty() ||
+                    ageString.isEmpty() || phone.isEmpty() || address.isEmpty() || city.isEmpty() || province.isEmpty()) {
 
-                        Toast.makeText(InscriptionActivity.this, "Veuillez remplir tous les champs !", Toast.LENGTH_LONG).show();
-                    } else {
+                Toast.makeText(InscriptionActivity.this, "Veuillez remplir tous les champs !", Toast.LENGTH_LONG).show();
+            } else {
 
-                        int age = Integer.parseInt(ageString);
-                        String adresse = address + ", " + city + ", " + province;
+                int age = Integer.parseInt(ageString);
+                String adresse = address + ", " + city + ", " + province;
 
-                        Client client = new Client(0, lastName, firstName, email, password, age, phone, adresse);
+                Client client = new Client(0, lastName, firstName, email, password, age, phone, adresse);
 
-                        modelView = new ViewModelProvider(this).get(ModelView.class);
+                modelView = new ViewModelProvider(this).get(ModelView.class);
 
-                        try {
+                try {
 
-                            modelView.postClient(client);
-                            setResult(RESULT_OK);
-                            finish();
+                    modelView.postClient(client);
+                    setResult(RESULT_OK);
+                    finish();
 
-                        } catch (JSONException e) {
+                } catch (JSONException e) {
 
-                            Toast.makeText(InscriptionActivity.this, "Une erreur s'est produite !", Toast.LENGTH_LONG).show();
-                        }
-                    }
+                    Toast.makeText(InscriptionActivity.this, "Une erreur s'est produite !", Toast.LENGTH_LONG).show();
+                }
+            }
 
             /*
             if (firstName.isEmpty() ) {

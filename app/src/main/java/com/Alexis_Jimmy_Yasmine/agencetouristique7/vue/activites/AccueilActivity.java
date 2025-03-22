@@ -53,6 +53,8 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         spinBudgetAccueil.setOnItemSelectedListener(this);
         spinTypeAccueil.setOnItemSelectedListener(this);
 
+        voyagesListView.setOnItemClickListener(this);
+
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(ModelView.class);
         modelView.getVoyages().observe(this, new Observer<Voyage[]>() {
@@ -77,7 +79,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         int id = view.getId();
 
         if (id == R.id.buttonHome) {
-             Toast.makeText(this, "Accueil", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Accueil", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.buttonHistorique) {
             Intent intent = new Intent(this, HistoriqueReservationsActivity.class);
