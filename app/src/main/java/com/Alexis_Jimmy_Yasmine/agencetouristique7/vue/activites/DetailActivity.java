@@ -33,9 +33,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_voyage);
 
-        // Observer la liste des voyages
-        modelView = new ViewModelProvider(this).get(ModelView.class);
-
         // Composantes de la navbar
         btnHome = findViewById(R.id.buttonHome);
         btnHistorique = findViewById(R.id.buttonHistorique);
@@ -58,41 +55,48 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         editPlacesReservees = findViewById(R.id.editText_nb_places_detail);
         btnReserver = findViewById(R.id.button_reserver_detail);
 
+
+        // Observer la liste des voyages
+        modelView = new ViewModelProvider(this).get(ModelView.class);
         modelView.getVoyages().observe(this, voyages -> {
-            Log.d("DetailActivity", "onChanged appelé, taille du tableau voyages: " + voyages.length); // Log existant
+            if (voyages != null) {
+                Log.d("DetailActivity", "onChanged appelé, taille du tableau voyages: " + voyages.length); // Log existant
 
-            // Picasso set l'image
-            Picasso.get().load(voyages[0].getImageUrl()).into(imageVoyage);
-            tNom.setText(voyages[0].getNomVoyage());
-            tDescription.setText(voyages[0].getDescription());
-            tDestination.setText(voyages[0].getDestination());
-            tDuree.setText(voyages[0].getStrDuree());
-            tPrix.setText(voyages[0].getStrPrix());
-            tActivites.setText(voyages[0].getActivitesIncluses());
+                // Picasso set l'image
+                Picasso.get().load(voyages[0].getImageUrl()).into(imageVoyage);
+                tNom.setText(voyages[0].getNomVoyage());
+                tDescription.setText(voyages[0].getDescription());
+                tDestination.setText(voyages[0].getDestination());
+                tDuree.setText(voyages[0].getStrDuree());
+                tPrix.setText(voyages[0].getStrPrix());
+                tActivites.setText(voyages[0].getActivitesIncluses());
 
-            // Mettre à jour le Spinner des dates de départ
-            TripsAdaptateur tripsAdaptateur = new TripsAdaptateur(DetailActivity.this, R.layout.layout_trips, voyages[0].getTrips());
-            spinDateDepart.setAdapter(tripsAdaptateur);
+                // Mettre à jour le Spinner des dates de départ
+                TripsAdaptateur tripsAdaptateur = new TripsAdaptateur(DetailActivity.this, R.layout.layout_trips, voyages[0].getTrips());
+                spinDateDepart.setAdapter(tripsAdaptateur);
 
-            // Mettre à jour le TextView des places disponibles
-            if (voyages[0].getTrips() != null && voyages[0].getTrips().length > 0) {
-                spinDateDepart.setSelection(0);
-                Voyage.Trip premierTrip = (Voyage.Trip) spinDateDepart.getSelectedItem();
+                // Mettre à jour le TextView des places disponibles
+                if (voyages[0].getTrips() != null && voyages[0].getTrips().length > 0) {
+                    spinDateDepart.setSelection(0);
+                    Voyage.Trip premierTrip = (Voyage.Trip) spinDateDepart.getSelectedItem();
 
-                String nbPlacesDisponiblesAvantSetText = premierTrip.getStrNbPlacesDisponibles();
-                Log.d("DetailActivity", "Nombre de places disponibles (premier trip avant setText): " + nbPlacesDisponiblesAvantSetText);
-                tPlacesDisponible.setText(premierTrip.getStrNbPlacesDisponibles());
-                String nbPlacesDisponiblesApresSetText = premierTrip.getStrNbPlacesDisponibles();
-                Log.d("DetailActivity", "Nombre de places disponibles (premier trip après setText): " + tPlacesDisponible.getText());
+                    String nbPlacesDisponiblesAvantSetText = premierTrip.getStrNbPlacesDisponibles();
+                    Log.d("DetailActivity", "Nombre de places disponibles (premier trip avant setText): " + nbPlacesDisponiblesAvantSetText);
+                    tPlacesDisponible.setText(premierTrip.getStrNbPlacesDisponibles());
+                    String nbPlacesDisponiblesApresSetText = premierTrip.getStrNbPlacesDisponibles();
+                    Log.d("DetailActivity", "Nombre de places disponibles (premier trip après setText): " + tPlacesDisponible.getText());
+                } else {
+                    Log.w("DetailActivity", "Voyage ou trips null ou vide dans onChanged");
+                }
             } else {
-                Log.w("DetailActivity", "Voyage ou trips null ou vide dans onChanged");
+                setResult(RESULT_CANCELED);
+                finish();
             }
         });
 
-        Intent intent = getIntent();
+        int voyageId = getIntent().getIntExtra("ID", 0);
 
-         modelView = new ViewModelProvider(this).get(ModelView.class);
-        modelView.chargerVoyages("/?id=" + intent.getIntExtra("ID", 0));
+        modelView.chargerVoyages("/?id=" + voyageId);
 
         spinDateDepart.setOnItemSelectedListener(this);
 

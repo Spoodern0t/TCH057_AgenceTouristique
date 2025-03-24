@@ -54,12 +54,16 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
 
         voyagesListView.setOnItemClickListener(this);
 
+
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(ModelView.class);
         modelView.getVoyages().observe(this, voyages -> {
-            voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
+            if (voyages != null) {
+                voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
+            } else {
+                Toast.makeText(this, "Une erreur de connexion au serveur !", Toast.LENGTH_SHORT).show();
+            }
         });
-        modelView.chargerVoyages("/");
     }
 
     // Recharger les destinations au retour de l'activité

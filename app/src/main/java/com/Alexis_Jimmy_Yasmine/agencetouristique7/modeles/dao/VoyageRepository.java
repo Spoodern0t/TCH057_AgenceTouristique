@@ -24,7 +24,7 @@ public class VoyageRepository {
     private final MutableLiveData<Voyage[]> voyagesLiveData = new MutableLiveData<>();
     private final ObjectMapper mapper = new ObjectMapper();
 
-    private final MutableLiveData<String> reservationResultLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> reservationResultLiveData = new MutableLiveData<>("Error: Network error");
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -53,10 +53,12 @@ public class VoyageRepository {
                         // Enregistrer les informations dans une liste de voyage
                         Voyage[] voyages = mapper.readValue(corpsReponse.string(), Voyage[].class);
                         voyagesLiveData.postValue(voyages);
+                    } else {
+                        voyagesLiveData.postValue(null);
                     }
 
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    voyagesLiveData.postValue(null);
                 }
             }
         }).start();
@@ -102,7 +104,7 @@ public class VoyageRepository {
                         }
                     }
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    voyagesLiveData.postValue(null);
                 }
             }
         }).start();

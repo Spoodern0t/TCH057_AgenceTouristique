@@ -8,8 +8,6 @@ import com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao.VoyageRepository;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 
-import org.json.JSONException;
-
 import java.util.regex.Pattern;
 
 public class ModelView extends ViewModel {
@@ -17,7 +15,7 @@ public class ModelView extends ViewModel {
     private final VoyageRepository voyageRepository;
     private final LiveData<Voyage[]> voyages;
     private final ClientRepository clientRepository;
-    private final LiveData<String> connexion;
+    private final LiveData<Integer> connexion, inscription;
     private final LiveData<String> reservationResult;
 
     public ModelView() {
@@ -25,6 +23,7 @@ public class ModelView extends ViewModel {
         voyages = voyageRepository.getVoyages();
         clientRepository = new ClientRepository();
         connexion = clientRepository.getConnexion();
+        inscription = clientRepository.getInscription();
         reservationResult = voyageRepository.getReservationResultLiveData();
     }
 
@@ -40,15 +39,19 @@ public class ModelView extends ViewModel {
         voyageRepository.chargerVoyages(url, budgetRange, regex);
     }
 
-    public LiveData<String> getConnexion() {
+    public LiveData<Integer> getConnexion() {
         return connexion;
     }
 
-    public void postConnexion(String email, String mdp) throws JSONException {
-        clientRepository.connexion(email, mdp);
+    public void chargerConnexion(String email, String mdp) {
+        clientRepository.getConnexion(email, mdp);
     }
 
-    public void postClient(Client client) throws JSONException {
+    public LiveData<Integer> getInscription() {
+        return inscription;
+    }
+
+    public void postClient(Client client) {
         clientRepository.postNouveauClient(client);
     }
 

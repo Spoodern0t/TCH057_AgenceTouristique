@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
-
-import org.json.JSONException;
 
 public class InscriptionActivity extends AppCompatActivity {
 
@@ -41,6 +38,28 @@ public class InscriptionActivity extends AppCompatActivity {
         btnSignUp = findViewById(R.id.buttonSignUpInscription);
         btnAnnuler = findViewById(R.id.buttonReturnLoginInscription);
 
+        // Observer la liste des voyages
+        modelView = new ViewModelProvider(this).get(ModelView.class);
+        modelView.getInscription().observe(this, result -> {
+
+            // Si le compte est créé, renvoyer à la page de connexion
+            switch (result) {
+                case 201: {
+                    setResult(RESULT_OK);
+                    finish();
+                    break;
+                }
+                case 401: {
+                    Toast.makeText(this, "Un compte existe déjà avec cet email !", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case 404: {
+                    Toast.makeText(this, "Une erreur de connexion est subvenue !", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
+        });
+
         btnSignUp.setOnClickListener(v -> {
 
             String firstName = editFirstName.getText().toString();
@@ -62,59 +81,10 @@ public class InscriptionActivity extends AppCompatActivity {
                 int age = Integer.parseInt(ageString);
                 String adresse = address + ", " + city + ", " + province;
 
-                Client client = new Client(0, lastName, firstName, email, password, age, phone, adresse);
+                Client client = new Client("0", lastName, firstName, email, password, age, phone, adresse);
 
-                modelView = new ViewModelProvider(this).get(ModelView.class);
-
-                try {
-
-                    modelView.postClient(client);
-                    setResult(RESULT_OK);
-                    finish();
-
-                } catch (JSONException e) {
-
-                    Toast.makeText(InscriptionActivity.this, "Une erreur s'est produite !", Toast.LENGTH_LONG).show();
-                }
+                modelView.postClient(client);
             }
-
-            /*
-            if (firstName.isEmpty() ) {
-                Toast.makeText(InscriptionActivity.this, "Please fill in first name...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if ( lastName.isEmpty() ) {
-                Toast.makeText(InscriptionActivity.this, "Please fill in last name...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if ( ageString.isEmpty()  ) {
-                Toast.makeText(InscriptionActivity.this, "Please fill in age...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if ( email.isEmpty()  ) {
-                Toast.makeText(InscriptionActivity.this, "Please fill in email...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if  (password.isEmpty()) {
-                Toast.makeText(InscriptionActivity.this, "Please fill in password...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-
-            int ageInt;
-            try {
-                ageInt = Integer.parseInt(ageString);
-            } catch (NumberFormatException e) {
-                Toast.makeText(InscriptionActivity.this, "Invalid Age. Please enter a number...", Toast.LENGTH_LONG).show();
-                return;
-            }
-              Toast.makeText(InscriptionActivity.this, "Account created successfully! :)", Toast.LENGTH_SHORT).show();
-            finish();
-             */
         });
 
         btnAnnuler.setOnClickListener(v -> {

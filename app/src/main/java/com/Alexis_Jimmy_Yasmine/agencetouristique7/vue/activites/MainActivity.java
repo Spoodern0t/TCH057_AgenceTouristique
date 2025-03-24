@@ -12,8 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
 
-import org.json.JSONException;
-
 public class MainActivity extends AppCompatActivity {
 
     private ModelView modelView;
@@ -32,15 +30,27 @@ public class MainActivity extends AppCompatActivity {
         buttonSignIn = findViewById(R.id.buttonSignIn);
         buttonCreateAccount = findViewById(R.id.buttonCreateAccount);
 
-
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(ModelView.class);
-        modelView.getConnexion().observe(this, message -> {
-            if (message.equals("Connexion en cours")) {
-                Intent intent = new Intent(this, AccueilActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        modelView.getConnexion().observe(this, result -> {
+            switch (result) {
+                case 201: {
+                    Intent intent = new Intent(this, AccueilActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+                case 401: {
+                    Toast.makeText(this, "L'email est incorrect !", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case 402: {
+                    Toast.makeText(this, "Le mot de passe est incorrect !", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case 404: {
+                    Toast.makeText(this, "Une erreur de connexion est subvenue !", Toast.LENGTH_SHORT).show();
+                    break;
+                }
             }
         });
 
@@ -53,11 +63,8 @@ public class MainActivity extends AppCompatActivity {
             if (email.isEmpty() || mdp.isEmpty()) {
                 Toast.makeText(this, "Veuillez remplir tous les champs !", Toast.LENGTH_SHORT).show();
             } else {
-                try {
-                    modelView.postConnexion(email, mdp);
-                } catch (JSONException e) {
-                    //
-                }
+
+                modelView.chargerConnexion(email, mdp);
             }
         });
 
