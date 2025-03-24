@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -92,8 +93,9 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         } */ //temporary to test popup
         else if (id == R.id.buttonLogout) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-            PopupWindow popup = new PopupWindow(inflater.inflate(R.layout.popup_filtre, null), 100, 100, true);
-            popup.showAtLocation(findViewById(R.id.logoImageView), Gravity.CENTER, 0, 0);
+            View popupView = inflater.inflate(R.layout.popup_filtre, null);
+            PopupWindow popup = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+            popup.showAtLocation(view, Gravity.CENTER, 0, 0);
         }
     }
 
