@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 
@@ -16,8 +18,6 @@ import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.VoyagesAdaptateur;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class AccueilActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener, TextWatcher {
@@ -85,10 +85,15 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             Intent intent = new Intent(this, HistoriqueReservationsActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.buttonLogout) {
+        } /* else if (id == R.id.buttonLogout) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
+        } */ //temporary to test popup
+        else if (id == R.id.buttonLogout) {
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+            PopupWindow popup = new PopupWindow(inflater.inflate(R.layout.popup_filtre, null), 100, 100, true);
+            popup.showAtLocation(findViewById(R.id.logoImageView), Gravity.CENTER, 0, 0);
         }
     }
 
