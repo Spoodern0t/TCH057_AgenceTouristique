@@ -6,15 +6,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
-import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
-import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.VoyagesAdaptateur;
 
 import org.json.JSONException;
 
@@ -36,23 +32,6 @@ public class MainActivity extends AppCompatActivity {
         buttonSignIn = findViewById(R.id.buttonSignIn);
         buttonCreateAccount = findViewById(R.id.buttonCreateAccount);
 
-        buttonSignIn.setOnClickListener(v -> {
-            String email = editTextEmail.getText().toString();
-            String password = editTextPassword.getText().toString();
-
-            if (email.isEmpty()){
-                Toast.makeText(MainActivity.this, "Please fill in email...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if (password.isEmpty()) {
-                Toast.makeText(MainActivity.this, "Please fill in password...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            Intent intent = new Intent(MainActivity.this, AccueilActivity.class);
-            startActivity(intent);
-        });
 
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(ModelView.class);
@@ -81,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         buttonCreateAccount.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, InscriptionActivity.class);

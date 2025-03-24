@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
@@ -36,9 +35,9 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_accueil);
 
         // Composantes de la navbar
-        btnHome = (ImageButton) findViewById(R.id.buttonHome);
-        btnHistorique = (ImageButton) findViewById(R.id.buttonHistorique);
-        btnLogout = (ImageButton) findViewById(R.id.buttonLogout);
+        btnHome = findViewById(R.id.buttonHome);
+        btnHistorique = findViewById(R.id.buttonHistorique);
+        btnLogout = findViewById(R.id.buttonLogout);
         btnFiltre = findViewById(R.id.buttonFiltre);
 
         // ajouter un écouteur sur les boutons
@@ -69,11 +68,8 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
 
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(ModelView.class);
-        modelView.getVoyages().observe(this, new Observer<Voyage[]>() {
-            @Override
-            public void onChanged(Voyage[] voyages) {
-                voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
-            }
+        modelView.getVoyages().observe(this, voyages -> {
+            voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
         });
         modelView.chargerVoyages("/");
     }
@@ -124,7 +120,6 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         if (!nomLike.isEmpty()) {
             regex = Pattern.compile(nomLike, Pattern.CASE_INSENSITIVE);
         }
-
         // Budget
         try{
             int budgetNum = Integer.parseInt(budget);
@@ -173,6 +168,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
     // Envoyer vers l'activité de détail
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+
         Intent intent = new Intent(this, DetailActivity.class);
         Voyage voyageClique = (Voyage) parent.getAdapter().getItem(i);
         intent.putExtra("ID", voyageClique.getId());

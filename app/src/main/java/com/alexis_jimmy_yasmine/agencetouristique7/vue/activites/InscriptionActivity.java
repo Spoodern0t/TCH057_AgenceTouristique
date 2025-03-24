@@ -62,7 +62,7 @@ public class InscriptionActivity extends AppCompatActivity {
                 int age = Integer.parseInt(ageString);
                 String adresse = address + ", " + city + ", " + province;
 
-                Client client = new Client(0, lastName, firstName, email, password, age, phone, adresse);
+                Client client = new Client(null, lastName, firstName, email, password, age, phone, adresse);
 
                 modelView = new ViewModelProvider(this).get(ModelView.class);
 
