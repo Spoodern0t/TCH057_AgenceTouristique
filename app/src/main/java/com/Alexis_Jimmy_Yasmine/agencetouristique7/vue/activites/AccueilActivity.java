@@ -16,8 +16,6 @@ import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.VoyagesAdaptateur;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class AccueilActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener, TextWatcher {
@@ -34,9 +32,9 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_accueil);
 
         // Composantes de la navbar
-        btnHome = (ImageButton) findViewById(R.id.buttonHome);
-        btnHistorique = (ImageButton) findViewById(R.id.buttonHistorique);
-        btnLogout = (ImageButton) findViewById(R.id.buttonLogout);
+        btnHome = findViewById(R.id.buttonHome);
+        btnHistorique = findViewById(R.id.buttonHistorique);
+        btnLogout = findViewById(R.id.buttonLogout);
 
         // ajouter un écouteur sur les boutons
         btnHome.setOnClickListener(this);
@@ -44,24 +42,22 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         btnLogout.setOnClickListener(this);
 
         // récupérer les composantes de la vue
-        searchEditText = (EditText) findViewById(R.id.searchEditText);
-        spinBudgetAccueil = (Spinner) findViewById(R.id.budgetSpinner);
-        spinTypeAccueil = (Spinner) findViewById(R.id.typeSpinner);
-        voyagesListView = (ListView) findViewById(R.id.voyagesListView);
+        searchEditText = findViewById(R.id.searchEditText);
+        spinBudgetAccueil = findViewById(R.id.budgetSpinner);
+        spinTypeAccueil = findViewById(R.id.typeSpinner);
+        voyagesListView = findViewById(R.id.voyagesListView);
 
         searchEditText.addTextChangedListener(this);
         spinBudgetAccueil.setOnItemSelectedListener(this);
         spinTypeAccueil.setOnItemSelectedListener(this);
+        voyagesListView.setOnItemClickListener(this);
 
         voyagesListView.setOnItemClickListener(this);
 
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(ModelView.class);
-        modelView.getVoyages().observe(this, new Observer<Voyage[]>() {
-            @Override
-            public void onChanged(Voyage[] voyages) {
-                voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
-            }
+        modelView.getVoyages().observe(this, voyages -> {
+            voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
         });
         modelView.chargerVoyages("/");
     }
@@ -127,6 +123,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
     // Envoyer vers l'activité de détail
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+
         Intent intent = new Intent(this, DetailActivity.class);
         Voyage voyageClique = (Voyage) parent.getAdapter().getItem(i);
         intent.putExtra("ID", voyageClique.getId());

@@ -14,7 +14,7 @@ import java.io.IOException;
 import okhttp3.*;
 
 public class ClientRepository {
-    private static String URL_POINT_ENTREE = "http://10.0.2.2:3000/clients";
+    final private static String URL_POINT_ENTREE = "http://10.0.2.2:3000/clients";
     private final OkHttpClient okHttpClient = new OkHttpClient();
     private final MutableLiveData<String> connexionLiveData = new MutableLiveData<>();
     private final MediaType JSON = MediaType.get("application/json; charset=utf-8");
@@ -25,34 +25,16 @@ public class ClientRepository {
     }
 
     // Ajouter un nouveau client à la base de données JSON
-    public void postNouveauClient(Client client) throws JSONException {
+    public void postNouveauClient(Client client) {
 
         // Envoyer la requete dans un sidethread
         (new Thread() {
             @Override
             public void run() {
 
-                // Initier la variable de stockage de l'ID
-                long newId = 0;
-
-                // Requete GET pour avoir la valeur du dernier ID utilisé
-                Request requete = new Request.Builder().url(URL_POINT_ENTREE + "-id").build();
-                try (Response reponse = okHttpClient.newCall(requete).execute()) {
-                    ResponseBody corpsReponse = reponse.body();
-                    if(corpsReponse != null) {
-                        // Incrémenter la valeur du dernier ID de client
-                        newId = new JSONObject(corpsReponse.string()).getLong("id") + 1;
-                    }
-
-                } catch (IOException | JSONException e) {
-                    throw new RuntimeException(e);
-                }
-
-
                 try {
                     // Construire le corps de la requete POST
                     JSONObject postObj = new JSONObject();
-                    postObj.put("id", newId);
                     postObj.put("nom", client.getNom());
                     postObj.put("prenom", client.getPrenom());
                     postObj.put("email", client.getEmail());
@@ -64,17 +46,7 @@ public class ClientRepository {
                     // Requete POST pour ajouter un nouveau client
                     RequestBody corpsPostRequete = RequestBody.create(postObj.toString(), JSON);
                     Request postRequete = new Request.Builder().url(URL_POINT_ENTREE).post(corpsPostRequete).build();
-                    Response putReponse = okHttpClient.newCall(postRequete).execute();
-                    putReponse.close();
-
-                    // Construire le corps de la requete POST
-                    JSONObject putObj = new JSONObject();
-                    putObj.put("id", newId);
-
-                    // Requete PUT pour modifier la valeur du dernier ID utilisé
-                    RequestBody corpsPutRequete = RequestBody.create(putObj.toString(), JSON);
-                    Request putRequete = new Request.Builder().url(URL_POINT_ENTREE + "-id").put(corpsPutRequete).build();
-                    Response postReponse =  okHttpClient.newCall(putRequete).execute();
+                    Response postReponse = okHttpClient.newCall(postRequete).execute();
                     postReponse.close();
 
                 } catch (IOException | JSONException e) {
