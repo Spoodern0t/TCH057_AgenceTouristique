@@ -25,11 +25,19 @@
     <string name="accueil">Accueil</string>
     <string name="recherche">Recherche</string>
     <string name="historique">Historique</string>
+    <string name="filtre">Filtre</string>
     <string name="compte">Compte</string>
     <string name="log_out">Déconnexion</string>
 
-    <string name="budget_filter">Filtrer par Budget</string>
-    <string name="type_filter">Filtrer par Type</string>
+    <string name="popup_type">Type:</string>
+    <string name="popup_budget">Budget:</string>
+    <string name="popup_pays">Pays:</string>
+    <string name="popup_date">Date:</string>
+
+    <string name="type_filter">Filtrer par type…</string>
+    <string name="budget_filter">Filtrer par budget…</string>
+    <string name="pays_filter">Filtrer par pays…</string>
+    <string name="date_filter">Filtrer par date…</string>
 
     <string name="image_du_voyage">Image du voyage</string>
     <string name="date_de_depart">Date de Départ :</string>
