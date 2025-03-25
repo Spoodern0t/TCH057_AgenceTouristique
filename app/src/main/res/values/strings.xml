@@ -31,12 +31,12 @@
 
     <string name="popup_type">Type:</string>
     <string name="popup_budget">Budget:</string>
-    <string name="popup_destination">Destination:</string>
+    <string name="popup_pays">Pays:</string>
     <string name="popup_date">Date:</string>
 
     <string name="type_filter">Filtrer par type…</string>
     <string name="budget_filter">Filtrer par budget…</string>
-    <string name="destination_filter">Filtrer par destination…</string>
+    <string name="pays_filter">Filtrer par pays…</string>
     <string name="date_filter">Filtrer par date…</string>
 
     <string name="image_du_voyage">Image du voyage</string>
