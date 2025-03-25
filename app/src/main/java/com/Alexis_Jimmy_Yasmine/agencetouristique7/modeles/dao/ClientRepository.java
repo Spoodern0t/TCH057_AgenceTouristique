@@ -50,6 +50,7 @@ public class ClientRepository {
                     }
 
                 } catch (IOException e) {
+                    // Erreur de connexion
                     inscriptionLiveData.postValue(404);
                 }
 
@@ -71,12 +72,15 @@ public class ClientRepository {
                         Response postReponse = okHttpClient.newCall(postRequete).execute();
                         postReponse.close();
 
+                        // Réussite
                         inscriptionLiveData.postValue(201);
 
                     } catch (IOException | JSONException e) {
+                        // Erreur de connexion
                         inscriptionLiveData.postValue(404);
                     }
                 } else {
+                    // Erreur d'email
                     inscriptionLiveData.postValue(401);
                 }
             }
@@ -102,55 +106,22 @@ public class ClientRepository {
 
                             Client[] client = mapper.readValue(corpsReponse.string(), Client[].class);
                             if (client[0].getMdp().equals(mdp)) {
+                                // Réussite
                                 connexionLiveData.postValue(201);
                             } else {
-
+                                // Erreur de mdp
                                 connexionLiveData.postValue(402);
                             }
 
                         } else {
-
+                            // Erreur d'email
                             connexionLiveData.postValue(401);
                         }
                     }
                 } catch (IOException e) {
-
+                    // Erreur de conenxion
                     inscriptionLiveData.postValue(404);
                 }
-
-                /*
-                // Requete GET pour récupérer la liste des clients
-                Request requete = new Request.Builder().url(URL_POINT_ENTREE).build();
-                try (Response reponse = okHttpClient.newCall(requete).execute()) {
-
-                    // Si aucune connexion match, ce boolean reste true
-                    boolean connexionFail = true;
-
-                    ResponseBody corpsReponse = reponse.body();
-                    if(corpsReponse != null) {
-
-                        // Enregistrer les informations dans une liste de client
-                        Client[] clients = mapper.readValue(corpsReponse.string(), Client[].class);
-                        for (Client client : clients) {
-                            if (client.getEmail().equals(email) && client.getMdp().equals(mdp)) {
-
-                                // Envoyer un message de connexion
-                                connexionLiveData.postValue(201);
-                                connexionFail = false;
-                                break;
-                            }
-                        }
-
-                        // Envoyer un message d'erreur car aucune connexion match
-                        if (connexionFail) {
-                            connexionLiveData.postValue(false);
-                        }
-                    }
-                } catch (IOException e) {
-                    connexionLiveData.postValue(404);
-                }
-
-                 */
             }
 
         }).start();

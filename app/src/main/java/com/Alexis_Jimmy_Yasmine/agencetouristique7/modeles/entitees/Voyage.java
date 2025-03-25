@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.util.List;
 
 // FIXME: Ajouter les trips
 //@JsonIgnoreProperties(value = {"trips"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonFormat(shape = JsonFormat.Shape.STRING)
-public class Voyage {
+public class Voyage implements Serializable {
     @JsonProperty("id")
     private int id;
 
@@ -43,7 +44,7 @@ public class Voyage {
 
     // La classe pour les trips
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Trip {
+    public static class Trip implements Serializable {
 
         @JsonProperty("date")
         private String date;

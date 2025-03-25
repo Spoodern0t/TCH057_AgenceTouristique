@@ -130,7 +130,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
 
         Intent intent = new Intent(this, DetailActivity.class);
         Voyage voyageClique = (Voyage) parent.getAdapter().getItem(i);
-        intent.putExtra("ID", voyageClique.getId());
+        intent.putExtra("VOYAGE", voyageClique);
         startActivity(intent);
     }
 
