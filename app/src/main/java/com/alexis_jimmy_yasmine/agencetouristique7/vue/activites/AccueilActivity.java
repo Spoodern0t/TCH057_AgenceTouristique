@@ -27,7 +27,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
     private EditText searchEditText;
     private Spinner spinBudgetAccueil, spinTypeAccueil;
     private ListView voyagesListView;
-    private ImageButton btnHome, btnHistorique, btnLogout;
+    private ImageButton btnHome, btnHistorique, btnLogout, btnFiltre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,13 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         btnHome = (ImageButton) findViewById(R.id.buttonHome);
         btnHistorique = (ImageButton) findViewById(R.id.buttonHistorique);
         btnLogout = (ImageButton) findViewById(R.id.buttonLogout);
+        btnFiltre = findViewById(R.id.buttonFiltre);
 
         // ajouter un écouteur sur les boutons
         btnHome.setOnClickListener(this);
         btnHistorique.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
+        btnFiltre.setOnClickListener(this);
 
         // récupérer les composantes de la vue
         searchEditText = (EditText) findViewById(R.id.searchEditText);
@@ -86,12 +88,11 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             Intent intent = new Intent(this, HistoriqueReservationsActivity.class);
             startActivity(intent);
 
-        } /* else if (id == R.id.buttonLogout) {
+        } else if (id == R.id.buttonLogout) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
-        } */ //temporary to test popup
-        else if (id == R.id.buttonLogout) {
+        } else if (id == R.id.buttonFiltre) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             View popupView = inflater.inflate(R.layout.popup_filtre, null);
             PopupWindow popup = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);

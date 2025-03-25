@@ -29,21 +29,43 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/searchEditText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/ou_voulez_vous_aller"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textColorHint="@color/colorSecondaire"
-        android:textColorLink="@color/colorPrimary"
-        android:textStyle="bold" />
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/ou_voulez_vous_aller"
+            android:layout_weight="2"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textColorHint="@color/colorSecondaire"
+            android:textColorLink="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/buttonFiltre"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingVertical="10dp"
+            android:contentDescription="@string/filtre"
+            android:src="@drawable/filter"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"/>
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -25,6 +25,7 @@
     <string name="accueil">Accueil</string>
     <string name="recherche">Recherche</string>
     <string name="historique">Historique</string>
+    <string name="filtre">Filtre</string>
     <string name="compte">Compte</string>
     <string name="log_out">Déconnexion</string>
 
