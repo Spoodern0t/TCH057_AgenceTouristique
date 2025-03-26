@@ -17,7 +17,7 @@ public class ModelView extends ViewModel {
     private final VoyageRepository voyageRepository;
     private final LiveData<Voyage[]> voyages;
     private final ClientRepository clientRepository;
-    private final LiveData<String> connexion;
+    private final LiveData<Integer> connexion;
     private final LiveData<String> reservationResult;
 
     public ModelView() {
@@ -40,12 +40,12 @@ public class ModelView extends ViewModel {
         voyageRepository.chargerVoyages(url, budgetRange, regex);
     }
 
-    public LiveData<String> getConnexion() {
+    public LiveData<Integer> getConnexion() {
         return connexion;
     }
 
     public void postConnexion(String email, String mdp) throws JSONException {
-        clientRepository.connexion(email, mdp);
+        clientRepository.getConnexion(email, mdp);
     }
 
     public void postClient(Client client) throws JSONException {
