@@ -35,12 +35,25 @@ public class MainActivity extends AppCompatActivity {
 
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(ModelView.class);
-        modelView.getConnexion().observe(this, message -> {
-            if (message.equals("Connexion en cours")) {
-                Intent intent = new Intent(this, AccueilActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        modelView.getConnexion().observe(this, result -> {
+            switch (result) {
+                case 201: {
+                    Intent intent = new Intent(this, AccueilActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+                case 401: {
+                    Toast.makeText(this, "L'email est incorrect !", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case 402: {
+                    Toast.makeText(this, "Le mot de passe est incorrect !", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case 404: {
+                    Toast.makeText(this, "Une erreur de connexion est subvenue !", Toast.LENGTH_SHORT).show();
+                    break;
+                }
             }
         });
 
