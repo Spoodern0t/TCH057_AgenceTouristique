@@ -21,7 +21,6 @@ public class ClientRepository {
     private final MutableLiveData<Integer> connexionLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> inscriptionLiveData = new MutableLiveData<>();
     private final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    private final ObjectMapper mapper = new ObjectMapper();
 
     public LiveData<Integer> getConnexion() {
         return connexionLiveData;
@@ -102,21 +101,21 @@ public class ClientRepository {
 
                     ResponseBody corpsReponse = reponse.body();
                     if (corpsReponse != null) {
-                        if (!corpsReponse.string().equals("[]")) {
 
-                            Client[] client = mapper.readValue(corpsReponse.string(), Client[].class);
-                            if (client[0].getMdp().equals(mdp)) {
-                                // Réussite
-                                connexionLiveData.postValue(201);
-                            } else {
-                                // Erreur de mdp
-                                connexionLiveData.postValue(402);
-                            }
+                        ObjectMapper mapper = new ObjectMapper();
 
+                        Client[] client = mapper.readValue(corpsReponse.string(), Client[].class);
+                        if (client[0].getMdp().equals(mdp)) {
+                            // Réussite
+                            connexionLiveData.postValue(201);
                         } else {
-                            // Erreur d'email
-                            connexionLiveData.postValue(401);
+                            // Erreur de mdp
+                            connexionLiveData.postValue(402);
                         }
+
+                    } else {
+                        // Erreur d'email
+                        connexionLiveData.postValue(401);
                     }
                 } catch (IOException e) {
                     // Erreur de conenxion

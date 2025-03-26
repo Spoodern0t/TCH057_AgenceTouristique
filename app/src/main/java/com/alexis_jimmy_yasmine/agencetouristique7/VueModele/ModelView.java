@@ -17,7 +17,7 @@ public class ModelView extends ViewModel {
     private final VoyageRepository voyageRepository;
     private final LiveData<Voyage[]> voyages;
     private final ClientRepository clientRepository;
-    private final LiveData<Integer> connexion;
+    private final LiveData<Integer> connexion, inscription;
     private final LiveData<String> reservationResult;
 
     public ModelView() {
@@ -26,6 +26,7 @@ public class ModelView extends ViewModel {
         clientRepository = new ClientRepository();
         connexion = clientRepository.getConnexion();
         reservationResult = voyageRepository.getReservationResultLiveData();
+        inscription = clientRepository.getInscription();
     }
 
     public LiveData<Voyage[]> getVoyages() {
@@ -46,6 +47,10 @@ public class ModelView extends ViewModel {
 
     public void postConnexion(String email, String mdp) throws JSONException {
         clientRepository.getConnexion(email, mdp);
+    }
+
+    public LiveData<Integer> getInscription() {
+        return inscription;
     }
 
     public void postClient(Client client) throws JSONException {
