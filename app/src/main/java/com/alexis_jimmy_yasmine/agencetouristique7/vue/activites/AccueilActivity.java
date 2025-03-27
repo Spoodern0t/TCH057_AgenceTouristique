@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,11 +23,12 @@ import java.util.regex.Pattern;
 public class AccueilActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener, TextWatcher {
 
     private ModelView modelView;
-    private EditText searchEditText, popupTypeEditText, popupBudgetEditText, popupPaysEditText, popupDateEditText;
+    private EditText searchEditText;
+    private Spinner spinBudgetAccueil, spinTypeAccueil;
     private ListView voyagesListView;
-    private ImageButton btnHome, btnHistorique, btnLogout, btnFiltre;
+    private ImageButton btnHome, btnHistorique, btnLogout, btnFilter;
+    private PopupWindow popupWindow;
 
-    private PopupWindow popup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,33 +39,25 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         btnHome = (ImageButton) findViewById(R.id.buttonHome);
         btnHistorique = (ImageButton) findViewById(R.id.buttonHistorique);
         btnLogout = (ImageButton) findViewById(R.id.buttonLogout);
-        btnFiltre = findViewById(R.id.buttonFiltre);
+        btnFilter = (ImageButton) findViewById(R.id.buttonFilter);
 
         // ajouter un écouteur sur les boutons
         btnHome.setOnClickListener(this);
         btnHistorique.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
-        btnFiltre.setOnClickListener(this);
+        btnFilter.setOnClickListener(this);
 
         // récupérer les composantes de la vue
         searchEditText = (EditText) findViewById(R.id.searchEditText);
+        spinBudgetAccueil = (Spinner) findViewById(R.id.budgetSpinner);
+        spinTypeAccueil = (Spinner) findViewById(R.id.typeSpinner);
         voyagesListView = (ListView) findViewById(R.id.voyagesListView);
 
         searchEditText.addTextChangedListener(this);
+        spinBudgetAccueil.setOnItemSelectedListener(this);
+        spinTypeAccueil.setOnItemSelectedListener(this);
 
         voyagesListView.setOnItemClickListener(this);
-
-        //obtenir les éléments du popup de filtrage
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_filtre, null);
-        popup = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-        popupTypeEditText = popupView.findViewById(R.id.popupTypeEditText);
-        popupBudgetEditText = popupView.findViewById(R.id.popupBudgetEditText);
-        popupPaysEditText = popupView.findViewById(R.id.popupPaysEditText);
-        popupDateEditText = popupView.findViewById(R.id.popupDateEditText);
-
-        popup.setOnDismissListener(this::filtrerVoyages);
 
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(ModelView.class);
@@ -101,20 +93,105 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.buttonFiltre) {
-            popup.showAtLocation(view, Gravity.CENTER, 0, 0);
+        }  else if (id == R.id.buttonFilter) {
+            afficherPopupFiltre(view);
+
+        }
+    }
+
+    private void afficherPopupFiltre(View view) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_filtre, null);
+
+        popupWindow = new PopupWindow(
+                popupView,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        popupWindow.setFocusable(true);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        Spinner popupTypeSpinner = popupView.findViewById(R.id.popupTypeSpinner);
+        Spinner popupBudgetSpinner = popupView.findViewById(R.id.popupBudgetSpinner);
+        Spinner popupDestinationSpinner = popupView.findViewById(R.id.popupDestinationSpinner);
+        Spinner popupDateSpinner = popupView.findViewById(R.id.popupDateSpinner);
+        Button popupFilterButton = popupView.findViewById(R.id.popupFilterButton);
+
+        popupFilterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appliquerPopupFiltres();
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+
+    // Appliquer les filtres depuis le popup
+    private void appliquerPopupFiltres() {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            View popupView = popupWindow.getContentView();
+
+            Spinner popupTypeSpinner = popupView.findViewById(R.id.popupTypeSpinner);
+            Spinner popupBudgetSpinner = popupView.findViewById(R.id.popupBudgetSpinner);
+            Spinner popupDestinationSpinner = popupView.findViewById(R.id.popupDestinationSpinner);
+            Spinner popupDateSpinner = popupView.findViewById(R.id.popupDateSpinner);
+
+
+            String filtreType = popupTypeSpinner.getSelectedItem().toString();
+            String filtreBudget = popupBudgetSpinner.getSelectedItem().toString();
+            String filtreDestination = popupDestinationSpinner.getSelectedItem().toString();
+            String filtreDate = popupDateSpinner.getSelectedItem().toString();
+
+            String url = "/?";
+            int[] rangeeBudget = obtenirRangeeBudgetDepuisTexte(filtreBudget);
+            Pattern regex = null;
+            String nomRecherche = searchEditText.getText().toString();
+            if (!nomRecherche.isEmpty()) {
+                regex = Pattern.compile(nomRecherche, Pattern.CASE_INSENSITIVE);
+            }
+
+
+            if (!filtreType.equalsIgnoreCase("Tous les types")) {
+                url += "type_de_voyage=" + filtreType + "&";
+            }
+            if (!filtreBudget.equalsIgnoreCase("Tous les budgets")) {
+                switch (filtreBudget) {
+                    case "Moins de 300$": rangeeBudget = new int[]{0, 300}; break;
+                    case "300$ - 600$": rangeeBudget = new int[]{300, 600}; break;
+                    case "Plus de 600$": rangeeBudget = new int[]{600, 2147483647}; break;
+                }
+            }
+            if (!filtreDestination.equalsIgnoreCase("Toutes les destinations")) {
+                url += "destination=" + filtreDestination + "&";
+            }
+
+            if (url.endsWith("&") && url.length() > 2) {
+                url = url.substring(0, url.length() - 1);
+            } else if (url.equals("/?")) {
+                url = "/";
+            }
+
+            modelView.chargerVoyages(url, rangeeBudget, regex);
+        }
+    }
+
+    private int[] obtenirRangeeBudgetDepuisTexte(String texteBudget) {
+        switch (texteBudget) {
+            case "Moins de 300$": return new int[]{0, 300};
+            case "300$ - 600$": return new int[]{300, 600};
+            case "Plus de 600$": return new int[]{600, Integer.MAX_VALUE};
+            default: return null;
         }
     }
 
     // Gestion du filtre
     public void filtrerVoyages() {
-
         // contruit la requete GET
         String nomLike = searchEditText.getText().toString();
-        String budget = popupBudgetEditText.getText().toString();
-        String type = popupTypeEditText.getText().toString();
-        String pays = popupPaysEditText.getText().toString();
-        String date = popupDateEditText.getText().toString();
+        String budget = spinBudgetAccueil.getSelectedItem().toString();
+        String type = spinTypeAccueil.getSelectedItem().toString();
 
         String url = "/?";
         int[] budgetRange = null;
@@ -124,26 +201,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         if (!nomLike.isEmpty()) {
             regex = Pattern.compile(nomLike, Pattern.CASE_INSENSITIVE);
         }
-
         // Budget
-        try{
-            int budgetNum = Integer.parseInt(budget);
-            if (budgetNum > 600){
-                budgetRange = new int[]{600, Integer.MAX_VALUE};
-            } else if (budgetNum > 300){
-                budgetRange = new int[]{300, 600};
-            } else if (budgetNum >= 0){
-                budgetRange = new int[]{0, 300};
-            } else {
-                throw new NumberFormatException("Le budget doit être positif!");
-            }
-
-        } catch (NumberFormatException e){
-            budgetRange = new int[]{0, Integer.MAX_VALUE};
-        }
-
-        /*
-        //TODO: revenir à cette logique commentée quand on implémentera le slider
         if (!budget.equalsIgnoreCase("Tous les budgets")) {
             switch (budget) {
                 case "Moins de 300$": budgetRange = new int[]{0, 300}; break;
@@ -151,23 +209,13 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
                 case "Plus de 600$": budgetRange = new int[]{600, 2147483647}; break;
             }
         }
-        */
-
         // Type
-        if (!type.isBlank()) {
+        if (!type.equalsIgnoreCase("Tous les types")) {
             url += "type_de_voyage=" + type + "&";
         }
         url = url.substring(0, url.length() - 1);
 
-        //Pays
-        //TODO: implémenter filtrage par pays
-
-        //Date
-        //TODO: implémenter filtrage par date
-
         modelView.chargerVoyages(url, budgetRange, regex);
-
-
     }
 
     // Envoyer vers l'activité de détail

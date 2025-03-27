@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-// FIXME: Ajouter les trips
-//@JsonIgnoreProperties(value = {"trips"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public class Voyage {
@@ -29,6 +27,9 @@ public class Voyage {
     @JsonProperty("image_url")
     private String imageUrl;
 
+    @JsonProperty("image_urls")
+    private List<String> imageUrls;
+
     @JsonProperty("duree_jours")
     private int dureeJours;
 
@@ -41,10 +42,9 @@ public class Voyage {
     @JsonProperty("activites_incluses")
     private String activitesIncluses;
 
-    // La classe pour les trips
+    // Inner class Trip (no changes needed)
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Trip {
-
         @JsonProperty("date")
         private String date;
 
@@ -68,22 +68,23 @@ public class Voyage {
         }
     }
 
-
     public Voyage() {
     }
 
-    public Voyage(int id, String nomVoyage, String description, int prix, String destination, String imageUrl, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
+    public Voyage(int id, String nomVoyage, String description, int prix, String destination, String imageUrl, List<String> imageUrls, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
         this.id = id;
         this.nomVoyage = nomVoyage;
         this.description = description;
         this.prix = prix;
         this.destination = destination;
         this.imageUrl = imageUrl;
+        this.imageUrls = imageUrls;
         this.dureeJours = dureeJours;
         this.trips = trips;
         this.typeDeVoyage = typeDeVoyage;
         this.activitesIncluses = activitesIncluses;
     }
+
 
     public int getId() {
         return id;
@@ -97,10 +98,6 @@ public class Voyage {
         return prix;
     }
 
-    public String getStrPrix() {
-        return "Prix par personne : " + prix + " $";
-    }
-
     public void setPrix(double prix) {
         this.prix = prix;
     }
@@ -108,11 +105,6 @@ public class Voyage {
     public int getDureeJours() {
         return dureeJours;
     }
-
-    public String getStrDuree() {
-        return "Durée : " + dureeJours + " jours";
-    }
-
     public void setDureeJours(int dureeJours) {
         this.dureeJours = dureeJours;
     }
@@ -134,7 +126,7 @@ public class Voyage {
     }
 
     public String getDestination() {
-        return "Destination : " + destination;
+        return destination;
     }
 
     public void setDestination(String destination) {
@@ -149,6 +141,14 @@ public class Voyage {
         this.imageUrl = imageUrl;
     }
 
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
     public String getTypeDeVoyage() {
         return typeDeVoyage;
     }
@@ -158,9 +158,8 @@ public class Voyage {
     }
 
     public String getActivitesIncluses() {
-        return "Activités incluses : " + activitesIncluses;
+        return activitesIncluses;
     }
-
     public void setActivitesIncluses(String activitesIncluses) {
         this.activitesIncluses = activitesIncluses;
     }

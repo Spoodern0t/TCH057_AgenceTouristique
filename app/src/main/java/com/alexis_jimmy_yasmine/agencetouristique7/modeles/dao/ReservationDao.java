@@ -21,4 +21,8 @@ public class ReservationDao {
     public long ajouterReservation(Reservation reservation) {
         return dbHelper.ajouterReservation(reservation);
     }
+
+    public int supprimerReservation(int reservationId) {
+        return dbHelper.supprimerReservation(reservationId);
+    }
 }

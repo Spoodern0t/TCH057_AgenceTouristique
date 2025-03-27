@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private Button buttonSignIn;
-    private Button buttonCreateAccount;
+    private Button buttonCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonSignIn = findViewById(R.id.buttonSignIn);
-        buttonCreateAccount = findViewById(R.id.buttonCreateAccount);
+        buttonCreate = findViewById(R.id.buttonCreateAccount);
 
         buttonSignIn.setOnClickListener(v -> {
             String email = editTextEmail.getText().toString();
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonCreateAccount.setOnClickListener(v -> {
+        buttonCreate.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, InscriptionActivity.class);
             startActivity(intent);
         });
