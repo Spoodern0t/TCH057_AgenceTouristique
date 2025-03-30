@@ -3,17 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#E72C3834"
+    android:background="@drawable/white_rounded_background"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:layout_marginBottom="8dp">
 
     <ImageView
         android:id="@+id/lvVoyageImage"
-        android:layout_width="150sp"
+        android:layout_width="150dp"
         android:layout_height="120dp"
         android:contentDescription="@string/image_de_la_destination"
-        app:srcCompat="@drawable/mtl"
-        android:scaleType="fitCenter"/>
+        app:srcCompat="@drawable/logo"
+        android:scaleType="centerCrop"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,8 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textColor="@color/white"
-            android:textColorHint="@color/colorSecondaire"
+            android:textColor="@color/black_text"
+            android:textColorHint="#858585"
             android:textColorLink="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -37,8 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textColor="@color/white"
-            android:textColorHint="@color/colorSecondaire"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="#858585"
             android:textColorLink="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -50,10 +51,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|center_vertical"
-            android:textColor="@color/white"
-            android:textColorHint="@color/colorSecondaire"
+            android:textColor="@color/black_text"
+            android:textColorHint="#858585"
             android:textColorLink="@color/colorPrimary"
             android:textSize="16sp"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>

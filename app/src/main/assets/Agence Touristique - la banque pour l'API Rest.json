@@ -1,118 +1,169 @@
 {
     "voyages": [
         {
-            "id": 1,
-            "nom_voyage": "Exploration de Montréal",
+            "activites_incluses": "Visite du Vieux-Montréal, Dégustation de poutine, Tour du Mont-Royal",
             "description": "Découvrez la culture vibrante de Montréal.",
-            "prix": 150,
             "destination": "Montréal, Québec",
-            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Mtl_from_mont_royal_%28cropped%29.jpg/288px-Mtl_from_mont_royal_%28cropped%29.jpg",
             "duree_jours": 3,
+            "id": "1",
+            "image_url": null,
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Mtl_from_mont_royal_%28cropped%29.jpg/288px-Mtl_from_mont_royal_%28cropped%29.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Skyline_of_Montreal_2.jpg/640px-Skyline_of_Montreal_2.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Montreal_night_view.jpg/640px-Montreal_night_view.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Bas%C3%ADlica_de_Notre-Dame%2C_Montreal%2C_Canad%C3%A1%2C_2017-08-11%2C_DD_20-22_HDR.jpg/640px-Bas%C3%ADlica_de_Notre-Dame%2C_Montreal%2C_Canad%C3%A1%2C_2017-08-11%2C_DD_20-22_HDR.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Montreal_-_Olympic_Park_panorama_-_Cropped_version.jpg/640px-Montreal_-_Olympic_Park_panorama_-_Cropped_version.jpg"
+            ],
+            "nom_voyage": "Exploration de Montréal",
+            "prix": 150,
             "trips": [
                 {
+                    "strNbPlacesDisponibles": "Places disponibles : 20",
                     "date": "2025-04-10",
                     "nb_places_disponibles": 20
                 },
                 {
+                    "strNbPlacesDisponibles": "Places disponibles : 20",
                     "date": "2025-05-10",
                     "nb_places_disponibles": 20
                 }
             ],
-            "type_de_voyage": "Culturel",
-            "activites_incluses": "Visite du Vieux-Montréal, Dégustation de poutine, Tour du Mont-Royal"
+            "type_de_voyage": "Culturel"
         },
         {
-            "id": 2,
-            "nom_voyage": "Découverte de Québec",
+            "activites_incluses": "Visite du Château Frontenac, Balade en calèche, Dégustation de spécialités locales",
             "description": "Visitez la vieille capitale avec son charme historique.",
-            "prix": 250,
             "destination": "Québec, Québec",
-            "image_url": "https://www.quebec-cite.com/sites/otq/files/styles/gallery_desktop/public/media/image/VQ_automne.jpg?itok=l6PDlEUH",
             "duree_jours": 2,
+            "id": "2",
+            "image_urls": [
+                "https://www.quebec-cite.com/sites/otq/files/styles/gallery_desktop/public/media/image/VQ_automne.jpg?itok=l6PDlEUH",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Ch%C3%A2teau_Frontenac_city_at_night.jpg/1920px-Ch%C3%A2teau_Frontenac_city_at_night.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Parc_national_de_la_Jacques-Cartier%2C_Quebec%2C_Canada_22.jpg/640px-Parc_national_de_la_Jacques-Cartier%2C_Quebec%2C_Canada_22.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Quebec_city_in_autumn_02.jpg/640px-Quebec_city_in_autumn_02.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Fontaine_de_Tourny%2C_Centre-Ville_de_Qu%C3%A9bec_alt.jpg/640px-Fontaine_de_Tourny%2C_Centre-Ville_de_Qu%C3%A9bec_alt.jpg"
+            ],
+            "nom_voyage": "Découverte de Québec",
+            "prix": 250,
             "trips": [
                 {
+                    "strNbPlacesDisponibles": "Places disponibles : 8",
                     "date": "2025-05-10",
                     "nb_places_disponibles": 8
                 }
             ],
-            "type_de_voyage": "Culturel",
-            "activites_incluses": "Visite du Château Frontenac, Balade en calèche, Dégustation de spécialités locales"
+            "type_de_voyage": "Culturel"
         },
         {
-            "id": 3,
-            "nom_voyage": "Aventure en Gaspésie",
+
+            "activites_incluses": "Randonnée au Parc Forillon, Observation de la faune, Kayak en mer",
             "description": "Randonnée et découverte des paysages époustouflants.",
-            "prix": 500,
             "destination": "Gaspésie, Québec",
-            "image_url": "https://images.radio-canada.ca/w_635,h_357/v1/ici-tele/16x9/tourisme-contre-nature-doc-humanite.jpg",
             "duree_jours": 5,
+            "id": "3",
+            "image_urls": [
+                "https://images.radio-canada.ca/w_635,h_357/v1/ici-tele/16x9/tourisme-contre-nature-doc-humanite.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Gasp%C3%A9_taiga.jpg/640px-Gasp%C3%A9_taiga.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Massif_des_McGerrigle_from_Mont_Olivine_PN_de_la_Gaspesie_1.jpg/640px-Massif_des_McGerrigle_from_Mont_Olivine_PN_de_la_Gaspesie_1.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Coucher_de_soleil_Gasp%C3%A9sie_Qu%C3%A9bec.jpg/640px-Coucher_de_soleil_Gasp%C3%A9sie_Qu%C3%A9bec.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Sunset_Matane_0324_%2835408844762%29.jpg/640px-Sunset_Matane_0324_%2835408844762%29.jpg"
+            ],
+            "nom_voyage": "Aventure en Gaspésie",
+            "prix": 500,
             "trips": [
                 {
+                    "strNbPlacesDisponibles": "Places disponibles : 12",
                     "date": "2025-07-10",
                     "nb_places_disponibles": 12
                 }
             ],
-            "type_de_voyage": "Aventure",
-            "activites_incluses": "Randonnée au Parc Forillon, Observation de la faune, Kayak en mer"
+            "type_de_voyage": "Aventure"
         },
         {
-            "id": 4,
-            "nom_voyage": "Séjour détente aux Laurentides",
+            "activites_incluses": "Spa et massages, Randonnée en forêt, Yoga et méditation",
             "description": "Relaxation et nature dans les montagnes.",
-            "prix": 400,
             "destination": "Laurentides, Québec",
-            "image_url": "https://www.quebecvacances.com/images/photos/photos_320_240/strom_spa_nordique_saint_sauveur_1_h.jpg",
             "duree_jours": 4,
+            "id": "4",
+            "image_urls": [
+                "https://www.quebecvacances.com/images/photos/photos_320_240/strom_spa_nordique_saint_sauveur_1_h.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Automne_Laurentides_1959.jpg/640px-Automne_Laurentides_1959.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Homer_Watson_-_Down_in_the_Laurentides_%281882%29.jpg/640px-Homer_Watson_-_Down_in_the_Laurentides_%281882%29.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Paysage_hivernal%2C_Mont_Tremblant%2C_Laurentides_Qu%C3%A9bec.jpg/640px-Paysage_hivernal%2C_Mont_Tremblant%2C_Laurentides_Qu%C3%A9bec.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Bouquetins_%40_Col_du_Lac_Cornu_04.jpg/640px-Bouquetins_%40_Col_du_Lac_Cornu_04.jpg"
+            ],
+            "nom_voyage": "Séjour détente aux Laurentides",
+            "prix": 400,
             "trips": [
                 {
+                    "strNbPlacesDisponibles": "Places disponibles : 7",
                     "date": "2025-03-10",
                     "nb_places_disponibles": 7
                 }
             ],
-            "type_de_voyage": "Bien-être",
-            "activites_incluses": "Spa et massages, Randonnée en forêt, Yoga et méditation"
+            "type_de_voyage": "Bien-être"
         },
         {
-            "id": 5,
-            "nom_voyage": "Aventure dans les Rocheuses",
+            "activites_incluses": "Randonnée au lac Louise, Escalade, Observation des glaciers",
             "description": "Expédition immersive dans les Rocheuses canadiennes.",
-            "prix": 800,
             "destination": "Banff, Alberta",
-            "image_url": "https://www.guidesulysse.com/images/destinations/iStock-471926619.jpg",
             "duree_jours": 7,
+            "id": "5",
+            "image_urls": [
+                "https://www.guidesulysse.com/images/destinations/iStock-471926619.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Peyto_Lake-Banff_NP-Canada.jpg/640px-Peyto_Lake-Banff_NP-Canada.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Banff_from_Sulphur_Mountain_2020.jpg/640px-Banff_from_Sulphur_Mountain_2020.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Aurora_at_Banff_Canada.jpg/640px-Aurora_at_Banff_Canada.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Adirondack_chair%2C_Banff%2C_Alberta%2C_Canada.jpg/640px-Adirondack_chair%2C_Banff%2C_Alberta%2C_Canada.jpg"
+            ],
+            "nom_voyage": "Aventure dans les Rocheuses",
+            "prix": 800,
             "trips": [
                 {
+                    "strNbPlacesDisponibles": "Places disponibles : 10",
                     "date": "2025-09-20",
                     "nb_places_disponibles": 10
                 }
             ],
-            "type_de_voyage": "Aventure",
-            "activites_incluses": "Randonnée au lac Louise, Escalade, Observation des glaciers"
+            "type_de_voyage": "Aventure"
         },
         {
-            "id": 6,
-            "nom_voyage": "Exploration de Vancouver",
+            "activites_incluses": "Balade à Stanley Park, Visite de Granville Island, Dégustation de fruits de mer",
             "description": "Beauté naturelle et culture urbaine.",
-            "prix": 600,
             "destination": "Vancouver, Colombie-Britannique",
-            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Concord_Pacific_Master_Plan_Area.jpg/1200px-Concord_Pacific_Master_Plan_Area.jpg",
             "duree_jours": 3,
+            "id": "6",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Concord_Pacific_Master_Plan_Area.jpg/1200px-Concord_Pacific_Master_Plan_Area.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/2/27/Vancouver_dusk_pano.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Jack_Poole_Plaza_on_Canada_Day_2010.jpg/640px-Jack_Poole_Plaza_on_Canada_Day_2010.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Butchart-gardens-003.jpg/640px-Butchart-gardens-003.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Lions-Gate-Bridge_0710B.jpg/640px-Lions-Gate-Bridge_0710B.jpg"
+            ],
+            "nom_voyage": "Exploration de Vancouver",
+            "prix": 600,
             "trips": [
                 {
+                    "strNbPlacesDisponibles": "Places disponibles : 8",
                     "date": "2025-08-12",
                     "nb_places_disponibles": 8
                 }
             ],
-            "type_de_voyage": "Culturel",
-            "activites_incluses": "Balade à Stanley Park, Visite de Granville Island, Dégustation de fruits de mer"
+            "type_de_voyage": "Culturel"
         },
         {
-            "id": 7,
+            "id": "7",
             "nom_voyage": "Chutes du Niagara",
             "description": "Admirez l'une des merveilles naturelles du monde.",
             "prix": 300,
             "destination": "Niagara Falls, Ontario",
-            "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/3Falls_Niagara.jpg",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/a/ab/3Falls_Niagara.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Niagara_watervallen_canada.jpg/800px-Niagara_watervallen_canada.jpg?20040910003517",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Niagara_falls_-_Winter_-_Prospect_point_view_at_night.jpg/640px-Niagara_falls_-_Winter_-_Prospect_point_view_at_night.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Rainbow_Above_Horseshoe_Falls_%28Niagara_Falls%29.jpg/640px-Rainbow_Above_Horseshoe_Falls_%28Niagara_Falls%29.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Niagara_Falls%2C_Canada.jpg/640px-Niagara_Falls%2C_Canada.jpg"
+            ],
             "duree_jours": 2,
             "trips": [
                 {
@@ -124,12 +175,18 @@
             "activites_incluses": "Croisière au pied des chutes, Balade sur Clifton Hill, Visite des vignobles"
         },
         {
-            "id": 8,
+            "id": "8",
             "nom_voyage": "Séjour à Ottawa",
             "description": "Découvrez la capitale canadienne et ses institutions.",
             "prix": 200,
             "destination": "Ottawa, Ontario",
-            "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/22/Parliament-Ottawa.jpg",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/2/22/Parliament-Ottawa.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Ottawa_overlooking_Gatineau.jpg/640px-Ottawa_overlooking_Gatineau.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Ottawa%2C_Ontario_%2829442332893%29.jpg/640px-Ottawa%2C_Ontario_%2829442332893%29.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Ottawa_Sign.jpg/640px-Ottawa_Sign.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Monument_Champlain%2C_Ottawa%2C_Ontario_%2830035250356%29.jpg/640px-Monument_Champlain%2C_Ottawa%2C_Ontario_%2830035250356%29.jpg"
+            ],
             "duree_jours": 2,
             "trips": [
                 {
@@ -139,11 +196,338 @@
             ],
             "type_de_voyage": "Culturel",
             "activites_incluses": "Visite du Parlement, Promenade le long du canal Rideau, Musée des civilisations"
+        },
+        {
+            "id": "9",
+            "nom_voyage": "Escapade Romantique à Paris",
+            "description": "Découvrez le charme et le romantisme de la Ville Lumière.",
+            "destination": "Paris, France",
+            "duree_jours": 4,
+            "prix": 750,
+            "type_de_voyage": "Romantique",
+            "activites_incluses": "Croisière sur la Seine, Visite de la Tour Eiffel, Promenade à Montmartre",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/800px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Porte_Saint-Martin%2C_Paris_8_June_2014.jpg/640px-Porte_Saint-Martin%2C_Paris_8_June_2014.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Paris_-_Place_de_la_Concorde_-_3119.jpg/640px-Paris_-_Place_de_la_Concorde_-_3119.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Paris_Notre-Dame_East_View_02.JPG/640px-Paris_Notre-Dame_East_View_02.JPG",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/February_2008_Paris_3.jpg/640px-February_2008_Paris_3.jpg"
+            ],
+            "trips": [
+                {
+                    "date": "2025-06-15",
+                    "nb_places_disponibles": 15
+                },
+                {
+                    "date": "2025-07-22",
+                    "nb_places_disponibles": 10
+                }
+            ]
+        },
+        {
+            "activites_incluses": "Activités incluses : Visite du Colisée, du Forum Romain, et de la Cité du Vatican",
+            "description": "Explorez l'histoire antique et la spiritualité au cœur de l'Italie.",
+            "destination": "Rome, Italie",
+            "duree_jours": 5,
+            "id": "10",
+            "image_url": null,
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/2006_July_14_Rome_3.jpg/640px-2006_July_14_Rome_3.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Triumph_of_St._Ignatius_of_Loyola%2C_ceiling_fresco_by_Andrea_Pozzo.jpg/640px-Triumph_of_St._Ignatius_of_Loyola%2C_ceiling_fresco_by_Andrea_Pozzo.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Sant%27Angelo_bridge%2C_dusk%2C_Rome%2C_Italy.jpg/800px-Sant%27Angelo_bridge%2C_dusk%2C_Rome%2C_Italy.jpg?20140125192507",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Castel_Sant%27Angelo_at_dusk%2C_Rome%2C_Italy.jpg/640px-Castel_Sant%27Angelo_at_dusk%2C_Rome%2C_Italy.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Courthouse_facade%2C_Rome%2C_Italy.jpg/640px-Courthouse_facade%2C_Rome%2C_Italy.jpg"
+            ],
+            "nom_voyage": "Merveilles de Rome et du Vatican",
+            "prix": 900,
+            "trips": [
+                {
+                    "strNbPlacesDisponibles": "Places disponibles : 7",
+                    "date": "2025-07-01",
+                    "nb_places_disponibles": 7
+                },
+                {
+                    "strNbPlacesDisponibles": "Places disponibles : 12",
+                    "date": "2025-08-10",
+                    "nb_places_disponibles": 12
+                }
+            ],
+            "type_de_voyage": "Culturel"
+        },
+        {
+            "id": "11",
+            "nom_voyage": "Saveurs et Traditions de Tokyo",
+            "description": "Plongez dans la modernité et la tradition de la capitale japonaise.",
+            "destination": "Tokyo, Japon",
+            "duree_jours": 6,
+            "prix": 1200,
+            "type_de_voyage": "Culturel",
+            "activites_incluses": "Visite du marché aux poissons de Tsukiji, Exploration de Shibuya, Cérémonie du thé traditionnelle",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Minato_City%2C_Tokyo%2C_Japan.jpg/640px-Minato_City%2C_Tokyo%2C_Japan.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Tokyo_Shibuya_Scramble_Crossing_2018-10-09.jpg/640px-Tokyo_Shibuya_Scramble_Crossing_2018-10-09.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/East_garden_Edo_Castle_Tokyo_by_Don_Ramey_Logan.jpg/640px-East_garden_Edo_Castle_Tokyo_by_Don_Ramey_Logan.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Tokyo_Railway_Station._%2844436526580%29.jpg/640px-Tokyo_Railway_Station._%2844436526580%29.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/National_Art_Center_Tokyo_2008.jpg/640px-National_Art_Center_Tokyo_2008.jpg"
+            ],
+            "trips": [
+                {
+                    "date": "2025-08-20",
+                    "nb_places_disponibles": 5
+                },
+                {
+                    "date": "2025-09-15",
+                    "nb_places_disponibles": 7
+                }
+            ]
+        },
+        {
+            "id": "12",
+            "nom_voyage": "Aventure et Nature en Islande",
+            "description": "Explorez les paysages volcaniques, les glaciers et les aurores boréales.",
+            "destination": "Reykjavik, Islande",
+            "duree_jours": 7,
+            "prix": 1500,
+            "type_de_voyage": "Aventure",
+            "activites_incluses": "Observation des aurores boréales, Baignade dans le Blue Lagoon, Excursion au Cercle d'Or",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/View_of_Reykjav%C3%ADk_from_Hallgr%C3%ADmskirkja%2C_20230507_1227_5715.jpg/640px-View_of_Reykjav%C3%ADk_from_Hallgr%C3%ADmskirkja%2C_20230507_1227_5715.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/039_Northern_lights_over_M%C3%BDvatn_%28Iceland%29_Photo_by_Giles_Laurent.jpg/640px-039_Northern_lights_over_M%C3%BDvatn_%28Iceland%29_Photo_by_Giles_Laurent.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/038_Svartifoss_waterfall_%28Iceland%29_Photo_by_Giles_Laurent.jpg/640px-038_Svartifoss_waterfall_%28Iceland%29_Photo_by_Giles_Laurent.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Br%C3%BAarhl%C3%B6%C3%B0%2C_Iceland%2C_20230501_1041_3844.jpg/640px-Br%C3%BAarhl%C3%B6%C3%B0%2C_Iceland%2C_20230501_1041_3844.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/2016-11-13_02_Kjeungskj%C3%A6r_Lighthouse%2C_S%C3%B8r-Tr%C3%B8ndelag%2C_Norway.jpg/640px-2016-11-13_02_Kjeungskj%C3%A6r_Lighthouse%2C_S%C3%B8r-Tr%C3%B8ndelag%2C_Norway.jpg"
+            ],
+            "trips": [
+                {
+                    "date": "2025-09-25",
+                    "nb_places_disponibles": 3
+                },
+                {
+                    "date": "2025-10-15",
+                    "nb_places_disponibles": 6
+                }
+            ]
+        },
+        {
+            "id": "13",
+            "nom_voyage": "Plages de Rêve à Bali",
+            "description": "Détendez-vous sur les plages paradisiaques et découvrez la culture balinaise.",
+            "destination": "Denpasar, Bali",
+            "duree_jours": 8,
+            "prix": 1100,
+            "type_de_voyage": "Bien-être",
+            "activites_incluses": "Cours de yoga au bord de la plage, Visite des rizières de Tegalalang, Détente à Seminyak",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Rice_terraces%2C_Rice_fields%2C_Tirta_Gangga%2C_Bali.jpg/640px-Rice_terraces%2C_Rice_fields%2C_Tirta_Gangga%2C_Bali.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Sunset%2C_Kuta%2C_Bali%2C_Indonesia%2C_20220825_1755_0879.jpg/640px-Sunset%2C_Kuta%2C_Bali%2C_Indonesia%2C_20220825_1755_0879.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Bali_panorama.jpg/640px-Bali_panorama.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/W_Hotel_Bali_pool_%287070540061%29.jpg/640px-W_Hotel_Bali_pool_%287070540061%29.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Chaise_lounges_on_the_beautiful_tropical_beach_with_white_sand%2C_Bali%2C_Indonesia.jpg/640px-Chaise_lounges_on_the_beautiful_tropical_beach_with_white_sand%2C_Bali%2C_Indonesia.jpg"
+            ],
+            "trips": [
+                {
+                    "date": "2025-10-20",
+                    "nb_places_disponibles": 10
+                },
+                {
+                    "date": "2025-11-12",
+                    "nb_places_disponibles": 14
+                }
+            ]
+        },
+        {
+            "id": "14",
+            "nom_voyage": "Safari Photo en Tanzanie",
+            "description": "Vivez une aventure inoubliable au cœur de la faune africaine.",
+            "destination": "Arusha, Tanzanie",
+            "duree_jours": 9,
+            "prix": 2000,
+            "type_de_voyage": "Aventure",
+            "activites_incluses": "Safari dans le Serengeti, Ascension du Kilimandjaro (optionnel), Visite d'un village Maasai",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Calauit_safari.jpg/640px-Calauit_safari.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Tanzanie.jpg/640px-Tanzanie.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Uluguru_Mountain_Ranges.jpg/640px-Uluguru_Mountain_Ranges.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Mount_Kilimanjaro_Dormant_Volcano_In_United_Republic_Of_Tanzania_kibo_Mawenzi_Shira_Highest_Peaks-33.jpg/640px-Mount_Kilimanjaro_Dormant_Volcano_In_United_Republic_Of_Tanzania_kibo_Mawenzi_Shira_Highest_Peaks-33.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Nature_of_Arusha_National_Park_%28102%29.jpg/640px-Nature_of_Arusha_National_Park_%28102%29.jpg"
+            ],
+            "trips": [
+                {
+                    "date": "2025-11-01",
+                    "nb_places_disponibles": 6
+                },
+                {
+                    "date": "2025-12-05",
+                    "nb_places_disponibles": 9
+                }
+            ]
+        },
+        {
+            "id": "15",
+            "nom_voyage": "Mystères et Temples d'Angkor",
+            "description": "Explorez les temples anciens et la riche histoire du Cambodge.",
+            "destination": "Siem Reap, Cambodge",
+            "duree_jours": 6,
+            "prix": 850,
+            "type_de_voyage": "Culturel",
+            "activites_incluses": "Visite d'Angkor Wat, Angkor Thom, et Ta Prohm, Découverte de la culture Khmer",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Tree_in_Siem_Reap%2C_Cambodia.jpg/640px-Tree_in_Siem_Reap%2C_Cambodia.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/20171129_Tonle_Sap_Lake_Cambodia_6200_DxO.jpg/640px-20171129_Tonle_Sap_Lake_Cambodia_6200_DxO.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Angkor_Wat%2C_Camboya%2C_2013-08-16%2C_DD_079.JPG/640px-Angkor_Wat%2C_Camboya%2C_2013-08-16%2C_DD_079.JPG",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/View_of_the_outskirts_of_Sihanoukville.jpg/640px-View_of_the_outskirts_of_Sihanoukville.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/2016_Kampot%2C_Zach%C3%B3d_s%C5%82o%C5%84ca_nad_rzek%C4%85_Praek_Tuek_Chhu_%2820%29.jpg/640px-2016_Kampot%2C_Zach%C3%B3d_s%C5%82o%C5%84ca_nad_rzek%C4%85_Praek_Tuek_Chhu_%2820%29.jpg"
+            ],
+            "trips": [
+                {
+                    "date": "2025-12-10",
+                    "nb_places_disponibles": 12
+                },
+                {
+                    "date": "2026-01-15",
+                    "nb_places_disponibles": 18
+                }
+            ]
+        },
+        {
+            "id": "16",
+            "nom_voyage": "Vignobles et Châteaux de Bordeaux",
+            "description": "Savourez les vins prestigieux et l'élégance de la région bordelaise.",
+            "destination": "Bordeaux, France",
+            "duree_jours": 5,
+            "prix": 1000,
+            "type_de_voyage": "Gastronomique",
+            "activites_incluses": "Dégustation de vins dans les grands châteaux, Visite de Saint-Émilion, Balade dans Bordeaux",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/138_-_Place_de_la_Bourse_et_le_miroir_d%27eau_-_Bordeaux.jpg/640px-138_-_Place_de_la_Bourse_et_le_miroir_d%27eau_-_Bordeaux.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Cuisine_Fran%C3%A7aise.jpg/640px-Cuisine_Fran%C3%A7aise.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Parc_floral_de_Bordeaux%2C_pavillon_de_Fukuoka_2.jpg/640px-Parc_floral_de_Bordeaux%2C_pavillon_de_Fukuoka_2.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Deuxieme_vue_du_port_de_Bordeaux_prise_du_ch%C3%A2teau_Trompette.jpg/640px-Deuxieme_vue_du_port_de_Bordeaux_prise_du_ch%C3%A2teau_Trompette.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/R%C3%89GAZ-BORDEAUX-BACALAN.jpg/640px-R%C3%89GAZ-BORDEAUX-BACALAN.jpg"
+            ],
+            "trips": [
+                {
+                    "date": "2026-01-20",
+                    "nb_places_disponibles": 9
+                },
+                {
+                    "date": "2026-02-14",
+                    "nb_places_disponibles": 11
+                }
+            ]
+        },
+        {
+            "id": "17",
+            "nom_voyage": "Rythmes et Couleurs de Rio",
+            "description": "Vibrez au son de la samba et découvrez les plages légendaires de Rio de Janeiro.",
+            "destination": "Rio de Janeiro, Brésil",
+            "duree_jours": 6,
+            "prix": 950,
+            "type_de_voyage": "Culturel",
+            "activites_incluses": "Visite du Christ Rédempteur, Plages de Copacabana et Ipanema, Carnaval (si période)",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Cidade_Maravilhosa.jpg/640px-Cidade_Maravilhosa.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Contrasts_of_Rio_de_Janeiro_-_Rocinha%2C_Ipanema%2C_and_Mountains_at_Sunrise.jpg/640px-Contrasts_of_Rio_de_Janeiro_-_Rocinha%2C_Ipanema%2C_and_Mountains_at_Sunrise.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/1_rocinha_night_2014_panorama.jpg/640px-1_rocinha_night_2014_panorama.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Rio_de_Janeiro%2C_Brazil_-08.jpg/640px-Rio_de_Janeiro%2C_Brazil_-08.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Boca_da_Ba%C3%ADa_de_Guanabara_e_orlas_artificiais_-_Parque_do_Flamengo%2C_Fortes_Hist%C3%B3ricos_de_Niter%C3%B3i%2C_Monumento_Natural_do_P%C3%A3o_de_A%C3%A7%C3%BAcar%2C_orla_mar%C3%ADtima_de_Copacabana_-_Rio_de_Janeiro_-_20240623064031.jpg/640px-thumbnail.jpg"
+            ],
+            "trips": [
+                {
+                    "date": "2026-02-25",
+                    "nb_places_disponibles": 14
+                },
+                {
+                    "date": "2026-03-15",
+                    "nb_places_disponibles": 20
+                }
+            ]
+        },
+        {
+            "id": "18",
+            "nom_voyage": "Trésors Cachés de Marrakech",
+            "description": "Perdez-vous dans les souks colorés et les palais enchanteurs de Marrakech.",
+            "destination": "Marrakech, Maroc",
+            "duree_jours": 5,
+            "prix": 700,
+            "type_de_voyage": "Culturel",
+            "activites_incluses": "Exploration de la médina, Visite du Jardin Majorelle, Nuit dans un riad traditionnel",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Menara_Garden%2CMorocco%2CMarrakech.jpg/640px-Menara_Garden%2CMorocco%2CMarrakech.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Maroc_Essaouira_Luc_Viatour_4.JPG/640px-Maroc_Essaouira_Luc_Viatour_4.JPG",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Maroc_voyageurs.jpg/640px-Maroc_voyageurs.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Morocco_-_Essaouira_Part_2_%2830870442013%29.jpg/640px-Morocco_-_Essaouira_Part_2_%2830870442013%29.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Port_traditionel_des_p%C3%AAcheurs_TIBOUDA_Nador_Maroc_-_Brahim_FARAJI.jpg/640px-Port_traditionel_des_p%C3%AAcheurs_TIBOUDA_Nador_Maroc_-_Brahim_FARAJI.jpg"
+            ],
+            "trips": [
+                {
+                    "date": "2026-03-20",
+                    "nb_places_disponibles": 7
+                },
+                {
+                    "date": "2026-04-10",
+                    "nb_places_disponibles": 11
+                }
+            ]
+        },
+        {
+            "id": "19",
+            "nom_voyage": "Îles Grecques et Mythes Antiques",
+            "description": "Naviguez entre les îles grecques et plongez dans la mythologie.",
+            "destination": "Athènes, Grèce",
+            "duree_jours": 8,
+            "prix": 1300,
+            "type_de_voyage": "Nature",
+            "activites_incluses": "Visite de l'Acropole, Croisière dans les Cyclades, Détente à Santorin",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Temple_of_Zeus_Olympian%2C_Athens%2C_Greece.jpg/640px-Temple_of_Zeus_Olympian%2C_Athens%2C_Greece.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Greece_Crete_Chania_FalasarnaBeach_Aerial_Summer_ISymeonidis-4-S.jpg/640px-Greece_Crete_Chania_FalasarnaBeach_Aerial_Summer_ISymeonidis-4-S.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Oia_-_Santorini_-_Greece_-_October_2022.jpg/640px-Oia_-_Santorini_-_Greece_-_October_2022.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Greece%2C_Zakynthos_island%2C_Zakynthos.jpg/640px-Greece%2C_Zakynthos_island%2C_Zakynthos.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Gialiskari_beach_-_Crete%2C_Greece_-_panoramio.jpg/640px-Gialiskari_beach_-_Crete%2C_Greece_-_panoramio.jpg"
+            ],
+            "trips": [
+                {
+                    "date": "2026-04-25",
+                    "nb_places_disponibles": 16
+                },
+                {
+                    "date": "2026-05-15",
+                    "nb_places_disponibles": 22
+                }
+            ]
+        },
+        {
+            "id": "20",
+            "nom_voyage": "Nature Sauvage de la Costa Rica",
+            "description": "Aventurez-vous dans les forêts tropicales et découvrez la biodiversité du Costa Rica.",
+            "destination": "San José, Costa Rica",
+            "duree_jours": 9,
+            "prix": 1600,
+            "type_de_voyage": "Aventure",
+            "activites_incluses": "Randonnée dans le parc national Manuel Antonio, Tyrolienne dans la canopée, Observation de la faune",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Iglesia_de_la_Merced%2C_San_Jos%C3%A9%2C_Costa_Rica.jpg/640px-Iglesia_de_la_Merced%2C_San_Jos%C3%A9%2C_Costa_Rica.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Sierpe_River%2C_Costa_Rica.jpg/640px-Sierpe_River%2C_Costa_Rica.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Camino_de_Costa_Rica_Volc%C3%A1n_Turrialba.jpg/640px-Camino_de_Costa_Rica_Volc%C3%A1n_Turrialba.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Costa_Rica_%2858445558%29.jpeg/640px-Costa_Rica_%2858445558%29.jpeg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Costa_Rica.png/640px-Costa_Rica.png"
+            ],
+            "trips": [
+                {
+                    "date": "2026-05-20",
+                    "nb_places_disponibles": 11
+                },
+                {
+                    "date": "2026-06-10",
+                    "nb_places_disponibles": 17
+                }
+            ]
         }
     ],
     "clients": [
         {
-            "id": 1,
+            "id": "1",
             "nom": "Lavoie",
             "prenom": "Sophie",
             "email": "sophie.lavoie@example.com",
@@ -153,7 +537,7 @@
             "adresse": "345 Rue Sherbrooke, Montréal, QC"
         },
         {
-            "id": 2,
+            "id": "2",
             "nom": "Tremblay",
             "prenom": "Marc",
             "email": "marc.tremblay@example.com",
@@ -163,7 +547,7 @@
             "adresse": "1200 Avenue Cartier, Québec, QC"
         },
         {
-            "id": 3,
+            "id": "3",
             "nom": "Gagnon",
             "prenom": "Émilie",
             "email": "emilie.gagnon@example.com",
@@ -173,7 +557,7 @@
             "adresse": "670 Boulevard Curé-Labelle, Laval, QC"
         },
         {
-            "id": 4,
+            "id": "4",
             "nom": "Roy",
             "prenom": "Jonathan",
             "email": "jonathan.roy@example.com",
@@ -183,7 +567,7 @@
             "adresse": "33 Rue Wellington, Ottawa, ON"
         },
         {
-            "id": 5,
+            "id": "5",
             "nom": "Bouchard",
             "prenom": "Camille",
             "email": "camille.bouchard@example.com",
@@ -193,7 +577,7 @@
             "adresse": "890 Rue St-Jean, Québec, QC"
         },
         {
-            "id": 6,
+            "id": "6",
             "nom": "Fortin",
             "prenom": "Alexandre",
             "email": "alexandre.fortin@example.com",
@@ -203,7 +587,7 @@
             "adresse": "100 Rue Ste-Catherine, Montréal, QC"
         },
         {
-            "id": 7,
+            "id": "7",
             "nom": "Lemieux",
             "prenom": "Julie",
             "email": "julie.lemieux@example.com",
@@ -213,7 +597,7 @@
             "adresse": "290 Boulevard des Laurentides, Gatineau, QC"
         },
         {
-            "id": 8,
+            "id": "8",
             "nom": "Côté",
             "prenom": "Maxime",
             "email": "maxime.cote@example.com",
@@ -223,7 +607,7 @@
             "adresse": "76 Chemin du Roy, Trois-Rivières, QC"
         },
         {
-            "id": 9,
+            "id": "9",
             "nom": "Morin",
             "prenom": "Caroline",
             "email": "caroline.morin@example.com",
@@ -233,7 +617,7 @@
             "adresse": "567 Avenue Laurier, Québec, QC"
         },
         {
-            "id": 10,
+            "id": "10",
             "nom": "Dubois",
             "prenom": "François",
             "email": "francois.dubois@example.com",
@@ -243,7 +627,7 @@
             "adresse": "1500 Boulevard René-Lévesque, Montréal, QC"
         },
         {
-            "id": 11,
+            "id": "11",
             "nom": "Al",
             "prenom": "Jim",
             "email": "a",

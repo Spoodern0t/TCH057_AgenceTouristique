@@ -49,4 +49,29 @@
     <string name="nb_places_souhaitees">Nombre de places souhaitées</string>
     <string name="image_de_la_destination">Image de la destination</string>
 
+
+    <string name="button_Home">btn_Home</string>
+    <string name="button_Historique">btn_Historique</string>
+    <string name="button_Logout">btn_Logout</string>
+
+    <string name="filtrer_voyages">Filtrer Voyages</string>
+    <string name="type_label">Type:</string>
+    <string name="budget_label">Budget:</string>
+    <string name="destination_label">Destination:</string>
+    <string name="date_label">Date:</string>
+    <string name="appliquer_filtres">Appliquer</string>
+    <string name="destination_detail">Destination :</string>
+    <string name="duree_detail">Durée :</string>
+    <string name="prix_detail">Prix par personne :</string>
+    <string name="profil">Profil</string>
+    <string name="filtrer">Filtrer</string>
+    <string name="historique_label">Historique</string>
+    <string name="recherche_label">Recherche</string>
+    <string name="accueil_label">Accueil</string>
+    <string name="profile_label">Profil</string>
+    <string name="annuler">Annuler</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="image_de_reservation">Image de réservation</string>
+    <string name="supprimer_la_r_servation">Supprimer la réservation</string>
+
 </resources>

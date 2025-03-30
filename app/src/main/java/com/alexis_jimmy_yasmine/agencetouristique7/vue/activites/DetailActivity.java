@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao.ReservationDao;
@@ -17,142 +15,166 @@ import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.TripsAdaptateur;
 import com.squareup.picasso.Picasso;
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private ModelView modelView;
-    private ImageView imageVoyage;
     private TextView tNom, tDescription, tDestination, tDuree, tPrix, tActivites, tPlacesDisponible;
-    Spinner spinDateDepart;
-    EditText editPlacesReservees;
-    Button btnReserver;
-    private ImageButton btnHome, btnHistorique, btnLogout;
+    private Spinner spinDateDepart;
+    private EditText editPlacesReservees;
+    private Button btnReserver;
+    private ImageButton btn_Home, btn_Historique, btn_Logout;
+    private LinearLayout imageGalleryLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_voyage);
 
-        // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(ModelView.class);
 
-        // Composantes de la navbar
-        btnHome = (ImageButton) findViewById(R.id.buttonHome);
-        btnHistorique = (ImageButton) findViewById(R.id.buttonHistorique);
-        btnLogout = (ImageButton) findViewById(R.id.buttonLogout);
+        btn_Home = findViewById(R.id.buttonHome);
+        btn_Historique = findViewById(R.id.buttonHistorique);
+        btn_Logout = findViewById(R.id.buttonLogout);
 
-        // ajouter un écouteur sur les boutons
-        btnHome.setOnClickListener(this);
-        btnHistorique.setOnClickListener(this);
-        btnLogout.setOnClickListener(this);
+        btn_Home.setOnClickListener(this);
+        btn_Historique.setOnClickListener(this);
+        btn_Logout.setOnClickListener(this);
 
-        imageVoyage = (ImageView) findViewById(R.id.iv_voyage_detail);
-        tNom = (TextView) findViewById(R.id.tv_nom_voyage_detail);
-        tDescription = (TextView) findViewById(R.id.tv_description_voyage_detail);
-        tDestination = (TextView) findViewById(R.id.tv_destination_detail);
-        tDuree = (TextView) findViewById(R.id.tv_duree_detail);
-        tPrix = (TextView) findViewById(R.id.tv_prix_detail);
-        tActivites = (TextView) findViewById(R.id.tv_activites_detail);
-        tPlacesDisponible = (TextView) findViewById(R.id.tv_places_disponibles_detail);
-        spinDateDepart = (Spinner) findViewById(R.id.spinner_date_depart_detail);
-        editPlacesReservees = (EditText) findViewById(R.id.editText_nb_places_detail);
-        btnReserver = (Button) findViewById(R.id.button_reserver_detail);
+        imageGalleryLinearLayout = findViewById(R.id.linearLayoutImageGallery);
+        tNom = findViewById(R.id.tv_nom_voyage_detail);
+        tDescription = findViewById(R.id.tv_description_voyage_detail);
+        tDestination = findViewById(R.id.tv_destination_detail);
+        tDuree = findViewById(R.id.tv_duree_detail);
+        tPrix = findViewById(R.id.tv_prix_detail);
+        tActivites = findViewById(R.id.tv_activites_detail);
+        tPlacesDisponible = findViewById(R.id.tv_places_disponibles_detail);
+        spinDateDepart = findViewById(R.id.spinner_date_depart_detail);
+        editPlacesReservees = findViewById(R.id.editText_nb_places_detail);
+        btnReserver = findViewById(R.id.button_reserver_detail);
+
+        // Load the voyage data
+        Intent intent = getIntent();
+        modelView.chargerVoyages("/?id=" + intent.getIntExtra("ID", 0));
+
 
         modelView.getVoyages().observe(this, new Observer<Voyage[]>() {
             @Override
             public void onChanged(Voyage[] voyages) {
-                Log.d("DetailActivity", "onChanged appelé, taille du tableau voyages: " + voyages.length); // Log existant
+                if (voyages == null || voyages.length == 0) {
+                    Log.w("DetailActivity", "Voyages array is null or empty.");
+                    return;
+                }
 
-                // Picasso set l'image
-                Picasso.get().load(voyages[0].getImageUrl()).into(imageVoyage);
-                tNom.setText(voyages[0].getNomVoyage());
-                tDescription.setText(voyages[0].getDescription());
-                tDestination.setText(voyages[0].getDestination());
-                tDuree.setText(voyages[0].getStrDuree());
-                tPrix.setText(voyages[0].getStrPrix());
-                tActivites.setText(voyages[0].getActivitesIncluses());
+                Voyage voyage = voyages[0];
 
-                // Mettre à jour le Spinner des dates de départ
-                TripsAdaptateur tripsAdaptateur = new TripsAdaptateur(DetailActivity.this, R.layout.layout_trips, voyages[0].getTrips());
+                // Image Gallery
+                imageGalleryLinearLayout.removeAllViews();
+                List<String> imageUrls = voyage.getImageUrls();
+                if (imageUrls != null) {
+                    for (String imageUrl : imageUrls) {
+                        ImageView imageView = new ImageView(DetailActivity.this);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                400,
+                                LinearLayout.LayoutParams.MATCH_PARENT
+                        );
+                        layoutParams.setMarginEnd(20);
+                        imageView.setLayoutParams(layoutParams);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        Picasso.get().load(imageUrl).into(imageView);
+                        imageGalleryLinearLayout.addView(imageView);
+                    }
+                }
+
+                // Set text views
+                tNom.setText(voyage.getNomVoyage());
+                tDescription.setText(voyage.getDescription());
+                tDestination.setText(voyage.getDestination());
+                tDuree.setText(String.valueOf(voyage.getDureeJours()));
+                tPrix.setText(String.valueOf(voyage.getPrix()));
+                tActivites.setText(voyage.getActivitesIncluses());
+
+                // Set up the Spinner
+                TripsAdaptateur tripsAdaptateur = new TripsAdaptateur(DetailActivity.this, R.layout.layout_trips, voyage.getTrips());
                 spinDateDepart.setAdapter(tripsAdaptateur);
 
-                // Mettre à jour le TextView des places disponibles
-                if (voyages[0].getTrips() != null && voyages[0].getTrips().length > 0) {
-                    spinDateDepart.setSelection(0);
-                    Voyage.Trip premierTrip = (Voyage.Trip) spinDateDepart.getSelectedItem();
-
-                    String nbPlacesDisponiblesAvantSetText = premierTrip.getStrNbPlacesDisponibles();
-                    Log.d("DetailActivity", "Nombre de places disponibles (premier trip avant setText): " + nbPlacesDisponiblesAvantSetText);
-                    tPlacesDisponible.setText(premierTrip.getStrNbPlacesDisponibles());
-                    String nbPlacesDisponiblesApresSetText = premierTrip.getStrNbPlacesDisponibles();
-                    Log.d("DetailActivity", "Nombre de places disponibles (premier trip après setText): " + tPlacesDisponible.getText());
-                } else {
-                    Log.w("DetailActivity", "Voyage ou trips null ou vide dans onChanged");
-                }
+                // Update places available
+                updatePlacesAvailable(voyage);
             }
         });
 
-        Intent intent = getIntent();
 
-         modelView = new ViewModelProvider(this).get(ModelView.class);
-        modelView.chargerVoyages("/?id=" + intent.getIntExtra("ID", 0));
 
         spinDateDepart.setOnItemSelectedListener(this);
+        btnReserver.setOnClickListener(v -> handleReservation(modelView.getVoyages().getValue()[0], spinDateDepart.getSelectedItem()));
+    }
 
-        btnReserver.setOnClickListener(v -> {
-            // Récupérer les informations nécessaires pour la réservation
-            Voyage voyage = modelView.getVoyages().getValue()[0];
-            Voyage.Trip tripChoisi = (Voyage.Trip) spinDateDepart.getSelectedItem();
-            String nbPlacesString = editPlacesReservees.getText().toString();
-            int nbPlacesReserveesInt = 0;
+    private void updatePlacesAvailable(Voyage voyage) {
+        if (voyage.getTrips() != null && voyage.getTrips().length > 0) {
+            spinDateDepart.setSelection(0, false);
+            Voyage.Trip premierTrip = (Voyage.Trip) spinDateDepart.getSelectedItem();
+            tPlacesDisponible.setText(premierTrip.getStrNbPlacesDisponibles());
 
-            // Vérifier si le nombre de places est valide
-            if (!nbPlacesString.isEmpty()) {
-                nbPlacesReserveesInt = Integer.parseInt(nbPlacesString);
-            }else{
-                Toast.makeText(DetailActivity.this, "Veuillez entrer le nombre de places.", Toast.LENGTH_SHORT).show();
-            }
+        } else {
+            Log.w("DetailActivity", "Voyage or trips null or empty in onChanged");
+            tPlacesDisponible.setText("No trips available");
+        }
+    }
 
-             if (nbPlacesReserveesInt > tripChoisi.getNbPlacesDisponibles()) {
-                Toast.makeText(DetailActivity.this, "Nombre de places souhaitées supérieur aux places disponibles.", Toast.LENGTH_LONG).show();
-                return;
-            }
-            if (nbPlacesReserveesInt <= 0) {
-                Toast.makeText(DetailActivity.this, "Veuillez entrer un nombre de places valide et supérieur à zéro.", Toast.LENGTH_LONG).show();
-                return;
-            }
+    private void handleReservation(Voyage voyage, Object selectedItem) {
+        Voyage.Trip tripChoisi = (Voyage.Trip) selectedItem;
+        String nbPlacesString = editPlacesReservees.getText().toString();
+        int nbPlacesReserveesInt = 0;
 
-            Reservation reservation = new Reservation();
-            reservation.setDestination(voyage.getDestination().replace("Destination : ", ""));
-            reservation.setDateVoyage(tripChoisi.getDate());
-            reservation.setMontantPaye(voyage.getPrix() * nbPlacesReserveesInt);
-            reservation.setStatut("Confirmée");
-            reservation.setNbPersonnes(nbPlacesReserveesInt);
+        if (nbPlacesString.isEmpty()) {
+            Toast.makeText(DetailActivity.this, "Veuillez entrer le nombre de places.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            // Ajouter la réservation à la base de données SQLite locale
-            ReservationDao reservationDao = new ReservationDao(DetailActivity.this);
-            long nouvelleReservationId = reservationDao.ajouterReservation(reservation);
+        try {
+            nbPlacesReserveesInt = Integer.parseInt(nbPlacesString);
+        } catch (NumberFormatException e) {
+            Toast.makeText(DetailActivity.this, "Nombre de places invalide.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            if (nouvelleReservationId > 0) {
-                Toast.makeText(DetailActivity.this, "Réservation enregistrée avec succès!", Toast.LENGTH_SHORT).show();
+        if (nbPlacesReserveesInt > tripChoisi.getNbPlacesDisponibles()) {
+            Toast.makeText(DetailActivity.this, "Nombre de places souhaitées supérieur aux places disponibles.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-                // Mettre à jour le nombre de places disponibles sur le serveur JSON
-                 int placesReservees = nbPlacesReserveesInt;
+        if (nbPlacesReserveesInt <= 0) {
+            Toast.makeText(DetailActivity.this, "Veuillez entrer un nombre de places valide et supérieur à zéro.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-                // Calculer le nouveau nombre de places disponibles après la réservation
-                int nouveauNbPlacesDisponibles = tripChoisi.getNbPlacesDisponibles() - placesReservees;
+        Reservation reservation = new Reservation();
+        reservation.setDestination(voyage.getDestination());
+        reservation.setDateVoyage(tripChoisi.getDate());
+        reservation.setMontantPaye(voyage.getPrix() * nbPlacesReserveesInt);
+        reservation.setStatut("Confirmée");
+        reservation.setNbPersonnes(nbPlacesReserveesInt);
+        reservation.setImageUrl(voyage.getImageUrl());
 
-                modelView.updateTripAvailability(voyage.getId(), tripChoisi.getDate(), nouveauNbPlacesDisponibles);
+        ReservationDao reservationDao = new ReservationDao(DetailActivity.this);
+        long nouvelleReservationId = reservationDao.ajouterReservation(reservation);
 
-            } else {
-                Toast.makeText(DetailActivity.this, "Erreur lors de l'enregistrement de la réservation.", Toast.LENGTH_LONG).show();
-            }
+        if (nouvelleReservationId > 0) {
+            Toast.makeText(DetailActivity.this, "Réservation enregistrée avec succès!", Toast.LENGTH_SHORT).show();
 
-            modelView.chargerVoyages("/?id=" + voyage.getId());
+            int nouveauNbPlacesDisponibles = tripChoisi.getNbPlacesDisponibles() - nbPlacesReserveesInt;
+            modelView.updateTripAvailability(voyage.getId(), tripChoisi.getDate(), nouveauNbPlacesDisponibles);
 
+            //After success, simply end.
             setResult(RESULT_OK);
             finish();
-        });
+
+        } else {
+            Toast.makeText(DetailActivity.this, "Erreur lors de l'enregistrement de la réservation.", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
     @Override
@@ -160,27 +182,22 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         int id = view.getId();
 
         if (id == R.id.buttonHome) {
-            Intent intent = new Intent(this, AccueilActivity.class);
-            startActivity(intent);
-
+            startActivity(new Intent(this, AccueilActivity.class));
         } else if (id == R.id.buttonHistorique) {
-            Intent intent = new Intent(this, HistoriqueReservationsActivity.class);
-            startActivity(intent);
-
+            startActivity(new Intent(this, HistoriqueReservationsActivity.class));
         } else if (id == R.id.buttonLogout) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, MainActivity.class));
         }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Voyage.Trip tripChoisi = (Voyage.Trip) parent.getItemAtPosition(position);
-        tPlacesDisponible.setText(((Voyage.Trip) tripChoisi).getStrNbPlacesDisponibles());
+        tPlacesDisponible.setText(tripChoisi.getStrNbPlacesDisponibles());
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        // Ne rien faire
+        // Do nothing
     }
 }

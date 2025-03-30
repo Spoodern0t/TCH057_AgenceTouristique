@@ -1,151 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E1000500"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".vue.activites.InscriptionActivity">
-
-    <TextView
-        android:id="@+id/tv_inscription_titre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/creer_compte"
-        android:textColor="@color/colorPrimary"
-        android:textSize="32sp"
-        android:textStyle="bold" />
+    android:background="#EAFAF1"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="#EAFAF1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".vue.activites.InscriptionActivity">
 
-        <EditText
-            android:id="@+id/editTextFirstNameInscription"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_inscription_titre"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/creer_compte"
+            android:textColor="@color/colorPrimary"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/firstName_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:hint="@string/prenom"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxStrokeColor="#80000000"
+                app:hintTextColor="#80000000">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextFirstNameInscription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:paddingVertical="12dp"
+                    android:textColor="@color/black_text"
+                    android:textColorHint="#78909C"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lastName_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:hint="@string/nom"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxStrokeColor="#80000000"
+                app:hintTextColor="#80000000">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextLastNameInscription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:paddingVertical="12dp"
+                    android:textColor="@color/black_text"
+                    android:textColorHint="#78909C"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/age_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_weight="1"
-            android:hint="@string/prenom"
-            android:inputType="textPersonName"
-            android:textColor="@color/white"
-            android:textColorHint="#78909C"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:hint="@string/age"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#80000000"
+            app:hintTextColor="#80000000">
 
-        <EditText
-            android:id="@+id/editTextLastNameInscription"
-            android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextAgeInscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/black_text"
+                android:textColorHint="#78909C" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phone_input_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/nom"
-            android:inputType="textPersonName"
-            android:textColor="@color/white"
-            android:textColorHint="#78909C"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:layout_marginBottom="10dp"
+            android:hint="@string/telephone"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#80000000"
+            app:hintTextColor="#80000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPhoneInscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:minHeight="48dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/black_text"
+                android:textColorHint="#78909C" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/address_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/adresse"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#80000000"
+            app:hintTextColor="#80000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextAddressInscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress"
+                android:minHeight="48dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/black_text"
+                android:textColorHint="#78909C" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/city_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/ville"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#80000000"
+            app:hintTextColor="#80000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextCityInscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress"
+                android:minHeight="48dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/black_text"
+                android:textColorHint="#78909C" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/province_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/province"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#80000000"
+            app:hintTextColor="#80000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextProvinceInscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress"
+                android:minHeight="48dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/black_text"
+                android:textColorHint="#78909C" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_signup_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/courriel"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#80000000"
+            app:hintTextColor="#80000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmailRegisterInscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/black_text"
+                android:textColorHint="#78909C" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_signup_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:hint="@string/mot_de_passe"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#80000000"
+            app:hintTextColor="#80000000"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPasswordRegisterInscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/black_text"
+                android:textColorHint="#78909C" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonSignUpInscription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/creer_compte"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:cornerRadius="24dp" />
+
+        <Button
+            android:id="@+id/buttonReturnLoginInscription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:text="@string/retour_connexion"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/editTextAgeInscription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:hint="@string/age"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:textColor="@color/white"
-        android:textColorHint="#78909C" />
-
-    <EditText
-        android:id="@+id/editTextPhoneInscription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:hint="@string/telephone"
-        android:inputType="phone"
-        android:minHeight="48dp"
-        android:textColor="@color/white"
-        android:textColorHint="#78909C" />
-
-    <EditText
-        android:id="@+id/editTextAddressInscription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:hint="@string/adresse"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:textColor="@color/white"
-        android:textColorHint="#78909C" />
-
-    <EditText
-        android:id="@+id/editTextCityInscription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:hint="@string/ville"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:textColor="@color/white"
-        android:textColorHint="#78909C" />
-
-    <EditText
-        android:id="@+id/editTextProvinceInscription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:hint="@string/province"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:textColor="@color/white"
-        android:textColorHint="#78909C" />
-
-    <EditText
-        android:id="@+id/editTextEmailRegisterInscription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:hint="@string/courriel"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:textColor="@color/white"
-        android:textColorHint="#78909C" />
-
-    <EditText
-        android:id="@+id/editTextPasswordRegisterInscription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:hint="@string/mot_de_passe"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textColor="@color/white"
-        android:textColorHint="#78909C" />
-
-    <Button
-        android:id="@+id/buttonSignUpInscription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="@string/creer_compte"
-        android:textColor="#000000"
-        android:textSize="16sp" />
-
-    <Button
-        android:id="@+id/buttonReturnLoginInscription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:minHeight="48dp"
-        android:text="@string/retour_connexion"
-        android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-</LinearLayout>
+</ScrollView>

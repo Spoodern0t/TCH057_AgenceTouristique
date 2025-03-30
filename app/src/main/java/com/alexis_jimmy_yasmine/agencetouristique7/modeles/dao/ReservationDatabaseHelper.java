@@ -22,7 +22,8 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLONNE_DATE_VOYAGE = "date_voyage";
     public static final String COLONNE_MONTANT_PAYE = "montant_paye";
     public static final String COLONNE_STATUT = "statut";
-    public static final String COLONNE_NB_PERSONNES = "nb_personnes"; // Ajout de la colonne
+    public static final String COLONNE_NB_PERSONNES = "nb_personnes";
+    public static final String COLONNE_IMAGE_URL = "image_url";
 
     public ReservationDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -36,7 +37,8 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
                 + COLONNE_DATE_VOYAGE + " TEXT,"
                 + COLONNE_MONTANT_PAYE + " REAL,"
                 + COLONNE_STATUT + " TEXT,"
-                + COLONNE_NB_PERSONNES + " INTEGER" + ")";
+                + COLONNE_NB_PERSONNES + " INTEGER,"
+                + COLONNE_IMAGE_URL + " TEXT" + ")";
         db.execSQL(CREATE_RESERVATIONS_TABLE);
     }
 
@@ -48,16 +50,18 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
 
     // Méthode pour ajouter une nouvelle réservation à la base de données locale
     public long ajouterReservation(Reservation reservation) {
-        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLONNE_DESTINATION, reservation.getDestination());
         values.put(COLONNE_DATE_VOYAGE, reservation.getDateVoyage());
         values.put(COLONNE_MONTANT_PAYE, reservation.getMontantPaye());
         values.put(COLONNE_STATUT, reservation.getStatut());
         values.put(COLONNE_NB_PERSONNES, reservation.getNbPersonnes());
+        values.put(COLONNE_IMAGE_URL, reservation.getImageUrl());
 
-        long id = db.insert(TABLE_RESERVATIONS, null, values);
-        db.close();
+        long id = 0;
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            id = db.insert(TABLE_RESERVATIONS, null, values);
+        }
         return id;
     }
 
@@ -66,24 +70,32 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
         List<Reservation> listeReservations = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_RESERVATIONS;
 
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        try (SQLiteDatabase db = this.getReadableDatabase();
+             Cursor cursor = db.rawQuery(selectQuery, null)) {
 
-        if (cursor.moveToFirst()) {
-            do {
-                Reservation reservation = new Reservation();
-                reservation.setId(Integer.parseInt(cursor.getString(0)));
-                reservation.setDestination(cursor.getString(1));
-                reservation.setDateVoyage(cursor.getString(2));
-                reservation.setMontantPaye(Double.parseDouble(cursor.getString(3)));
-                reservation.setStatut(cursor.getString(4));
-                reservation.setNbPersonnes(Integer.parseInt(cursor.getString(5)));
-                listeReservations.add(reservation);
-            } while (cursor.moveToNext());
+            if (cursor.moveToFirst()) {
+                do {
+                    Reservation reservation = new Reservation();
+                    reservation.setId(Integer.parseInt(cursor.getString(0)));
+                    reservation.setDestination(cursor.getString(1));
+                    reservation.setDateVoyage(cursor.getString(2));
+                    reservation.setMontantPaye(Double.parseDouble(cursor.getString(3)));
+                    reservation.setStatut(cursor.getString(4));
+                    reservation.setNbPersonnes(Integer.parseInt(cursor.getString(5)));
+                    reservation.setImageUrl(cursor.getString(6));
+                    listeReservations.add(reservation);
+                } while (cursor.moveToNext());
+            }
         }
-
-        cursor.close();
-        db.close();
         return listeReservations;
+    }
+
+    public int supprimerReservation(int reservationId) {
+        int deletedRows = 0;
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            deletedRows = db.delete(TABLE_RESERVATIONS, COLONNE_ID + " = ?",
+                    new String[]{String.valueOf(reservationId)});
+        }
+        return deletedRows;
     }
 }

@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#E72C3834"
+    android:background="@drawable/white_rounded_background"
     android:orientation="horizontal"
-    android:padding="5dp">
-
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/tripDate"
@@ -15,8 +14,8 @@
         android:ellipsize="marquee"
         android:maxLines="1"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textColorHint="@color/colorSecondaire"
+        android:textColor="@color/black_text"
+        android:textColorHint="#858585"
         android:textColorLink="@color/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold" />
