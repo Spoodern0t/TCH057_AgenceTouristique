@@ -62,8 +62,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         Intent intent = getIntent();
         modelView.chargerVoyages("/?id=" + intent.getIntExtra("ID", 0));
       
-        // Assigner un nouvel observateur de changements au voyage choisi
-        modelView.getVoyages().observe(this, new Observer<Voyage[]>() {
+        // Assigner un nouvel Observateur au voyage choisi
+        modelView.getVoyages().observe(this, voyages -> {
             @Override
             public void onChanged(Voyage[] voyages) {
                 if (voyages == null || voyages.length == 0) {
@@ -92,7 +92,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 }
 
                 // Initier les TextView
-                Voyage voyage = voyages[0];
                 tNom.setText(voyage.getNomVoyage());
                 tDescription.setText(voyage.getDescription());
                 tDestination.setText(voyage.getDestination());
