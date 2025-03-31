@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/buttonHome"
+        android:icon="@drawable/home"
+        android:title="@string/accueil" />
+
+    <item
+        android:id="@+id/buttonHistorique"
+        android:icon="@drawable/reservation"
+        android:title="@string/historique_label" />
+
+    <item
+        android:id="@+id/buttonLogout"
+        android:icon="@drawable/logout"
+        android:title="@string/log_out" />
+
+</menu>
