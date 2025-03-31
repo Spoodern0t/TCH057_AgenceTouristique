@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         buttonCreateAccount.setOnClickListener(v -> {
+
             Intent intent = new Intent(MainActivity.this, InscriptionActivity.class);
             startActivity(intent);
         });

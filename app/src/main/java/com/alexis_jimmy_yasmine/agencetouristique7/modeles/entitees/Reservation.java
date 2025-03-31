@@ -8,17 +8,19 @@ public class Reservation {
     private double montantPaye;
     private String statut;
     private int nbPersonnes;
+    private String imageUrl;
 
-     public Reservation() {
+    public Reservation() {
     }
 
-    public Reservation(int id, String destination, String dateVoyage, double montantPaye, String statut, int nbPersonnes) {
+    public Reservation(int id, String destination, String dateVoyage, double montantPaye, String statut, int nbPersonnes, String imageUrl) {
         this.id = id;
         this.destination = destination;
         this.dateVoyage = dateVoyage;
         this.montantPaye = montantPaye;
         this.statut = statut;
         this.nbPersonnes = nbPersonnes;
+        this.imageUrl = imageUrl;
     }
 
     public int getId() {
@@ -67,5 +69,13 @@ public class Reservation {
 
     public void setNbPersonnes(int nbPersonnes) {
         this.nbPersonnes = nbPersonnes;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

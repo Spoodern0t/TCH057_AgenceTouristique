@@ -15,6 +15,7 @@ import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
 public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
 
     private Voyage[] voyages;
@@ -54,9 +55,17 @@ public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
             final TextView tvResume = (TextView) view.findViewById(R.id.lvVoyageDescription);
             final TextView tvPrix = (TextView) view.findViewById(R.id.lvVoyagePrix);
 
+            String imageUrlToLoad = voyage.getImageUrl();
+
+            if (voyage.getImageUrls() != null && !voyage.getImageUrls().isEmpty()) {
+                imageUrlToLoad = voyage.getImageUrls().get(0);
+            }
+
+            Picasso.get().load(imageUrlToLoad).into(tvImage);
+
             // Picasso set l'image
-            Picasso.get().load(voyage.getImageUrl()).into(tvImage);
-            tvDestination.setText(voyage.getDestination());
+            Picasso.get().load(imageUrlToLoad).into(tvImage);
+            tvDestination.setText(voyage.getDestination().replace("Destination : ", ""));
             tvResume.setText(voyage.getDescription());
             tvPrix.setText(voyage.getPrix()+" $");
         }

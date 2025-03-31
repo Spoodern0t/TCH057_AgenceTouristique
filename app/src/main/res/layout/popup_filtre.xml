@@ -1,108 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="#EAFAF1"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="16dp"
-    android:background="@color/white">
-    <!--tools:context="vue.activites.AccueilActivity"-->
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:text="@string/filtrer_voyages"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/type_label"
+            android:textColor="@color/black_text"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/popupTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spinner_background"
+            android:entries="@array/type_options"
+            android:minHeight="48dp"
+            android:prompt="@string/type_filter"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="224dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/budget_label"
+            android:textColor="@color/black_text"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/popupBudgetSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spinner_background"
+            android:entries="@array/budget_options"
+            android:minHeight="48dp"
+            android:prompt="@string/budget_filter"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
-        
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
+
         <TextView
-            android:id="@+id/popupTypeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/destination_label"
+            android:textColor="@color/black_text"
             android:textSize="16sp"
-            android:text="@string/popup_type"/>
+            android:layout_marginBottom="4dp"/>
 
-        <EditText
-            android:id="@+id/popupTypeEditText"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/popupDestinationSpinner"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/type_filter"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textColor="@color/gray"
-            android:textSize="16sp" />
+            android:minHeight="48dp"
+            android:entries="@array/destination_options"
+            android:prompt="@string/pays_filter"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/spinner_background"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/popupBudgetTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/popup_budget"
-            android:textSize="16sp" />
+            android:text="@string/date_label"
+            android:textColor="@color/black_text"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"/>
 
-        <EditText
-            android:id="@+id/popupBudgetEditText"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/popupDateSpinner"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/budget_filter"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textColor="@color/gray"
-            android:textSize="16sp" />
+            android:minHeight="48dp"
+            android:entries="@array/date_options"
+            android:prompt="@string/date_filter"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/spinner_background"/>
     </LinearLayout>
 
-    <LinearLayout
+    <Button
+        android:id="@+id/popupFilterButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/popupPaysTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/popup_pays"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/popupPaysEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/pays_filter"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textColor="@color/gray"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/popupDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/popup_date"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/popupDateEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/date_filter"
-            android:inputType="date"
-            android:singleLine="true"
-            android:textColor="@color/gray"
-            android:textSize="16sp" />
-    </LinearLayout>
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/appliquer_filtres"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 
 </LinearLayout>
