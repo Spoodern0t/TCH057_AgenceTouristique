@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
@@ -63,7 +64,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         modelView.chargerVoyages("/?id=" + intent.getIntExtra("ID", 0));
       
         // Assigner un nouvel Observateur au voyage choisi
-        modelView.getVoyages().observe(this, voyages -> {
+        modelView.getVoyages().observe(this, new Observer<Voyage[]>() {
             @Override
             public void onChanged(Voyage[] voyages) {
                 if (voyages == null || voyages.length == 0) {
