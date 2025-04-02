@@ -10,7 +10,7 @@ import java.util.List;
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public class Voyage {
     @JsonProperty("id")
-    private int id;
+    private String id;
 
     @JsonProperty("nom_voyage")
     private String nomVoyage;
@@ -63,12 +63,20 @@ public class Voyage {
         public void setNbPlacesDisponibles(int nbPlacesDisponibles) {
             this.nbPlacesDisponibles = nbPlacesDisponibles;
         }
+
+        public void augmenterNbPlaces(int nbPlacesCancelees) {
+            nbPlacesDisponibles += nbPlacesCancelees;
+        }
+
+        public void diminuerNbPlaces(int nbPlacesReservees) {
+            nbPlacesDisponibles -= nbPlacesReservees;
+        }
     }
 
     public Voyage() {
     }
 
-    public Voyage(int id, String nomVoyage, String description, int prix, String destination, List<String> imageUrls, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
+    public Voyage(String id, String nomVoyage, String description, int prix, String destination, List<String> imageUrls, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
         this.id = id;
         this.nomVoyage = nomVoyage;
         this.description = description;
@@ -82,11 +90,11 @@ public class Voyage {
     }
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -13,4 +13,20 @@ public class Modele {
     public void setVoyages(List<Voyage> voyages) {
         this.voyages = voyages;
     }
+
+    public Voyage getVoyageById(String id) {
+        for (Voyage voyage:voyages) {
+            if (id.equals(voyage.getId()))
+                return voyage;
+        }
+        return null;
+    }
+
+    public int getVoyagePosition(String id) {
+        for (int i=0; i < voyages.size(); i++) {
+            if (voyages.get(i).getId().equals(id))
+                return i + 1;
+        }
+        return 0;
+    }
 }

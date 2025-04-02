@@ -228,14 +228,14 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // Envoyer vers l'activité de détail
+    // Envoyer vers l'activité de détail du voyage cliqué
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
 
         Intent intent = new Intent(this, DetailActivity.class);
         Voyage voyageClique = (Voyage) parent.getAdapter().getItem(i);
         intent.putExtra("ID", voyageClique.getId());
-        startActivity(intent);
+        launcher.launch(intent);
     }
 
 

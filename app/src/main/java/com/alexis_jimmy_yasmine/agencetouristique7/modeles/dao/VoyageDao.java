@@ -1,6 +1,7 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.EcouteurDeDonnees;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 
 import org.json.JSONException;
 
@@ -11,5 +12,11 @@ public class VoyageDao {
                                  EcouteurDeDonnees ecouteurDeDonnees)
             throws JSONException, IOException {
         new HttpJsonService().getVoyages(filtreType, filtreBudget, filtreDestination, ecouteurDeDonnees);
+    }
+
+    public static void updateTripAvailability(Voyage voyage, int position,
+                                              EcouteurDeDonnees ecouteurDeDonnees)
+            throws JSONException, IOException {
+        new HttpJsonService().updateTripAvailability(voyage, position, ecouteurDeDonnees);
     }
 }

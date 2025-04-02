@@ -8,6 +8,7 @@ import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,6 +30,7 @@ public class HttpJsonService {
 
     private static final String URL_POINT_ENTREE = "http://10.0.2.2:3000";
     private final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    private final MediaType JSON_PARSE = MediaType.parse("application/json");
 
     public void postConnexion(String email, String mdp, EcouteurDeDonnees chargeurDeDonnees)
             throws IOException, JSONException {
@@ -175,6 +177,7 @@ public class HttpJsonService {
 
         OkHttpClient okHttpClient = new OkHttpClient();
 
+
         Request request = new Request.Builder()
                 .url(URL_POINT_ENTREE + "/voyages/"+path)
                 .build();
@@ -199,6 +202,43 @@ public class HttpJsonService {
                     }
                 }
             }
+            @Override
+            public void onFailure(@NonNull Call call, IOException e) {
+                chargeurDeDonnees.onError("Problème de connexion au serveur !");
+                call.cancel();
+            }
+        });
+    }
+
+    public void updateTripAvailability(Voyage voyage, int position, EcouteurDeDonnees chargeurDeDonnees)
+        throws IOException, JSONException {
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonObj;
+        try {
+            jsonObj = mapper.writeValueAsString(voyage);
+        } catch (JsonProcessingException e) {
+            chargeurDeDonnees.onError("Problème pour Mapper le voyage");
+            return;
+        }
+
+        // Requete PUT pour modifier le nombre de place d'un voyage
+        RequestBody corpsPutRequete = RequestBody.create(jsonObj, JSON_PARSE);
+
+        Request putRequest = new Request.Builder()
+                .url(URL_POINT_ENTREE + "/voyages/" + position)
+                .put(corpsPutRequete)
+                .build();
+
+        okHttpClient.newCall(putRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+
+                chargeurDeDonnees.onDataLoaded(null);
+            }
+
             @Override
             public void onFailure(@NonNull Call call, IOException e) {
                 chargeurDeDonnees.onError("Problème de connexion au serveur !");

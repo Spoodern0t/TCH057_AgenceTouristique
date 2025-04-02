@@ -107,4 +107,30 @@ public class AgenceViewModel extends ViewModel {
             erreurLiveData.postValue("Problème d'accès à l'API");
         }
     }
+
+    public Voyage getVoyageById(String id) {
+        return modele.getVoyageById(id);
+    }
+
+    public void updateTripAvailability(Voyage voyage) {
+
+        int position = modele.getVoyagePosition(voyage.getId());
+        try {
+            VoyageDao.updateTripAvailability(voyage, position, new EcouteurDeDonnees() {
+                @Override
+                public void onDataLoaded(Object data) {
+                    chargerVoyages(null, null, null);
+                }
+
+                @Override
+                public void onError(String errorMessage) {
+                    erreurLiveData.postValue(errorMessage);
+                }
+            });
+        } catch (JSONException e) {
+            erreurLiveData.postValue("Problème dans le JSON des comptes");
+        } catch (IOException e) {
+            erreurLiveData.postValue("Problème d'accès à l'API");
+        }
+    }
 }

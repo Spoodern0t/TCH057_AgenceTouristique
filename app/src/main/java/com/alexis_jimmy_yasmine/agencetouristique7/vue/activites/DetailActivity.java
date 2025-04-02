@@ -54,61 +54,60 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         editPlacesReservees = findViewById(R.id.editText_nb_places_detail);
         btnReserver = findViewById(R.id.button_reserver_detail);
 
-        /*
-        // Load the voyage data
+        // Récupérer l'id du voyage cliqué
         Intent intent = getIntent();
-        modelView.chargerVoyages("/?id=" + intent.getIntExtra("ID", 0));
+        String voyageId = intent.getStringExtra("ID");
+
+        Voyage voyage = modelView.getVoyageById(voyageId);
 
 
-        modelView.getVoyages().observe(this, new Observer<Voyage[]>() {
-            @Override
-            public void onChanged(Voyage[] voyages) {
-                if (voyages == null || voyages.length == 0) {
-                    Log.w("DetailActivity", "Voyages array is null or empty.");
-                    return;
-                }
-
-                Voyage voyage = voyages[0];
-
-                // Image Gallery
-                imageGalleryLinearLayout.removeAllViews();
-                List<String> imageUrls = voyage.getImageUrls();
-                if (imageUrls != null) {
-                    for (String imageUrl : imageUrls) {
-                        ImageView imageView = new ImageView(DetailActivity.this);
-                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                                400,
-                                LinearLayout.LayoutParams.MATCH_PARENT
-                        );
-                        layoutParams.setMarginEnd(20);
-                        imageView.setLayoutParams(layoutParams);
-                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        Picasso.get().load(imageUrl).into(imageView);
-                        imageGalleryLinearLayout.addView(imageView);
-                    }
-                }
-
-                // Set text views
-                tNom.setText(voyage.getNomVoyage());
-                tDescription.setText(voyage.getDescription());
-                tDestination.setText(voyage.getDestination());
-                tDuree.setText(String.valueOf(voyage.getDureeJours()));
-                tPrix.setText(String.valueOf(voyage.getPrix()));
-                tActivites.setText(voyage.getActivitesIncluses());
-
-                // Set up the Spinner
-                TripsAdaptateur tripsAdaptateur = new TripsAdaptateur(DetailActivity.this, R.layout.layout_trips, voyage.getTrips());
-                spinDateDepart.setAdapter(tripsAdaptateur);
-
-                // Update places available
-                updatePlacesAvailable(voyage);
-            }
-
+        modelView.getVoyages().observe(this, voyages -> {
+            // Update places available
+            updatePlacesAvailable(voyage);
         });
 
+
+        // Charger l'interface selon l'id du voyage cliqué
+        chargerVoyage(voyage);
+
         spinDateDepart.setOnItemSelectedListener(this);
-        btnReserver.setOnClickListener(v -> handleReservation(modelView.getVoyages().getValue()[0], spinDateDepart.getSelectedItem()));
-        */
+
+        btnReserver.setOnClickListener(v -> {
+                handleReservation(voyage, spinDateDepart.getSelectedItem());
+            });
+    }
+
+
+    private void chargerVoyage(Voyage voyage) {
+        // Image Gallery
+        imageGalleryLinearLayout.removeAllViews();
+        List<String> imageUrls = voyage.getImageUrls();
+        if (imageUrls != null) {
+            for (String imageUrl : imageUrls) {
+                ImageView imageView = new ImageView(DetailActivity.this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        400,
+                        LinearLayout.LayoutParams.MATCH_PARENT
+                );
+                layoutParams.setMarginEnd(20);
+                imageView.setLayoutParams(layoutParams);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                Picasso.get().load(imageUrl).into(imageView);
+                imageGalleryLinearLayout.addView(imageView);
+            }
+        }
+
+        // Set text views
+        tNom.setText(voyage.getNomVoyage());
+        tDescription.setText(voyage.getDescription());
+        tDestination.setText(voyage.getDestination());
+        tDuree.setText(String.valueOf(voyage.getDureeJours()));
+        tPrix.setText(String.valueOf(voyage.getPrix()));
+        tActivites.setText(voyage.getActivitesIncluses());
+
+        // Set up the Spinner
+        TripsAdaptateur tripsAdaptateur = new TripsAdaptateur(DetailActivity.this, R.layout.layout_trips, voyage.getTrips());
+        spinDateDepart.setAdapter(tripsAdaptateur);
     }
 
     private void updatePlacesAvailable(Voyage voyage) {
@@ -164,8 +163,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         if (nouvelleReservationId > 0) {
             Toast.makeText(DetailActivity.this, "Réservation enregistrée avec succès!", Toast.LENGTH_SHORT).show();
 
-            int nouveauNbPlacesDisponibles = tripChoisi.getNbPlacesDisponibles() - nbPlacesReserveesInt;
-            //modelView.updateTripAvailability(voyage.getId(), tripChoisi.getDate(), nouveauNbPlacesDisponibles);
+            tripChoisi.diminuerNbPlaces(nbPlacesReserveesInt);
+
+            modelView.updateTripAvailability(voyage);
 
             //After success, simply end.
             setResult(RESULT_OK);
