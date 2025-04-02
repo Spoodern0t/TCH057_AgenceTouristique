@@ -12,14 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
-import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
+import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
 
 import org.json.JSONException;
 
 public class InscriptionActivity extends AppCompatActivity {
 
-    private ModelView modelView;
+    private AgenceViewModel modelView;
     private EditText editFirstName, editLastName, editAge, editPhone, editAddress,
             editCity, editProvince, editEmail, editPassword;
     private Button btnSignUp, btnAnnuler;
@@ -41,6 +41,33 @@ public class InscriptionActivity extends AppCompatActivity {
         btnSignUp = findViewById(R.id.buttonSignUpInscription);
         btnAnnuler = findViewById(R.id.buttonReturnLoginInscription);
 
+        // Remplir l'email et le mot de passe venant de la page de connexion
+        Intent intent = getIntent();
+        String iEmail = intent.getStringExtra("EMAIL");
+        String iMdp = intent.getStringExtra("MDP");
+        editEmail.setText(iEmail);
+        editPassword.setText(iMdp);
+
+
+        // Observer l'inscription
+        modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
+        modelView.getInscription().observe(this, client -> {
+
+            Toast.makeText(this, "Inscrit !", Toast.LENGTH_SHORT).show();
+            // Renvoyer l'email et le mot de passe
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("EMAIL", client.getEmail());
+            resultIntent.putExtra("MDP", client.getMdp());
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        });
+
+        // Observer l'erreur
+        modelView.getErreur().observe(this, message -> {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        });
+
+
         btnSignUp.setOnClickListener(v -> {
 
             String firstName = editFirstName.getText().toString();
@@ -57,65 +84,17 @@ public class InscriptionActivity extends AppCompatActivity {
                     ageString.isEmpty() || phone.isEmpty() || address.isEmpty() || city.isEmpty() || province.isEmpty()) {
 
                 Toast.makeText(InscriptionActivity.this, "Veuillez remplir tous les champs !", Toast.LENGTH_LONG).show();
+
             } else {
 
                 int age = Integer.parseInt(ageString);
                 String adresse = address + ", " + city + ", " + province;
 
-                Client client = new Client(0, lastName, firstName, email, password, age, phone, adresse);
-
-                modelView = new ViewModelProvider(this).get(ModelView.class);
-
-                try {
-
-                    modelView.postClient(client);
-                    setResult(RESULT_OK);
-                    finish();
-
-                } catch (JSONException e) {
-
-                    Toast.makeText(InscriptionActivity.this, "Une erreur s'est produite !", Toast.LENGTH_LONG).show();
-                }
+                Client client = new Client(null, lastName, firstName, email, password, age, phone, adresse);
+                modelView.postClient(client);
             }
-
-            /*
-            if (firstName.isEmpty() ) {
-                Toast.makeText(InscriptionActivity.this, "Please fill in first name...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if ( lastName.isEmpty() ) {
-                Toast.makeText(InscriptionActivity.this, "Please fill in last name...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if ( ageString.isEmpty()  ) {
-                Toast.makeText(InscriptionActivity.this, "Please fill in age...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if ( email.isEmpty()  ) {
-                Toast.makeText(InscriptionActivity.this, "Please fill in email...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if  (password.isEmpty()) {
-                Toast.makeText(InscriptionActivity.this, "Please fill in password...", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-
-            int ageInt;
-            try {
-                ageInt = Integer.parseInt(ageString);
-            } catch (NumberFormatException e) {
-                Toast.makeText(InscriptionActivity.this, "Invalid Age. Please enter a number...", Toast.LENGTH_LONG).show();
-                return;
-            }
-              Toast.makeText(InscriptionActivity.this, "Account created successfully! :)", Toast.LENGTH_SHORT).show();
-            finish();
-             */
         });
+
 
         btnAnnuler.setOnClickListener(v -> {
             setResult(RESULT_CANCELED);

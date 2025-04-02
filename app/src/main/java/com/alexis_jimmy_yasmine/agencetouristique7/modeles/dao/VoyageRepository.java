@@ -16,7 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import okhttp3.*;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 public class VoyageRepository {
 
     private static String URL_POINT_ENTREE = "http://10.0.2.2:3000/voyages";
@@ -36,7 +42,7 @@ public class VoyageRepository {
         return reservationResultLiveData;
     }
 
-    public void chargerVoyages(String url) {
+    public void getVoyages(String url) {
 
         // Envoyer la requete dans un sidethread
         (new Thread("getVoyage") {
@@ -138,7 +144,7 @@ public class VoyageRepository {
                         }
                     } else {
                         // En cas de succès, recharger les détails du voyage et signaler le succès
-                        chargerVoyages("/?id=" + voyageId);
+                        getVoyages();
                         reservationResultLiveData.postValue("Success: Reservation successful :)");
                     }
                 }
@@ -202,7 +208,7 @@ public class VoyageRepository {
                         Log.e("VoyageRepository", "Erreur lors de la mise à jour du serveur: " + response.code());
                     } else {
                         Log.d("VoyageRepository", "Serveur mis à jour avec succès pour la réservation");
-                        chargerVoyages("/?id=" + voyageId);
+                        getVoyages();
                     }
                 }
             } catch (IOException e) {

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
-import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
+import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao.ReservationDao;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private ModelView modelView;
+    private AgenceViewModel modelView;
     private TextView tNom, tDescription, tDestination, tDuree, tPrix, tActivites, tPlacesDisponible;
     private Spinner spinDateDepart;
     private EditText editPlacesReservees;
@@ -32,7 +32,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_voyage);
 
-        modelView = new ViewModelProvider(this).get(ModelView.class);
+        modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
 
         btn_Home = findViewById(R.id.buttonHome);
         btn_Historique = findViewById(R.id.buttonHistorique);
@@ -54,6 +54,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         editPlacesReservees = findViewById(R.id.editText_nb_places_detail);
         btnReserver = findViewById(R.id.button_reserver_detail);
 
+        /*
         // Load the voyage data
         Intent intent = getIntent();
         modelView.chargerVoyages("/?id=" + intent.getIntExtra("ID", 0));
@@ -102,12 +103,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 // Update places available
                 updatePlacesAvailable(voyage);
             }
+
         });
-
-
 
         spinDateDepart.setOnItemSelectedListener(this);
         btnReserver.setOnClickListener(v -> handleReservation(modelView.getVoyages().getValue()[0], spinDateDepart.getSelectedItem()));
+        */
     }
 
     private void updatePlacesAvailable(Voyage voyage) {
@@ -164,7 +165,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(DetailActivity.this, "Réservation enregistrée avec succès!", Toast.LENGTH_SHORT).show();
 
             int nouveauNbPlacesDisponibles = tripChoisi.getNbPlacesDisponibles() - nbPlacesReserveesInt;
-            modelView.updateTripAvailability(voyage.getId(), tripChoisi.getDate(), nouveauNbPlacesDisponibles);
+            //modelView.updateTripAvailability(voyage.getId(), tripChoisi.getDate(), nouveauNbPlacesDisponibles);
 
             //After success, simply end.
             setResult(RESULT_OK);
@@ -200,4 +201,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     public void onNothingSelected(AdapterView<?> parent) {
         // Do nothing
     }
+
+
 }

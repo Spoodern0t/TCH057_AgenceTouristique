@@ -14,15 +14,16 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
-import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ModelView;
+import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.VoyagesAdaptateur;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class AccueilActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener, TextWatcher {
 
-    private ModelView modelView;
+    private AgenceViewModel modelView;
     private EditText searchEditText;
     private Spinner spinBudgetAccueil, spinTypeAccueil;
     private ListView voyagesListView;
@@ -60,14 +61,14 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         voyagesListView.setOnItemClickListener(this);
 
         // Observer la liste des voyages
-        modelView = new ViewModelProvider(this).get(ModelView.class);
-        modelView.getVoyages().observe(this, new Observer<Voyage[]>() {
+        modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
+        modelView.getVoyages().observe(this, new Observer<List<Voyage>>() {
             @Override
-            public void onChanged(Voyage[] voyages) {
+            public void onChanged(List<Voyage> voyages) {
                 voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
             }
         });
-        modelView.chargerVoyages("/");
+        modelView.getVoyages();
     }
 
     // Recharger les destinations au retour de l'activité
@@ -75,7 +76,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
     protected void onResume() {
         super.onResume();
 
-        modelView.chargerVoyages("/");
+        modelView.getVoyages();
     }
 
     @Override
@@ -153,18 +154,19 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             }
 
 
-            if (!filtreType.equalsIgnoreCase("Tous les types")) {
-                url += "type_de_voyage=" + filtreType + "&";
+            if (filtreType.equalsIgnoreCase("Tous les types")) {
+                filtreType = null;
             }
             if (!filtreBudget.equalsIgnoreCase("Tous les budgets")) {
                 switch (filtreBudget) {
                     case "Moins de 300$": rangeeBudget = new int[]{0, 300}; break;
                     case "300$ - 600$": rangeeBudget = new int[]{300, 600}; break;
                     case "Plus de 600$": rangeeBudget = new int[]{600, 2147483647}; break;
+                    default: filtreBudget = null;
                 }
             }
-            if (!filtreDestination.equalsIgnoreCase("Toutes les destinations")) {
-                url += "destination=" + filtreDestination + "&";
+            if (filtreDestination.equalsIgnoreCase("Toutes les destinations")) {
+                filtreDestination = null;
             }
 
             if (url.endsWith("&") && url.length() > 2) {
@@ -173,7 +175,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
                 url = "/";
             }
 
-            modelView.chargerVoyages(url, rangeeBudget, regex);
+            modelView.chargerVoyages(filtreType, rangeeBudget, filtreDestination);
         }
     }
 
@@ -215,12 +217,18 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         }
         url = url.substring(0, url.length() - 1);
 
-        modelView.chargerVoyages(url, budgetRange, regex);
+        //modelView.getVoyages(url, budgetRange, regex);
+    }
+
+    // Afficher un message d'erreur
+    public void afficherMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     // Envoyer vers l'activité de détail
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+
         Intent intent = new Intent(this, DetailActivity.class);
         Voyage voyageClique = (Voyage) parent.getAdapter().getItem(i);
         intent.putExtra("ID", voyageClique.getId());
