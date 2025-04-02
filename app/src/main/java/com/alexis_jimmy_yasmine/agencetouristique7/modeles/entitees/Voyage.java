@@ -24,9 +24,6 @@ public class Voyage {
     @JsonProperty("destination")
     private String destination;
 
-    @JsonProperty("image_url")
-    private String imageUrl;
-
     @JsonProperty("image_urls")
     private List<String> imageUrls;
 
@@ -71,13 +68,12 @@ public class Voyage {
     public Voyage() {
     }
 
-    public Voyage(int id, String nomVoyage, String description, int prix, String destination, String imageUrl, List<String> imageUrls, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
+    public Voyage(int id, String nomVoyage, String description, int prix, String destination, List<String> imageUrls, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
         this.id = id;
         this.nomVoyage = nomVoyage;
         this.description = description;
         this.prix = prix;
         this.destination = destination;
-        this.imageUrl = imageUrl;
         this.imageUrls = imageUrls;
         this.dureeJours = dureeJours;
         this.trips = trips;
@@ -131,14 +127,6 @@ public class Voyage {
 
     public void setDestination(String destination) {
         this.destination = destination;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public List<String> getImageUrls() {

@@ -55,11 +55,8 @@ public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
             final TextView tvResume = (TextView) view.findViewById(R.id.lvVoyageDescription);
             final TextView tvPrix = (TextView) view.findViewById(R.id.lvVoyagePrix);
 
-            String imageUrlToLoad = voyage.getImageUrl();
 
-            if (voyage.getImageUrls() != null && !voyage.getImageUrls().isEmpty()) {
-                imageUrlToLoad = voyage.getImageUrls().get(0);
-            }
+            String imageUrlToLoad = voyage.getImageUrls().get(0);
 
             // Picasso set l'image
             Picasso.get().load(imageUrlToLoad).into(tvImage);

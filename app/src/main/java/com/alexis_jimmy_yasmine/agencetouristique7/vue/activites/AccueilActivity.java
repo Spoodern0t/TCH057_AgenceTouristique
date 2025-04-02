@@ -1,5 +1,6 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.vue.activites;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -29,7 +32,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
     private ListView voyagesListView;
     private ImageButton btnHome, btnHistorique, btnLogout, btnFilter;
     private PopupWindow popupWindow;
-
+    private ActivityResultLauncher<Intent> launcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,23 +63,23 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
 
         voyagesListView.setOnItemClickListener(this);
 
+
+        // Aucun resultat attendu
+        launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // Aucun resultat attendu
+                }
+        );
+
+
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
-        modelView.getVoyages().observe(this, new Observer<List<Voyage>>() {
-            @Override
-            public void onChanged(List<Voyage> voyages) {
-                voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
-            }
+        modelView.getVoyages().observe(this, voyages -> {
+            voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
         });
-        modelView.getVoyages();
-    }
 
-    // Recharger les destinations au retour de l'activité
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        modelView.getVoyages();
+        modelView.chargerVoyages(null, null, null);
     }
 
     @Override
@@ -88,11 +91,11 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
 
         } else if (id == R.id.buttonHistorique) {
             Intent intent = new Intent(this, HistoriqueReservationsActivity.class);
-            startActivity(intent);
+            launcher.launch(intent);
 
         } else if (id == R.id.buttonLogout) {
             Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            launcher.launch(intent);
 
         }  else if (id == R.id.buttonFilter) {
             afficherPopupFiltre(view);

@@ -156,7 +156,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         reservation.setMontantPaye(voyage.getPrix() * nbPlacesReserveesInt);
         reservation.setStatut("Confirmée");
         reservation.setNbPersonnes(nbPlacesReserveesInt);
-        reservation.setImageUrl(voyage.getImageUrl());
+        reservation.setImageUrl(voyage.getImageUrls().get(0));
 
         ReservationDao reservationDao = new ReservationDao(DetailActivity.this);
         long nouvelleReservationId = reservationDao.ajouterReservation(reservation);

@@ -85,58 +85,6 @@ public class HttpJsonService {
     }
 
 
-    public void getVoyages(String filtreType, int[] filtreBudget, String filtreDestination, EcouteurDeDonnees chargeurDeDonnees)
-            throws IOException, JSONException {
-
-        String path = "";
-
-        if (!filtreType.isEmpty())
-            path += "type_de_voyage=" + filtreType + "&";
-
-        if (!filtreDestination.isEmpty())
-            path += "destination=" + filtreDestination + "&";
-
-        if (!path.isEmpty()) {
-            path = "?" + path;
-            path.substring(0, path.length() - 1);
-        }
-
-
-
-        OkHttpClient okHttpClient = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(URL_POINT_ENTREE + "/voyages/"+path)
-                .build();
-
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                final String jsonStr;
-                if (response.body() != null) {
-                    jsonStr = response.body().string();
-
-                    //Traitement de la réponse ici
-                    if (!jsonStr.isEmpty()) {
-                        ObjectMapper mapper = new ObjectMapper();
-                        try {
-                            List<Voyage> voyages = Arrays.asList(mapper.readValue(jsonStr, Voyage[].class));
-                            chargeurDeDonnees.onDataLoaded(voyages);
-                        } catch (JsonProcessingException e) {
-                            chargeurDeDonnees.onError("Problème du JSON dans les voyages reçus");
-                            call.cancel();
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onFailure(@NonNull Call call, IOException e) {
-                chargeurDeDonnees.onError("Problème de connexion au serveur !");
-                call.cancel();
-            }
-        });
-    }
-
     public void postClient(Client client, EcouteurDeDonnees chargeurDeDonnees) throws JSONException {
 
         // Variable ByRef (pointeur) Devient false si le email est déjà inscrit
@@ -194,6 +142,58 @@ public class HttpJsonService {
                             });
                         } catch (JSONException e) {
                             chargeurDeDonnees.onError("Problème de JSON Object !");
+                            call.cancel();
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call call, IOException e) {
+                chargeurDeDonnees.onError("Problème de connexion au serveur !");
+                call.cancel();
+            }
+        });
+    }
+
+
+    public void getVoyages(String filtreType, int[] filtreBudget, String filtreDestination, EcouteurDeDonnees chargeurDeDonnees)
+            throws IOException, JSONException {
+
+        String path = "";
+
+        if (!(filtreType == null))
+            path += "type_de_voyage=" + filtreType + "&";
+
+        if (!(filtreDestination == null))
+            path += "destination=" + filtreDestination + "&";
+
+        if (!path.isEmpty()) {
+            path = "?" + path;
+            path.substring(0, path.length() - 1);
+        }
+
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(URL_POINT_ENTREE + "/voyages/"+path)
+                .build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                final String jsonStr;
+                if (response.body() != null) {
+                    jsonStr = response.body().string();
+
+                    //Traitement de la réponse ici
+                    if (!jsonStr.isEmpty()) {
+                        ObjectMapper mapper = new ObjectMapper();
+                        try {
+                            List<Voyage> voyages = Arrays.asList(mapper.readValue(jsonStr, Voyage[].class));
+                            chargeurDeDonnees.onDataLoaded(voyages);
+                        } catch (JsonProcessingException e) {
+                            chargeurDeDonnees.onError("Problème du JSON dans les voyages reçus");
                             call.cancel();
                         }
                     }
