@@ -3,6 +3,8 @@ package com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees;
 public class Reservation {
 
     private int id;
+    private String userId;
+    private String voyageId;
     private String destination;
     private String dateVoyage;
     private double montantPaye;
@@ -13,8 +15,10 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(int id, String destination, String dateVoyage, double montantPaye, String statut, int nbPersonnes, String imageUrl) {
+    public Reservation(int id, String userId, String voyagId, String destination, String dateVoyage, double montantPaye, String statut, int nbPersonnes, String imageUrl) {
         this.id = id;
+        this.userId = userId;
+        this.voyageId = voyagId;
         this.destination = destination;
         this.dateVoyage = dateVoyage;
         this.montantPaye = montantPaye;
@@ -77,5 +81,21 @@ public class Reservation {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getVoyageId() {
+        return voyageId;
+    }
+
+    public void setVoyageId(String voyageId) {
+        this.voyageId = voyageId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

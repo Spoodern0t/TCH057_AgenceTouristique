@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Modele {
+
     private List<Voyage> voyages = new ArrayList<>();
-    public List<Voyage> getvoyages() {
-        return voyages;
-    }
     public void setVoyages(List<Voyage> voyages) {
         this.voyages = voyages;
     }
+
 
     public Voyage getVoyageById(String id) {
         for (Voyage voyage:voyages) {

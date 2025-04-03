@@ -6,12 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
-import com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao.ReservationDao;
-import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.TripsAdaptateur;
 import com.squareup.picasso.Picasso;
@@ -72,9 +69,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         spinDateDepart.setOnItemSelectedListener(this);
 
-        btnReserver.setOnClickListener(v -> {
-                handleReservation(voyage, spinDateDepart.getSelectedItem());
-            });
+        btnReserver.setOnClickListener(v -> handleReservation(voyage, spinDateDepart.getSelectedItem()));
     }
 
 
@@ -123,9 +118,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void handleReservation(Voyage voyage, Object selectedItem) {
+
         Voyage.Trip tripChoisi = (Voyage.Trip) selectedItem;
         String nbPlacesString = editPlacesReservees.getText().toString();
-        int nbPlacesReserveesInt = 0;
+
+        int nbPlacesReserveesInt;
 
         if (nbPlacesString.isEmpty()) {
             Toast.makeText(DetailActivity.this, "Veuillez entrer le nombre de places.", Toast.LENGTH_SHORT).show();
@@ -149,18 +146,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-        Reservation reservation = new Reservation();
-        reservation.setDestination(voyage.getDestination());
-        reservation.setDateVoyage(tripChoisi.getDate());
-        reservation.setMontantPaye(voyage.getPrix() * nbPlacesReserveesInt);
-        reservation.setStatut("Confirmée");
-        reservation.setNbPersonnes(nbPlacesReserveesInt);
-        reservation.setImageUrl(voyage.getImageUrls().get(0));
+        boolean succes = modelView.ajouteReservation(this, voyage, tripChoisi, nbPlacesReserveesInt);
 
-        ReservationDao reservationDao = new ReservationDao(DetailActivity.this);
-        long nouvelleReservationId = reservationDao.ajouterReservation(reservation);
-
-        if (nouvelleReservationId > 0) {
+        if (succes) {
             Toast.makeText(DetailActivity.this, "Réservation enregistrée avec succès!", Toast.LENGTH_SHORT).show();
 
             tripChoisi.diminuerNbPlaces(nbPlacesReserveesInt);

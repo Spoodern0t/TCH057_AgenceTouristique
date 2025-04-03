@@ -1,5 +1,7 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.VueModele;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -7,15 +9,16 @@ import androidx.lifecycle.ViewModel;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.Modele;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.ModeleManager;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao.ClientDao;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao.ReservationDao;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao.VoyageDao;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class AgenceViewModel extends ViewModel {
 
@@ -23,7 +26,6 @@ public class AgenceViewModel extends ViewModel {
     private final MutableLiveData<Client> inscriptionLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Voyage>> voyagesLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> erreurLiveData = new MutableLiveData<>();
-    private final MutableLiveData<String> reservationResult = new MutableLiveData<>();
 
     private final Modele modele;
 
@@ -132,5 +134,16 @@ public class AgenceViewModel extends ViewModel {
         } catch (IOException e) {
             erreurLiveData.postValue("Problème d'accès à l'API");
         }
+    }
+
+    public boolean ajouteReservation(Context context, Voyage voyage, Voyage.Trip tripChoisi, int nbPlacesReservees) {
+
+        Reservation reservation = new Reservation(0, null, voyage.getId(),
+                voyage.getDestination(), tripChoisi.getDate(),
+                voyage.getPrix() * nbPlacesReservees,
+                "Confirmée", nbPlacesReservees, voyage.getImageUrls().get(0));
+
+        ReservationDao reservationDao = new ReservationDao(context);
+        return reservationDao.ajouterReservation(reservation);
     }
 }
