@@ -15,10 +15,10 @@ import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -174,7 +174,7 @@ public class AgenceViewModel extends ViewModel {
         List<Voyage> voyagesFiltres = new ArrayList<>();
         for (Voyage voyage: voyages) {
 
-            String nomVoyage = voyage.getNomVoyage().replaceAll("\\p{M}", "");
+            String nomVoyage = StringUtils.stripAccents(voyage.getNomVoyage());
             // Tester le regex et ajouter la la liste filtrée si ca renvoie vrai
             boolean estMatch = regexPattern == null || regexPattern.matcher(nomVoyage).find();
             if (estMatch) {
