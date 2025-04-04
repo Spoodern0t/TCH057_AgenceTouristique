@@ -63,7 +63,6 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
 
         voyagesListView.setOnItemClickListener(this);
 
-
         // Aucun resultat attendu
         launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -76,7 +75,10 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
         modelView.getVoyages().observe(this, voyages -> {
-            voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
+            Voyage[] tabVoyages = new Voyage[voyages.size()];
+            voyages.toArray(tabVoyages);
+
+            voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, tabVoyages));
         });
 
         modelView.chargerVoyages(null, null, null);
