@@ -97,8 +97,6 @@ public class AgenceViewModel extends ViewModel {
                 @Override
                 public void onDataLoaded(Object data) {
                     List<Voyage> voyages = (List<Voyage>) data;
-                    modele.setVoyages(voyages);
-
                     if (filtreBudget != null) {
                         List<Voyage> voyagesFiltres = new ArrayList<>();
 
@@ -111,9 +109,12 @@ public class AgenceViewModel extends ViewModel {
                             }
                         }
 
+                        modele.setVoyages(voyagesFiltres);
                         voyagesLiveData.postValue(voyagesFiltres);
                     } else {
 
+
+                        modele.setVoyages(voyages);
                         voyagesLiveData.postValue(voyages);
                     }
                 }
@@ -173,7 +174,7 @@ public class AgenceViewModel extends ViewModel {
         List<Voyage> voyagesFiltres = new ArrayList<>();
         for (Voyage voyage: voyages) {
 
-            String nomVoyage = Normalizer.normalize(voyage.getNomVoyage(), Normalizer.Form.NFD);
+            String nomVoyage = voyage.getNomVoyage().replaceAll("\\p{M}", "");
             // Tester le regex et ajouter la la liste filtrée si ca renvoie vrai
             boolean estMatch = regexPattern == null || regexPattern.matcher(nomVoyage).find();
             if (estMatch) {
