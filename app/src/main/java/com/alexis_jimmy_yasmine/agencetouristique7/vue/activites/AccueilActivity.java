@@ -153,32 +153,28 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             String url = "/?";
             int[] rangeeBudget = obtenirRangeeBudgetDepuisTexte(filtreBudget);
             Pattern regex = null;
+            /*
             String nomRecherche = searchEditText.getText().toString();
             if (!nomRecherche.isEmpty()) {
                 regex = Pattern.compile(nomRecherche, Pattern.CASE_INSENSITIVE);
             }
+             */
 
 
             if (filtreType.equalsIgnoreCase("Tous les types")) {
                 filtreType = null;
             }
-            if (!filtreBudget.equalsIgnoreCase("Tous les budgets")) {
-                switch (filtreBudget) {
-                    case "Moins de 300$": rangeeBudget = new int[]{0, 300}; break;
-                    case "300$ - 600$": rangeeBudget = new int[]{300, 600}; break;
-                    case "Plus de 600$": rangeeBudget = new int[]{600, 2147483647}; break;
-                    default: filtreBudget = null;
-                }
-            }
             if (filtreDestination.equalsIgnoreCase("Toutes les destinations")) {
                 filtreDestination = null;
             }
 
+            /*
             if (url.endsWith("&") && url.length() > 2) {
                 url = url.substring(0, url.length() - 1);
             } else if (url.equals("/?")) {
                 url = "/";
             }
+             */
 
             modelView.chargerVoyages(filtreType, rangeeBudget, filtreDestination);
         }
@@ -213,7 +209,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             switch (budget) {
                 case "Moins de 300$": budgetRange = new int[]{0, 300}; break;
                 case "300$ - 600$": budgetRange = new int[]{300, 600}; break;
-                case "Plus de 600$": budgetRange = new int[]{600, 2147483647}; break;
+                case "Plus de 600$": budgetRange = new int[]{600, Integer.MAX_VALUE}; break;
             }
         }
         // Type
@@ -222,7 +218,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         }
         url = url.substring(0, url.length() - 1);
 
-        //modelView.getVoyages(url, budgetRange, regex);
+        modelView.regexVoyages(regex);
     }
 
     // Afficher un message d'erreur

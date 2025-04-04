@@ -18,7 +18,10 @@ import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class AgenceViewModel extends ViewModel {
 
@@ -90,12 +93,29 @@ public class AgenceViewModel extends ViewModel {
 
     public void chargerVoyages(String filtreType, int[] filtreBudget, String filtreDestination) {
         try {
-            VoyageDao.getVoyages(filtreType, filtreBudget, filtreDestination, new EcouteurDeDonnees() {
+            VoyageDao.getVoyages(filtreType, filtreDestination, new EcouteurDeDonnees() {
                 @Override
                 public void onDataLoaded(Object data) {
                     List<Voyage> voyages = (List<Voyage>) data;
                     modele.setVoyages(voyages);
-                    voyagesLiveData.postValue(voyages);
+
+                    if (filtreBudget != null) {
+                        List<Voyage> voyagesFiltres = new ArrayList<>();
+
+                        for (Voyage voyage : voyages) {
+
+                            // Tester si le prix est dans le budget
+                            boolean estDansRange = (voyage.getPrix() >= filtreBudget[0] && voyage.getPrix() <= filtreBudget[1]);
+                            if (estDansRange) {
+                                voyagesFiltres.add(voyage);
+                            }
+                        }
+
+                        voyagesLiveData.postValue(voyagesFiltres);
+                    } else {
+
+                        voyagesLiveData.postValue(voyages);
+                    }
                 }
 
                 @Override
@@ -145,5 +165,22 @@ public class AgenceViewModel extends ViewModel {
 
         ReservationDao reservationDao = new ReservationDao(context);
         return reservationDao.ajouterReservation(reservation);
+    }
+
+    public void regexVoyages(Pattern regexPattern) {
+
+        List<Voyage> voyages = modele.getVoyages();
+        List<Voyage> voyagesFiltres = new ArrayList<>();
+        for (Voyage voyage: voyages) {
+
+            String nomVoyage = Normalizer.normalize(voyage.getNomVoyage(), Normalizer.Form.NFD);
+            // Tester le regex et ajouter la la liste filtrée si ca renvoie vrai
+            boolean estMatch = regexPattern == null || regexPattern.matcher(nomVoyage).find();
+            if (estMatch) {
+                voyagesFiltres.add(voyage);
+            }
+        }
+
+        voyagesLiveData.postValue(voyagesFiltres);
     }
 }

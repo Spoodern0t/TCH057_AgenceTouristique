@@ -28,4 +28,8 @@ public class Modele {
         }
         return 0;
     }
+
+    public List<Voyage> getVoyages() {
+        return voyages;
+    }
 }

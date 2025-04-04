@@ -8,10 +8,10 @@ import org.json.JSONException;
 import java.io.IOException;
 
 public class VoyageDao {
-    public static void getVoyages(String filtreType, int[] filtreBudget, String filtreDestination,
+    public static void getVoyages(String filtreType, String filtreDestination,
                                  EcouteurDeDonnees ecouteurDeDonnees)
             throws JSONException, IOException {
-        new HttpJsonService().getVoyages(filtreType, filtreBudget, filtreDestination, ecouteurDeDonnees);
+        new HttpJsonService().getVoyages(filtreType, filtreDestination, ecouteurDeDonnees);
     }
 
     public static void updateTripAvailability(Voyage voyage, int position,

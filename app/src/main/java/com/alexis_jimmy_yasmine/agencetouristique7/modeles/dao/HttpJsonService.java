@@ -158,7 +158,7 @@ public class HttpJsonService {
     }
 
 
-    public void getVoyages(String filtreType, int[] filtreBudget, String filtreDestination, EcouteurDeDonnees chargeurDeDonnees)
+    public void getVoyages(String filtreType, String filtreDestination, EcouteurDeDonnees chargeurDeDonnees)
             throws IOException, JSONException {
 
         String path = "";
@@ -193,6 +193,7 @@ public class HttpJsonService {
                     if (!jsonStr.isEmpty()) {
                         ObjectMapper mapper = new ObjectMapper();
                         try {
+
                             List<Voyage> voyages = Arrays.asList(mapper.readValue(jsonStr, Voyage[].class));
                             chargeurDeDonnees.onDataLoaded(voyages);
                         } catch (JsonProcessingException e) {
