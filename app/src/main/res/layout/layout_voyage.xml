@@ -10,27 +10,40 @@
 
     <ImageView
         android:id="@+id/lvVoyageImage"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
         android:contentDescription="@string/image_de_la_destination"
         app:srcCompat="@drawable/logo"
         android:scaleType="centerCrop"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/lvVoyageDestination"
+            android:id="@+id/lvNomVoyage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textColor="@color/black_text"
             android:textColorHint="#858585"
             android:textColorLink="@color/colorPrimary"
-            android:textSize="20sp"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lvVoyageDestination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="#858585"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -38,27 +51,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/hint_text_color"
             android:textColorHint="#858585"
             android:textColorLink="@color/colorPrimary"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_below="@id/lvVoyageDestination"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lvVoyageDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|center_vertical"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxLines="3"
             android:textColor="@color/black_text"
             android:textColorHint="#858585"
             android:textColorLink="@color/colorPrimary"
-            android:textSize="16sp"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:layout_alignParentEnd="true"/>
+            android:textSize="14sp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
