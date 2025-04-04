@@ -18,12 +18,12 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
 
-    private Voyage[] voyages;
+    private List<Voyage> voyages;
     private Context contexte;
     private int viewResourceId;
     private Resources resources;
 
-    public VoyagesAdaptateur(@NonNull Context context, int viewResourceId, @NonNull Voyage[] voyages) {
+    public VoyagesAdaptateur(@NonNull Context context, int viewResourceId, @NonNull List<Voyage> voyages) {
         super(context, viewResourceId, voyages);
         this.contexte = context;
         this.viewResourceId = viewResourceId;
@@ -33,7 +33,7 @@ public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
 
     @Override
     public int getCount() {
-        return this.voyages.length;
+        return this.voyages.size();
     }
 
     @NonNull
@@ -47,7 +47,7 @@ public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
             view = layoutInflater.inflate(this.viewResourceId, parent, false);
         }
 
-        final Voyage voyage = this.voyages[position];
+        final Voyage voyage = this.voyages.get(position);
 
         if (voyage != null) {
             final ImageView tvImage = (ImageView) view.findViewById(R.id.lvVoyageImage);
@@ -55,17 +55,12 @@ public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
             final TextView tvResume = (TextView) view.findViewById(R.id.lvVoyageDescription);
             final TextView tvPrix = (TextView) view.findViewById(R.id.lvVoyagePrix);
 
-            String imageUrlToLoad = voyage.getImageUrl();
 
-            if (voyage.getImageUrls() != null && !voyage.getImageUrls().isEmpty()) {
-                imageUrlToLoad = voyage.getImageUrls().get(0);
-            }
-
-            Picasso.get().load(imageUrlToLoad).into(tvImage);
+            String imageUrlToLoad = voyage.getImageUrls().get(0);
 
             // Picasso set l'image
             Picasso.get().load(imageUrlToLoad).into(tvImage);
-            tvDestination.setText(voyage.getDestination().replace("Destination : ", ""));
+            tvDestination.setText(voyage.getDestination());
             tvResume.setText(voyage.getDescription());
             tvPrix.setText(voyage.getPrix()+" $");
         }

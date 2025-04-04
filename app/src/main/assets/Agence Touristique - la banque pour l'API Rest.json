@@ -636,11 +636,5 @@
             "telephone": "1234567890",
             "adresse": "ref, ref, ref"
         }
-    ],
-    "voyage-id": {
-        "id": 8
-    },
-    "clients-id": {
-        "id": 11
-    }
+    ]
 }

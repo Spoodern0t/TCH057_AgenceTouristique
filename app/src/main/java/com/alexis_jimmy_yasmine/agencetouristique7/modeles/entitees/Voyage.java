@@ -10,7 +10,7 @@ import java.util.List;
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public class Voyage {
     @JsonProperty("id")
-    private int id;
+    private String id;
 
     @JsonProperty("nom_voyage")
     private String nomVoyage;
@@ -23,9 +23,6 @@ public class Voyage {
 
     @JsonProperty("destination")
     private String destination;
-
-    @JsonProperty("image_url")
-    private String imageUrl;
 
     @JsonProperty("image_urls")
     private List<String> imageUrls;
@@ -66,18 +63,25 @@ public class Voyage {
         public void setNbPlacesDisponibles(int nbPlacesDisponibles) {
             this.nbPlacesDisponibles = nbPlacesDisponibles;
         }
+
+        public void augmenterNbPlaces(int nbPlacesCancelees) {
+            nbPlacesDisponibles += nbPlacesCancelees;
+        }
+
+        public void diminuerNbPlaces(int nbPlacesReservees) {
+            nbPlacesDisponibles -= nbPlacesReservees;
+        }
     }
 
     public Voyage() {
     }
 
-    public Voyage(int id, String nomVoyage, String description, int prix, String destination, String imageUrl, List<String> imageUrls, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
+    public Voyage(String id, String nomVoyage, String description, int prix, String destination, List<String> imageUrls, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
         this.id = id;
         this.nomVoyage = nomVoyage;
         this.description = description;
         this.prix = prix;
         this.destination = destination;
-        this.imageUrl = imageUrl;
         this.imageUrls = imageUrls;
         this.dureeJours = dureeJours;
         this.trips = trips;
@@ -86,11 +90,11 @@ public class Voyage {
     }
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -131,14 +135,6 @@ public class Voyage {
 
     public void setDestination(String destination) {
         this.destination = destination;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public List<String> getImageUrls() {

@@ -2,13 +2,14 @@ package com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao;
 
 import android.content.Context;
 
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.SQLite.ReservationDatabaseHelper;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
 
 import java.util.List;
 
 public class ReservationDao {
 
-    private ReservationDatabaseHelper dbHelper;
+    private final ReservationDatabaseHelper dbHelper;
 
     public ReservationDao(Context context) {
         dbHelper = new ReservationDatabaseHelper(context);
@@ -18,11 +19,11 @@ public class ReservationDao {
         return dbHelper.getAllReservations();
     }
 
-    public long ajouterReservation(Reservation reservation) {
+    public boolean ajouterReservation(Reservation reservation) {
         return dbHelper.ajouterReservation(reservation);
     }
 
-    public int supprimerReservation(int reservationId) {
+    public boolean supprimerReservation(int reservationId) {
         return dbHelper.supprimerReservation(reservationId);
     }
 }
