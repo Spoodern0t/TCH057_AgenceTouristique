@@ -118,10 +118,6 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         popupWindow.setFocusable(true);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-        Spinner popupTypeSpinner = popupView.findViewById(R.id.popupTypeSpinner);
-        Spinner popupBudgetSpinner = popupView.findViewById(R.id.popupBudgetSpinner);
-        Spinner popupDestinationSpinner = popupView.findViewById(R.id.popupDestinationSpinner);
-        Spinner popupDateSpinner = popupView.findViewById(R.id.popupDateSpinner);
         Button popupFilterButton = popupView.findViewById(R.id.popupFilterButton);
 
         popupFilterButton.setOnClickListener(new View.OnClickListener() {
@@ -140,13 +136,13 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             View popupView = popupWindow.getContentView();
 
             Spinner popupTypeSpinner = popupView.findViewById(R.id.popupTypeSpinner);
-            Spinner popupBudgetSpinner = popupView.findViewById(R.id.popupBudgetSpinner);
+            Spinner popupBudgetSlider = popupView.findViewById(R.id.popupBudgetSlider);
             Spinner popupDestinationSpinner = popupView.findViewById(R.id.popupDestinationSpinner);
             Spinner popupDateSpinner = popupView.findViewById(R.id.popupDateSpinner);
 
 
             String filtreType = popupTypeSpinner.getSelectedItem().toString();
-            String filtreBudget = popupBudgetSpinner.getSelectedItem().toString();
+            String filtreBudget = popupBudgetSlider.getSelectedItem().toString();
             String filtreDestination = popupDestinationSpinner.getSelectedItem().toString();
             String filtreDate = popupDateSpinner.getSelectedItem().toString();
 

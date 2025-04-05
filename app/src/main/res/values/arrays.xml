@@ -29,4 +29,9 @@
         <item>Prochain an</item>
     </string-array>
 
+    <array name="slider_values">
+        <item>0.0</item>
+        <item>5000.0</item>
+    </array>
+
 </resources>
