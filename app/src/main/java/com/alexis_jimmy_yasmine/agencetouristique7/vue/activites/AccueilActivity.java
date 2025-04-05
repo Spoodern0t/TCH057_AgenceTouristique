@@ -1,10 +1,10 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.vue.activites;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Visibility;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +13,16 @@ import android.widget.*;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.VoyagesAdaptateur;
+import com.google.android.material.slider.RangeSlider;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -34,16 +36,22 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
     private PopupWindow popupWindow;
     private ActivityResultLauncher<Intent> launcher;
 
+    // Composant du popup
+    Spinner popupTypeSpinner, popupDestinationSpinner;
+    RangeSlider popupBudgetSlider;
+    SwitchCompat popupDateSwitch;
+    DatePicker popupDatePicker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
 
         // Composantes de la navbar
-        btnHome = (ImageButton) findViewById(R.id.buttonHome);
-        btnHistorique = (ImageButton) findViewById(R.id.buttonHistorique);
-        btnLogout = (ImageButton) findViewById(R.id.buttonLogout);
-        btnFilter = (ImageButton) findViewById(R.id.buttonFilter);
+        btnHome = findViewById(R.id.buttonHome);
+        btnHistorique = findViewById(R.id.buttonHistorique);
+        btnLogout = findViewById(R.id.buttonLogout);
+        btnFilter = findViewById(R.id.buttonFilter);
 
         // ajouter un écouteur sur les boutons
         btnHome.setOnClickListener(this);
@@ -52,10 +60,10 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         btnFilter.setOnClickListener(this);
 
         // récupérer les composantes de la vue
-        searchEditText = (EditText) findViewById(R.id.searchEditText);
-        spinBudgetAccueil = (Spinner) findViewById(R.id.budgetSpinner);
-        spinTypeAccueil = (Spinner) findViewById(R.id.typeSpinner);
-        voyagesListView = (ListView) findViewById(R.id.voyagesListView);
+        searchEditText = findViewById(R.id.searchEditText);
+        spinBudgetAccueil = findViewById(R.id.budgetSpinner);
+        spinTypeAccueil = findViewById(R.id.typeSpinner);
+        voyagesListView = findViewById(R.id.voyagesListView);
 
         searchEditText.addTextChangedListener(this);
         spinBudgetAccueil.setOnItemSelectedListener(this);
@@ -81,7 +89,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, tabVoyages));
         });
 
-        modelView.chargerVoyages(null, null, null);
+        modelView.chargerVoyages(null, null, null, null);
     }
 
     @Override
@@ -116,16 +124,26 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         );
 
         popupWindow.setFocusable(true);
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupWindow.showAsDropDown(btnFilter, 0, 0);
 
         Button popupFilterButton = popupView.findViewById(R.id.popupFilterButton);
+        popupTypeSpinner = popupView.findViewById(R.id.popupTypeSpinner);
+        popupBudgetSlider = popupView.findViewById(R.id.popupBudgetSlider);
+        popupDestinationSpinner = popupView.findViewById(R.id.popupDestinationSpinner);
+        popupDatePicker = popupView.findViewById(R.id.popupDatePicker);
+        popupDateSwitch = popupView.findViewById(R.id.popupDateSwitch);
 
-        popupFilterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        popupDateSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                popupDatePicker.setVisibility(View.VISIBLE);
+            } else {
+                popupDatePicker.setVisibility(View.GONE);
+            }
+        });
+
+        popupFilterButton.setOnClickListener(v -> {
                 appliquerPopupFiltres();
                 popupWindow.dismiss();
-            }
         });
     }
 
@@ -133,29 +151,11 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
     // Appliquer les filtres depuis le popup
     private void appliquerPopupFiltres() {
         if (popupWindow != null && popupWindow.isShowing()) {
-            View popupView = popupWindow.getContentView();
-
-            Spinner popupTypeSpinner = popupView.findViewById(R.id.popupTypeSpinner);
-            Spinner popupBudgetSlider = popupView.findViewById(R.id.popupBudgetSlider);
-            Spinner popupDestinationSpinner = popupView.findViewById(R.id.popupDestinationSpinner);
-            Spinner popupDateSpinner = popupView.findViewById(R.id.popupDateSpinner);
-
 
             String filtreType = popupTypeSpinner.getSelectedItem().toString();
-            String filtreBudget = popupBudgetSlider.getSelectedItem().toString();
+            List<Float> filtreBudget = popupBudgetSlider.getValues();
             String filtreDestination = popupDestinationSpinner.getSelectedItem().toString();
-            String filtreDate = popupDateSpinner.getSelectedItem().toString();
-
-            String url = "/?";
-            int[] rangeeBudget = obtenirRangeeBudgetDepuisTexte(filtreBudget);
-            Pattern regex = null;
-            /*
-            String nomRecherche = searchEditText.getText().toString();
-            if (!nomRecherche.isEmpty()) {
-                regex = Pattern.compile(nomRecherche, Pattern.CASE_INSENSITIVE);
-            }
-             */
-
+            LocalDate filtreDate = null;
 
             if (filtreType.equalsIgnoreCase("Tous les types")) {
                 filtreType = null;
@@ -163,16 +163,14 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             if (filtreDestination.equalsIgnoreCase("Toutes les destinations")) {
                 filtreDestination = null;
             }
-
-            /*
-            if (url.endsWith("&") && url.length() > 2) {
-                url = url.substring(0, url.length() - 1);
-            } else if (url.equals("/?")) {
-                url = "/";
+            if (popupDateSwitch.isChecked()) {
+                int jour = popupDatePicker.getDayOfMonth();
+                int mois = popupDatePicker.getMonth() + 1;
+                int annee = popupDatePicker.getYear();
+                filtreDate = LocalDate.of(annee, mois, jour);
             }
-             */
 
-            modelView.chargerVoyages(filtreType, rangeeBudget, filtreDestination);
+            modelView.chargerVoyages(filtreType, filtreBudget, filtreDestination, filtreDate);
         }
     }
 

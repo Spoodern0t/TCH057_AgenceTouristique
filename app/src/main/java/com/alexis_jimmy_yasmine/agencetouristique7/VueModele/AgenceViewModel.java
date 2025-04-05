@@ -19,7 +19,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -91,32 +93,14 @@ public class AgenceViewModel extends ViewModel {
         }
     }
 
-    public void chargerVoyages(String filtreType, int[] filtreBudget, String filtreDestination) {
+    public void chargerVoyages(String filtreType, List<Float> filtreBudget, String filtreDestination, LocalDate filtreDate) {
         try {
-            VoyageDao.getVoyages(filtreType, filtreDestination, new EcouteurDeDonnees() {
+            VoyageDao.getVoyages(filtreType, filtreBudget, filtreDestination, filtreDate, new EcouteurDeDonnees() {
                 @Override
                 public void onDataLoaded(Object data) {
                     List<Voyage> voyages = (List<Voyage>) data;
-                    if (filtreBudget != null) {
-                        List<Voyage> voyagesFiltres = new ArrayList<>();
-
-                        for (Voyage voyage : voyages) {
-
-                            // Tester si le prix est dans le budget
-                            boolean estDansRange = (voyage.getPrix() >= filtreBudget[0] && voyage.getPrix() <= filtreBudget[1]);
-                            if (estDansRange) {
-                                voyagesFiltres.add(voyage);
-                            }
-                        }
-
-                        modele.setVoyages(voyagesFiltres);
-                        voyagesLiveData.postValue(voyagesFiltres);
-                    } else {
-
-
-                        modele.setVoyages(voyages);
-                        voyagesLiveData.postValue(voyages);
-                    }
+                    modele.setVoyages(voyages);
+                    voyagesLiveData.postValue(voyages);
                 }
 
                 @Override
@@ -142,7 +126,7 @@ public class AgenceViewModel extends ViewModel {
             VoyageDao.updateTripAvailability(voyage, position, new EcouteurDeDonnees() {
                 @Override
                 public void onDataLoaded(Object data) {
-                    chargerVoyages(null, null, null);
+                    chargerVoyages(null, null, null, null);
                 }
 
                 @Override

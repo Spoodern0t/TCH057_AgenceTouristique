@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -158,21 +159,27 @@ public class HttpJsonService {
     }
 
 
-    public void getVoyages(String filtreType, String filtreDestination, EcouteurDeDonnees chargeurDeDonnees)
+    public void getVoyages(String filtreType, List<Float> filtreBudget, String filtreDestination, LocalDate filtreDate, EcouteurDeDonnees chargeurDeDonnees)
             throws IOException, JSONException {
 
-        String path = "";
+        String path = "?";
 
         if (!(filtreType == null))
             path += "type_de_voyage=" + filtreType + "&";
 
+        if (!(filtreBudget == null)) {
+            path += "prix_gte=" + filtreBudget.get(0) + "&";
+            path += "prix_lte=" + filtreBudget.get(1) + "&";
+        }
+
         if (!(filtreDestination == null))
             path += "destination=" + filtreDestination + "&";
 
-        if (!path.isEmpty()) {
-            path = "?" + path;
-            path.substring(0, path.length() - 1);
-        }
+        if (!(filtreDate == null))
+            path += "date_lte=" + filtreDate + "&";
+
+        // Enlève le symbole dernier symbole de path (soit "&" ou "?")
+        path = path.substring(0, path.length() - 1);
 
 
         OkHttpClient okHttpClient = new OkHttpClient();
