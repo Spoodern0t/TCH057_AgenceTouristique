@@ -52,14 +52,11 @@ public class HistoriqueReservationsActivity extends AppCompatActivity implements
 
         List<Reservation> reservations = reservationDao.getAllReservations();
 
-        if (reservations.isEmpty()) {
+        if (reservations.isEmpty())
             Toast.makeText(this, "Aucune réservation enregistrée.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(HistoriqueReservationsActivity.this, AccueilActivity.class);
-            startActivity(intent);
-        } else {
-            adaptateur = new ReservationsAdaptateur(this, R.layout.layout_reservation_historique_item, reservations, this);
-            listViewReservationsHistorique.setAdapter(adaptateur);
-        }
+
+        adaptateur = new ReservationsAdaptateur(this, R.layout.layout_reservation_historique_item, reservations, this);
+        listViewReservationsHistorique.setAdapter(adaptateur);
     }
 
     public void deleteReservation(Reservation reservationToDelete) {

@@ -1,8 +1,8 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <style name="Base.Theme.AgenceTouristique7" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:paddingTop">3dp</item>
     </style>
 
     <style name="Theme.AgenceTouristique7" parent="Base.Theme.AgenceTouristique7" />

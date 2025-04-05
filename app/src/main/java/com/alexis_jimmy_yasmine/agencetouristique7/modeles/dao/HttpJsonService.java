@@ -8,12 +8,10 @@ import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +23,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class HttpJsonService {
 
@@ -89,9 +86,6 @@ public class HttpJsonService {
 
 
     public void postClient(Client client, EcouteurDeDonnees chargeurDeDonnees) throws JSONException {
-
-        // Variable ByRef (pointeur) Devient false si le email est déjà inscrit
-        final boolean[] emailUnique = {true};
 
         OkHttpClient okHttpClient = new OkHttpClient();
 
@@ -159,7 +153,7 @@ public class HttpJsonService {
     }
 
 
-    public void getVoyages(String filtreType, List<Float> filtreBudget, String filtreDestination, EcouteurDeDonnees chargeurDeDonnees)
+    public void getVoyages(String filtreType, List<Float> filtreBudget, EcouteurDeDonnees chargeurDeDonnees)
             throws IOException, JSONException {
 
         String path = "?";
@@ -171,9 +165,6 @@ public class HttpJsonService {
             path += "prix_gte=" + filtreBudget.get(0) + "&";
             path += "prix_lte=" + filtreBudget.get(1) + "&";
         }
-
-        if (!(filtreDestination == null))
-            path += "destination=" + filtreDestination + "&";
 
         // Enlève le symbole dernier symbole de path (soit "&" ou "?")
         path = path.substring(0, path.length() - 1);

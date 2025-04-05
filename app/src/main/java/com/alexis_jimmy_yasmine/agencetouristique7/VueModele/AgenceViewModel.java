@@ -21,7 +21,6 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -95,22 +94,33 @@ public class AgenceViewModel extends ViewModel {
 
     public void chargerVoyages(String filtreType, List<Float> filtreBudget, String filtreDestination, LocalDate filtreDate) {
         try {
-            VoyageDao.getVoyages(filtreType, filtreBudget, filtreDestination, new EcouteurDeDonnees() {
+            VoyageDao.getVoyages(filtreType, filtreBudget, new EcouteurDeDonnees() {
                 @Override
                 public void onDataLoaded(Object data) {
                     List<Voyage> voyages = (List<Voyage>) data;
 
-                    if (!(filtreDate == null)) {
-
+                    if (!(filtreDate == null) || !(filtreDestination == null)) {
+                        // Filtrer par date
                         List<Voyage> voyagesFiltres = new ArrayList<>();
-
                         for (Voyage voyage : voyages) {
-                            Voyage.Trip[] trips = voyage.getTrips();
-                            for (Voyage.Trip trip : trips) {
-                                if (filtreDate.isBefore(LocalDate.parse(trip.getDate()))) {
-                                    voyagesFiltres.add(voyage);
-                                    break;
+                            boolean estAjoute = false;
+
+
+                            if (!(filtreDestination == null)) {
+                                estAjoute = voyage.getDestination().contains(filtreDestination);
+                            }
+
+                            if (!(filtreDate == null)) {
+                                Voyage.Trip[] trips = voyage.getTrips();
+                                for (Voyage.Trip trip : trips) {
+                                    if (filtreDate.isBefore(LocalDate.parse(trip.getDate()))) {
+                                        estAjoute = true;
+                                        break;
+                                    }
                                 }
+                            }
+                            if (estAjoute) {
+                                voyagesFiltres.add(voyage);
                             }
                         }
 
@@ -173,19 +183,22 @@ public class AgenceViewModel extends ViewModel {
     }
 
     public void regexVoyages(Pattern regexPattern) {
-
         List<Voyage> voyages = modele.getVoyages();
-        List<Voyage> voyagesFiltres = new ArrayList<>();
-        for (Voyage voyage: voyages) {
-
-            String nomVoyage = StringUtils.stripAccents(voyage.getNomVoyage());
-            // Tester le regex et ajouter la la liste filtrée si ca renvoie vrai
-            boolean estMatch = regexPattern == null || regexPattern.matcher(nomVoyage).find();
-            if (estMatch) {
-                voyagesFiltres.add(voyage);
+        if (!(regexPattern == null)) {
+            List<Voyage> voyagesFiltres = new ArrayList<>();
+            for (Voyage voyage : voyages) {
+                // Tester le regex et ajouter la la liste filtrée si ca renvoie vrai
+                String nomVoyage = StringUtils.stripAccents(voyage.getNomVoyage());
+                boolean estMatch = regexPattern.matcher(nomVoyage).find();
+                if (estMatch) voyagesFiltres.add(voyage);
             }
+            voyagesLiveData.postValue(voyagesFiltres);
+        } else {
+            voyagesLiveData.postValue(voyages);
         }
+    }
 
-        voyagesLiveData.postValue(voyagesFiltres);
+    public List<String> getVoyagesDestinations() {
+        return modele.getVoyagesDestinations();
     }
 }

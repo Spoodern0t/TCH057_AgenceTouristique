@@ -53,6 +53,7 @@
                 android:layout_weight="1"
                 android:hint="@string/ou_voulez_vous_aller"
                 android:imeOptions="actionSearch"
+                android:importantForAutofill="no"
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:singleLine="true"
@@ -72,36 +73,6 @@
                 android:gravity="center"
                 android:scaleType="centerInside"
                 android:src="@drawable/type" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <Spinner
-                android:id="@+id/budgetSpinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minHeight="48dp"
-                android:prompt="@string/budget_filter"
-                android:spinnerMode="dropdown" />
-
-            <Spinner
-                android:id="@+id/typeSpinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:entries="@array/type_options"
-                android:minHeight="48dp"
-                android:prompt="@string/type_filter"
-                android:spinnerMode="dialog" />
 
         </LinearLayout>
 

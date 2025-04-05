@@ -32,4 +32,17 @@ public class Modele {
     public List<Voyage> getVoyages() {
         return voyages;
     }
+
+    public List<String> getVoyagesDestinations() {
+        List<String> voyagesDestinations = new ArrayList<>();
+        voyagesDestinations.add("Toutes les destinations");
+        for (Voyage voyage: voyages) {
+            String[] destinations = voyage.getDestination().split(",");
+            String destination = destinations[destinations.length - 1].trim();
+            if (!voyagesDestinations.contains(destination)) {
+                voyagesDestinations.add(destination);
+            }
+        }
+        return voyagesDestinations;
+    }
 }
