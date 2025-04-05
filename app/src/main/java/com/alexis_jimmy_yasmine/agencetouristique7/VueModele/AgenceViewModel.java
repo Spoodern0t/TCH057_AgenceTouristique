@@ -95,12 +95,32 @@ public class AgenceViewModel extends ViewModel {
 
     public void chargerVoyages(String filtreType, List<Float> filtreBudget, String filtreDestination, LocalDate filtreDate) {
         try {
-            VoyageDao.getVoyages(filtreType, filtreBudget, filtreDestination, filtreDate, new EcouteurDeDonnees() {
+            VoyageDao.getVoyages(filtreType, filtreBudget, filtreDestination, new EcouteurDeDonnees() {
                 @Override
                 public void onDataLoaded(Object data) {
                     List<Voyage> voyages = (List<Voyage>) data;
-                    modele.setVoyages(voyages);
-                    voyagesLiveData.postValue(voyages);
+
+                    if (!(filtreDate == null)) {
+
+                        List<Voyage> voyagesFiltres = new ArrayList<>();
+
+                        for (Voyage voyage : voyages) {
+                            Voyage.Trip[] trips = voyage.getTrips();
+                            for (Voyage.Trip trip : trips) {
+                                if (filtreDate.isBefore(LocalDate.parse(trip.getDate()))) {
+                                    voyagesFiltres.add(voyage);
+                                    break;
+                                }
+                            }
+                        }
+
+                        modele.setVoyages(voyagesFiltres);
+                        voyagesLiveData.postValue(voyagesFiltres);
+                    } else {
+
+                        modele.setVoyages(voyages);
+                        voyagesLiveData.postValue(voyages);
+                    }
                 }
 
                 @Override

@@ -10,10 +10,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class VoyageDao {
-    public static void getVoyages(String filtreType, List<Float> filtreBudget, String filtreDestination, LocalDate filtreDate,
+    public static void getVoyages(String filtreType, List<Float> filtreBudget, String filtreDestination,
                                  EcouteurDeDonnees ecouteurDeDonnees)
             throws JSONException, IOException {
-        new HttpJsonService().getVoyages(filtreType, filtreBudget, filtreDestination, filtreDate, ecouteurDeDonnees);
+        new HttpJsonService().getVoyages(filtreType, filtreBudget, filtreDestination, ecouteurDeDonnees);
     }
 
     public static void updateTripAvailability(Voyage voyage, int position,

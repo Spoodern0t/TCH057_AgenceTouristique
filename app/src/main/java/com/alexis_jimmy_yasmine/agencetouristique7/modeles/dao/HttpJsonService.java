@@ -159,7 +159,7 @@ public class HttpJsonService {
     }
 
 
-    public void getVoyages(String filtreType, List<Float> filtreBudget, String filtreDestination, LocalDate filtreDate, EcouteurDeDonnees chargeurDeDonnees)
+    public void getVoyages(String filtreType, List<Float> filtreBudget, String filtreDestination, EcouteurDeDonnees chargeurDeDonnees)
             throws IOException, JSONException {
 
         String path = "?";
@@ -174,9 +174,6 @@ public class HttpJsonService {
 
         if (!(filtreDestination == null))
             path += "destination=" + filtreDestination + "&";
-
-        if (!(filtreDate == null))
-            path += "date_lte=" + filtreDate + "&";
 
         // Enlève le symbole dernier symbole de path (soit "&" ou "?")
         path = path.substring(0, path.length() - 1);
