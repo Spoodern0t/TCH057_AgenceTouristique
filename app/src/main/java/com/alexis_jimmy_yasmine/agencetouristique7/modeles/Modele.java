@@ -7,7 +7,11 @@ import java.util.List;
 
 public class Modele {
 
-    private List<Voyage> voyages = new ArrayList<>();
+    private List<Voyage> voyages;
+
+    public Modele() {
+        this.voyages = new ArrayList<>();
+    }
     public void setVoyages(List<Voyage> voyages) {
         this.voyages = voyages;
     }

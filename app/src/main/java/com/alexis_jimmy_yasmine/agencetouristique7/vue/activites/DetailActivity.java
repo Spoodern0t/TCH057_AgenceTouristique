@@ -60,7 +60,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         modelView.getVoyages().observe(this, voyages -> {
             // Update places available
-            updatePlacesAvailable(voyage);
+            updatePlacesAvailable(voyage.getTrips());
         });
 
 
@@ -101,19 +101,20 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         tActivites.setText(voyage.getActivitesIncluses());
 
         // Set up the Spinner
-        TripsAdaptateur tripsAdaptateur = new TripsAdaptateur(DetailActivity.this, R.layout.layout_trips, voyage.getTrips());
-        spinDateDepart.setAdapter(tripsAdaptateur);
+        if (!voyage.getTrips().isEmpty()) {
+            TripsAdaptateur tripsAdaptateur = new TripsAdaptateur(DetailActivity.this, R.layout.layout_trips, voyage.getTrips());
+            spinDateDepart.setAdapter(tripsAdaptateur);
+        }
     }
 
-    private void updatePlacesAvailable(Voyage voyage) {
-        if (voyage.getTrips() != null && voyage.getTrips().length > 0) {
-            spinDateDepart.setSelection(0, false);
+    private void updatePlacesAvailable(List<Voyage.Trip> trips) {
+        if (trips == null || trips.isEmpty() ) {
             Voyage.Trip premierTrip = (Voyage.Trip) spinDateDepart.getSelectedItem();
             tPlacesDisponible.setText(premierTrip.getStrNbPlacesDisponibles());
 
         } else {
-            Log.w("DetailActivity", "Voyage or trips null or empty in onChanged");
             tPlacesDisponible.setText("No trips available");
+            btnReserver.setFocusable(false);
         }
     }
 
@@ -139,10 +140,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         if (nbPlacesReserveesInt > tripChoisi.getNbPlacesDisponibles()) {
             Toast.makeText(DetailActivity.this, "Nombre de places souhaitées supérieur aux places disponibles.", Toast.LENGTH_LONG).show();
             return;
-        }
-
-        if (nbPlacesReserveesInt <= 0) {
+        }else if (nbPlacesReserveesInt <= 0) {
             Toast.makeText(DetailActivity.this, "Veuillez entrer un nombre de places valide et supérieur à zéro.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (tripChoisi.estDateValide()) {
+            Toast.makeText(DetailActivity.this, "La date choisie est déjà passée.", Toast.LENGTH_LONG).show();
             return;
         }
 

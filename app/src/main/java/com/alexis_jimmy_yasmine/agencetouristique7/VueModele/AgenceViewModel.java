@@ -109,7 +109,7 @@ public class AgenceViewModel extends ViewModel {
 
                             if (!(filtreDate == null)) {
                                 estValable = false;
-                                Voyage.Trip[] trips = voyage.getTrips();
+                                List<Voyage.Trip> trips = voyage.getTrips();
                                 for (Voyage.Trip trip : trips) {
                                     if (filtreDate.isBefore(LocalDate.parse(trip.getDate()))) {
                                         estValable = true;
@@ -121,11 +121,9 @@ public class AgenceViewModel extends ViewModel {
                                 voyagesFiltres.add(voyage);
                             }
                         }
-
                         modele.setVoyages(voyagesFiltres);
                         voyagesLiveData.postValue(voyagesFiltres);
                     } else {
-
                         modele.setVoyages(voyages);
                         voyagesLiveData.postValue(voyages);
                     }

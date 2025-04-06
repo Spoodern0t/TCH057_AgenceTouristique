@@ -16,15 +16,17 @@ import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.fasterxml.jackson.databind.ser.Serializers;
 
+import java.util.List;
+
 public class TripsAdaptateur extends BaseAdapter {
 
-    private Voyage.Trip[] trips;
+    private List<Voyage.Trip> trips;
     private Context contexte;
     private int viewResourceId;
     private Resources resources;
     LayoutInflater inflater;
 
-    public TripsAdaptateur(@NonNull Context context, int viewResourceId, @NonNull Voyage.Trip[] trips) {
+    public TripsAdaptateur(@NonNull Context context, int viewResourceId, @NonNull List<Voyage.Trip> trips) {
         this.contexte = context;
         this.viewResourceId = viewResourceId;
         this.resources = contexte.getResources();
@@ -34,12 +36,12 @@ public class TripsAdaptateur extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return this.trips.length;
+        return this.trips.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return this.trips[position];
+        return this.trips.get(position);
     }
 
     @Override
@@ -58,11 +60,10 @@ public class TripsAdaptateur extends BaseAdapter {
             view = layoutInflater.inflate(this.viewResourceId, parent, false);
         }
 
-        final Voyage.Trip trip = this.trips[position];
+        final Voyage.Trip trip = this.trips.get(position);
+        final TextView dateDepart = view.findViewById(R.id.tripDate);
 
         if (trip != null) {
-            final TextView dateDepart = (TextView) view.findViewById(R.id.tripDate);
-
             dateDepart.setText(trip.getDate());
         }
 

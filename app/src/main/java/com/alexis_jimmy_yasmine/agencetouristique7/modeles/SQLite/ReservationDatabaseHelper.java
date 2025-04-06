@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,14 +89,27 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
         return listeReservations;
     }
 
-    public boolean supprimerReservation(int reservationId) {
+    public int supprimerReservation(int reservationId) {
         try (SQLiteDatabase db = this.getWritableDatabase()) {
-            db.delete(TauxContract.TABLE_NAME,
-                    TauxContract.Colonnes.ID + " = ?",
-                    new String[]{String.valueOf(reservationId)});
-            return true;
+            // Empecher l'utilisateur de supprimé une réservation après la date du voyage
+            String[] colonnes = {TauxContract.Colonnes.DATE_VOYAGE};
+            String[] selectionArgs = {String.valueOf(reservationId)};
+            Cursor cursor = db.query(TauxContract.TABLE_NAME, colonnes,
+                    TauxContract.Colonnes.ID + " = ?", selectionArgs, null, null, null);
+
+            cursor.moveToFirst();
+            LocalDate today = LocalDate.now();
+            LocalDate voyageDate = LocalDate.parse(cursor.getString(0));
+            if (today.isBefore(voyageDate)) {
+                db.delete(TauxContract.TABLE_NAME,
+                        TauxContract.Colonnes.ID + " = ?",
+                        new String[]{String.valueOf(reservationId)});
+                return 1;
+            } else {
+                return 0;
+            }
         } catch (Exception e) {
-            return false;
+            return -1;
         }
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -31,7 +32,7 @@ public class Voyage {
     private int dureeJours;
 
     @JsonProperty("trips")
-    private Trip[] trips;
+    private List<Trip> trips;
 
     @JsonProperty("type_de_voyage")
     private String typeDeVoyage;
@@ -64,6 +65,11 @@ public class Voyage {
             this.nbPlacesDisponibles = nbPlacesDisponibles;
         }
 
+        public boolean estDateValide() {
+            LocalDate today = LocalDate.now();
+            return today.isAfter(LocalDate.parse(date));
+        }
+
         public void augmenterNbPlaces(int nbPlacesCancelees) {
             nbPlacesDisponibles += nbPlacesCancelees;
         }
@@ -76,7 +82,7 @@ public class Voyage {
     public Voyage() {
     }
 
-    public Voyage(String id, String nomVoyage, String description, int prix, String destination, List<String> imageUrls, int dureeJours, Trip[] trips, String typeDeVoyage, String activitesIncluses) {
+    public Voyage(String id, String nomVoyage, String description, int prix, String destination, List<String> imageUrls, int dureeJours, List<Trip> trips, String typeDeVoyage, String activitesIncluses) {
         this.id = id;
         this.nomVoyage = nomVoyage;
         this.description = description;
@@ -88,7 +94,6 @@ public class Voyage {
         this.typeDeVoyage = typeDeVoyage;
         this.activitesIncluses = activitesIncluses;
     }
-
 
     public String getId() {
         return id;
@@ -160,11 +165,14 @@ public class Voyage {
         this.activitesIncluses = activitesIncluses;
     }
 
-    public Trip[] getTrips() {
+    public List<Trip> getTrips() {
+        LocalDate today = LocalDate.now();
+        trips.removeIf(trip -> today.isAfter(LocalDate.parse(trip.getDate())));
+        trips.removeIf(trip -> trip.getNbPlacesDisponibles() <= 0);
         return trips;
     }
 
-    public void setTrips(Trip[] trips) {
+    public void setTrips(List<Trip> trips) {
         this.trips = trips;
     }
 }

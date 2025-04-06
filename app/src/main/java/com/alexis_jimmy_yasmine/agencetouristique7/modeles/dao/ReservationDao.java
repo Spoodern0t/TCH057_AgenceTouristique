@@ -23,7 +23,7 @@ public class ReservationDao {
         return dbHelper.ajouterReservation(reservation);
     }
 
-    public boolean supprimerReservation(int reservationId) {
+    public int supprimerReservation(int reservationId) {
         return dbHelper.supprimerReservation(reservationId);
     }
 }

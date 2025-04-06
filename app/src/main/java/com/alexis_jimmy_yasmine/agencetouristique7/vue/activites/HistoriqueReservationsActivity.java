@@ -61,26 +61,25 @@ public class HistoriqueReservationsActivity extends AppCompatActivity implements
 
     public void deleteReservation(Reservation reservationToDelete) {
         ReservationDao reservationDao = new ReservationDao(this);
-        boolean succes = reservationDao.supprimerReservation(reservationToDelete.getId());
+        int resultat = reservationDao.supprimerReservation(reservationToDelete.getId());
 
         String voyageId = reservationToDelete.getVoyageId();
         String voyageDate = reservationToDelete.getDateVoyage();
         int nbPlacesCancelees = reservationToDelete.getNbPersonnes();
 
-        Voyage voyage = modelView.getVoyageById(voyageId);
-
-        for (Voyage.Trip trip: voyage.getTrips()) {
-            if (trip.getDate().equals(voyageDate)) {
-                trip.augmenterNbPlaces(nbPlacesCancelees);
-                break;
-            }
-        }
-
-        modelView.updateTripAvailability(voyage);
-
-        if (succes) {
+        if (resultat == 1) {
             Toast.makeText(this, "Réservation supprimée!", Toast.LENGTH_SHORT).show();
+            Voyage voyage = modelView.getVoyageById(voyageId);
+            for (Voyage.Trip trip: voyage.getTrips()) {
+                if (trip.getDate().equals(voyageDate)) {
+                    trip.augmenterNbPlaces(nbPlacesCancelees);
+                    break;
+                }
+            }
+            modelView.updateTripAvailability(voyage);
             afficherHistoriqueReservations();
+        } else if (resultat == 0) {
+            Toast.makeText(this, "La date du voyage est dépassée!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Erreur lors de la suppression de la réservation.", Toast.LENGTH_LONG).show();
         }
