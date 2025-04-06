@@ -104,9 +104,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         if (!voyage.getTrips().isEmpty()) {
             TripsAdaptateur tripsAdaptateur = new TripsAdaptateur(DetailActivity.this, R.layout.layout_trips, voyage.getTrips());
             spinDateDepart.setAdapter(tripsAdaptateur);
-        } else {
-            String[] noDate = {"Aucune date disponible pour le moment."};
-            spinDateDepart.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, noDate));
         }
     }
 
@@ -117,7 +114,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         } else {
             tPlacesDisponible.setText("No trips available");
-            btnReserver.setFocusable(false);
         }
     }
 

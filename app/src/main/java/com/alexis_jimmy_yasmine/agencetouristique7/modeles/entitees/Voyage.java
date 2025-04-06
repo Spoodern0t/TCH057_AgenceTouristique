@@ -166,9 +166,6 @@ public class Voyage {
     }
 
     public List<Trip> getTrips() {
-        LocalDate today = LocalDate.now();
-        trips.removeIf(trip -> today.isAfter(LocalDate.parse(trip.getDate())));
-        trips.removeIf(trip -> trip.getNbPlacesDisponibles() <= 0);
         return trips;
     }
 
