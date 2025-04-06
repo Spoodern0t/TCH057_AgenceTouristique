@@ -68,7 +68,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:entries="@array/destination_options"
         android:prompt="@string/pays_filter"
         android:spinnerMode="dropdown"
         android:background="@drawable/spinner_background"/>
@@ -78,7 +77,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="@string/date"
+        android:text="@string/choisir_date_depart"
+        app:switchPadding="10dp"
         android:checked="false"/>
 
     <DatePicker
@@ -89,15 +89,5 @@
         android:datePickerMode="spinner"
         android:calendarViewShown="false"
         android:minDate="today" />
-
-    <Button
-        android:id="@+id/popupFilterButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="@string/appliquer_filtres"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
 
 </LinearLayout>

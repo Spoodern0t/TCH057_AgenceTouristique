@@ -36,6 +36,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
     private List<String> destinationListe = new ArrayList<>();
 
     // Composant du popup
+    View popupView;
     Spinner popupTypeSpinner, popupDestinationSpinner;
     RangeSlider popupBudgetSlider;
     SwitchCompat popupDateSwitch;
@@ -81,15 +82,18 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             Voyage[] tabVoyages = new Voyage[voyages.size()];
             voyages.toArray(tabVoyages);
 
-            // Singleton
+            // Singleton pour la liste de destinations du filtre
             if (destinationListe.isEmpty()) {
                 destinationListe = modelView.getVoyagesDestinations();
+                ArrayAdapter<String> destinationAdaptateur = new ArrayAdapter<>(this,
+                        android.R.layout.simple_spinner_dropdown_item, destinationListe);
+                popupDestinationSpinner.setAdapter(destinationAdaptateur);
             }
 
             voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, tabVoyages));
         });
-
         modelView.chargerVoyages(null, null, null, null);
+        creerPopUpFiltre();
     }
 
     @Override
@@ -108,35 +112,25 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             launcher.launch(intent);
 
         }  else if (id == R.id.buttonFilter) {
-            afficherPopupFiltre();
-
+            popupWindow.showAsDropDown(btnFilter, 0, 0);
         }
     }
 
-    private void afficherPopupFiltre() {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_filtre, null);
-
+    private void creerPopUpFiltre() {
+        popupView = View.inflate(this, R.layout.popup_filtre, null);
         popupWindow = new PopupWindow(
                 popupView,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                true
         );
-
-        popupWindow.setFocusable(true);
-        popupWindow.showAsDropDown(btnFilter, 0, 0);
-
-        Button popupFilterButton = popupView.findViewById(R.id.popupFilterButton);
         popupTypeSpinner = popupView.findViewById(R.id.popupTypeSpinner);
         popupBudgetSlider = popupView.findViewById(R.id.popupBudgetSlider);
         popupDestinationSpinner = popupView.findViewById(R.id.popupDestinationSpinner);
         popupDatePicker = popupView.findViewById(R.id.popupDatePicker);
         popupDateSwitch = popupView.findViewById(R.id.popupDateSwitch);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, destinationListe);
 
-        popupDestinationSpinner.setAdapter(adapter);
 
         popupDateSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -146,16 +140,12 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        popupFilterButton.setOnClickListener(v -> {
-                appliquerPopupFiltres();
-                popupWindow.dismiss();
-        });
+        popupWindow.setOnDismissListener(this::appliquerPopupFiltres);
     }
-
 
     // Appliquer les filtres depuis le popup
     private void appliquerPopupFiltres() {
-        if (popupWindow != null && popupWindow.isShowing()) {
+        if (popupWindow != null) {
 
             String filtreType = popupTypeSpinner.getSelectedItem().toString();
             List<Float> filtreBudget = popupBudgetSlider.getValues();

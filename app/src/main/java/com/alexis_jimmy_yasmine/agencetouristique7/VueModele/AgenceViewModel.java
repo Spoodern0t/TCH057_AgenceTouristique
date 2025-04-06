@@ -103,23 +103,21 @@ public class AgenceViewModel extends ViewModel {
                         // Filtrer par date
                         List<Voyage> voyagesFiltres = new ArrayList<>();
                         for (Voyage voyage : voyages) {
-                            boolean estAjoute = false;
 
-
-                            if (!(filtreDestination == null)) {
-                                estAjoute = voyage.getDestination().contains(filtreDestination);
-                            }
+                            // Renvoie true si la destination match ou si le filtre est null
+                            boolean estValable = filtreDestination == null || voyage.getDestination().contains(filtreDestination);
 
                             if (!(filtreDate == null)) {
+                                estValable = false;
                                 Voyage.Trip[] trips = voyage.getTrips();
                                 for (Voyage.Trip trip : trips) {
                                     if (filtreDate.isBefore(LocalDate.parse(trip.getDate()))) {
-                                        estAjoute = true;
+                                        estValable = true;
                                         break;
                                     }
                                 }
                             }
-                            if (estAjoute) {
+                            if (estValable) {
                                 voyagesFiltres.add(voyage);
                             }
                         }

@@ -9,13 +9,6 @@
         <item>Nature</item>
     </string-array>
 
-    <string-array name="destination_options">
-        <item>Toutes les destinations</item>
-        <item>Paris</item>
-        <item>Rome</item>
-        <item>Tokyo</item>
-    </string-array>
-
     <array name="slider_values">
         <item>0.0</item>
         <item>2000.0</item>

@@ -171,7 +171,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         int id = view.getId();
 
         if (id == R.id.buttonHome) {
-            startActivity(new Intent(this, AccueilActivity.class));
+            setResult(RESULT_CANCELED);
+            finish();
         } else if (id == R.id.buttonHistorique) {
             startActivity(new Intent(this, HistoriqueReservationsActivity.class));
         } else if (id == R.id.buttonLogout) {
