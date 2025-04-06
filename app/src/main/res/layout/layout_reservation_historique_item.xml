@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:orientation="vertical"
         android:textColor="@color/black_text"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -25,16 +24,18 @@
 
         <ImageView
             android:id="@+id/iv_reservation_image"
-            android:layout_width="131dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="3"
             android:baselineAligned="false"
             android:contentDescription="@string/image_de_la_destination"
             android:scaleType="centerCrop" />
 
         <LinearLayout
-            android:layout_width="162dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_weight="5"
+            android:layout_marginHorizontal="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -72,14 +73,12 @@
 
         <ImageButton
             android:id="@+id/button_delete_reservation"
-            android:layout_width="50dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginStart="10dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/supprimer_la_r_servation"
-            android:foregroundGravity="center_vertical|center_horizontal"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:src="@drawable/trash"
             app:tint="@color/colorSecondaire" />
     </LinearLayout>

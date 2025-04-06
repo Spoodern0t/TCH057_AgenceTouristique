@@ -1,101 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EAFAF1"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:weightSum="14">
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1.5"
+        android:contentDescription="@string/logotravel"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/companyNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/planed"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/logoImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@string/logotravel"
-            android:src="@drawable/logo" />
-
-        <TextView
-            android:id="@+id/companyNameTextView"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
-            android:text="@string/planed"
-            android:textColor="@color/colorPrimary"
-            android:textSize="30sp"
+            android:layout_weight="5"
+            android:hint="@string/ou_voulez_vous_aller"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="@color/black_text"
+            android:textColorHint="#858585"
+            android:textColorLink="@color/colorPrimary"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/buttonFilter"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/searchEditText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:hint="@string/ou_voulez_vous_aller"
-                android:imeOptions="actionSearch"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:minHeight="48dp"
-                android:singleLine="true"
-                android:textAlignment="center"
-                android:textColor="@color/black_text"
-                android:textColorHint="#858585"
-                android:textColorLink="@color/colorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/buttonFilter"
-                android:layout_width="74dp"
-                android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackground"
-                android:contentDescription="@string/recherche"
-                android:gravity="center"
-                android:scaleType="centerInside"
-                android:src="@drawable/type" />
-
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/voyagesListView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
             android:layout_weight="1"
-            android:clipToPadding="false"
-            android:paddingTop="8dp"
-            android:paddingBottom="80dp" />
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/recherche"
+            android:scaleType="fitCenter"
+            android:src="@drawable/type" />
+
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/voyagesListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10.5"
+        android:clipToPadding="false"
+        android:paddingTop="10dp" />
 
     <LinearLayout
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/black_text"
+        app:menu="@menu/bottom_navigation_menu">
 
         <ImageButton
             android:id="@+id/buttonHome"
@@ -104,8 +91,8 @@
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/accueil"
-            android:src="@drawable/home"
             android:scaleType="centerInside"
+            android:src="@drawable/home"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
@@ -115,8 +102,8 @@
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/historique"
-            android:src="@drawable/reservation"
             android:scaleType="centerInside"
+            android:src="@drawable/reservation"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
@@ -126,10 +113,10 @@
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/log_out"
-            android:src="@drawable/logout"
             android:scaleType="centerInside"
+            android:src="@drawable/logout"
             tools:ignore="SpeakableTextPresentCheck" />
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -96,8 +96,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         tNom.setText(voyage.getNomVoyage());
         tDescription.setText(voyage.getDescription());
         tDestination.setText(voyage.getDestination());
-        tDuree.setText(String.valueOf(voyage.getDureeJours()));
-        tPrix.setText(String.valueOf(voyage.getPrix()));
+        tDuree.setText(voyage.getDureeJours() + " jours");
+        tPrix.setText(String.format("%.2f", voyage.getPrix())+" $");
         tActivites.setText(voyage.getActivitesIncluses());
 
         // Set up the Spinner

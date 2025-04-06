@@ -1,54 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EAFAF1"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".vue.activites.HistoriqueReservationsActivity">
+    android:padding="16dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/historique_des_reservations"
+        android:textColor="@color/colorPrimary"
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="32dp"
-            android:text="@string/historique_des_reservations"
-            android:textColor="@color/colorPrimary"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+    <ListView
+        android:id="@+id/listView_reservations_historique"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp" />
 
-        <ListView
-            android:id="@+id/listView_reservations_historique"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="8dp" />
-    </LinearLayout>
     <LinearLayout
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
         android:orientation="horizontal"
-        android:weightSum="3"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/black_text">
 
         <ImageButton
             android:id="@+id/buttonHome"
@@ -84,4 +74,4 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
