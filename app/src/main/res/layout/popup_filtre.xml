@@ -53,7 +53,12 @@
         android:stepSize="100.0"
         android:valueFrom="0.0"
         android:valueTo="2000.0"
-        app:values="@array/slider_values" />
+        app:values="@array/slider_values"
+        app:thumbColor="@color/colorPrimary"
+        app:trackColorActive="@color/colorPrimary"
+        app:trackColorInactive="#EAFAF1"
+        app:tickColorActive="#EAFAF1"
+        app:tickColorInactive="@color/colorPrimary"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,7 +84,9 @@
         android:textSize="16sp"
         android:text="@string/choisir_date_depart"
         app:switchPadding="10dp"
-        android:checked="false"/>
+        android:checked="false"
+        app:thumbTint="@color/colorPrimary"
+        app:trackTint="#91e3b4"/>
 
     <DatePicker
         android:id="@+id/popupDatePicker"
