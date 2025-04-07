@@ -105,33 +105,39 @@ public class AgenceViewModel extends ViewModel {
                 public void onDataLoaded(Object data) {
                     List<Voyage> voyages = (List<Voyage>) data;
 
-                    if (!(filtreDate == null) || !(filtreDestination == null)) {
-                        // Filtrer par date
+                    if (filtreDate == null && filtreDestination == null){
+                        modele.setVoyages(voyages);
+                        voyagesLiveData.postValue(voyages);
+                    } else {
+                        //filtrer les voyages selon les paramètres choisis
                         List<Voyage> voyagesFiltres = new ArrayList<>();
-                        for (Voyage voyage : voyages) {
+                        for (Voyage voyage: voyages){
 
-                            // Renvoie true si la destination match ou si le filtre est null
-                            boolean estValable = filtreDestination == null || voyage.getDestination().contains(filtreDestination);
+                            //si une destination est spécifiée, ignorer les autres
+                            if (filtreDestination != null && !voyage.getDestination().contains(filtreDestination))
+                                continue;
 
-                            if (!(filtreDate == null)) {
-                                estValable = false;
+                            //si une date est spécifiée, ignorer les voyages sans vols suivant cette date.
+                            if (filtreDate != null){
                                 List<Voyage.Trip> trips = voyage.getTrips();
+                                boolean tripDispo = false;
+                                //regarder les dates de chaque vol du voyage en question
                                 for (Voyage.Trip trip : trips) {
-                                    if (filtreDate.isBefore(LocalDate.parse(trip.getDate()))) {
-                                        estValable = true;
+                                    if(LocalDate.parse(trip.getDate()).isAfter(filtreDate)){
+                                        tripDispo = true;
                                         break;
                                     }
                                 }
+                                if (!tripDispo){
+                                    continue;
+                                }
                             }
-                            if (estValable) {
-                                voyagesFiltres.add(voyage);
-                            }
+
+                            //garder les voyages respectant tous les filtres
+                            voyagesFiltres.add(voyage);
                         }
                         modele.setVoyages(voyagesFiltres);
                         voyagesLiveData.postValue(voyagesFiltres);
-                    } else {
-                        modele.setVoyages(voyages);
-                        voyagesLiveData.postValue(voyages);
                     }
                 }
 

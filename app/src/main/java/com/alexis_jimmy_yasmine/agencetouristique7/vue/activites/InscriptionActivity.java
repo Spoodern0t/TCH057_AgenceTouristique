@@ -1,11 +1,9 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.vue.activites;
-//
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +13,9 @@ import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
 
-import org.json.JSONException;
-
 public class InscriptionActivity extends AppCompatActivity {
+
+    private final String FORMAT_EMAIL = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     private AgenceViewModel modelView;
     private EditText editFirstName, editLastName, editAge, editPhone, editAddress,
@@ -85,7 +83,11 @@ public class InscriptionActivity extends AppCompatActivity {
 
                 Toast.makeText(InscriptionActivity.this, "Veuillez remplir tous les champs !", Toast.LENGTH_LONG).show();
 
-            } else {
+            } else if (!email.matches(FORMAT_EMAIL)) {
+
+                Toast.makeText(InscriptionActivity.this, "Veuillez saisir une addresse courriel valide!", Toast.LENGTH_LONG).show();
+
+            } else if (estMotPasseValide(password)) {
 
                 int age = Integer.parseInt(ageString);
                 String adresse = address + ", " + city + ", " + province;
@@ -100,5 +102,25 @@ public class InscriptionActivity extends AppCompatActivity {
             setResult(RESULT_CANCELED);
             finish();
         });
+    }
+
+    private boolean estMotPasseValide(String motPasse){
+        //un mot de passe valide a au moins 8 caractères
+        if (motPasse.length() > 7){
+            //un mot de passe valide est sans espace
+            if (!motPasse.contains(" ")){
+                //un mot de passe valide contient au moins une majuscule et un chiffre
+                if (motPasse.matches(".*[A-Z]+.*") && motPasse.matches(".*[0-9]+.*")){
+                    return true;
+                } else {
+                    Toast.makeText(InscriptionActivity.this, "Le mot de passe doit contenir un chiffre et une majuscule!", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(InscriptionActivity.this, "Le mot de passe ne doit pas contenir d'espaces!", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(InscriptionActivity.this, "Le mot de passe doit contenir au moins 8 caractères!", Toast.LENGTH_LONG).show();
+        }
+        return false;
     }
 }
