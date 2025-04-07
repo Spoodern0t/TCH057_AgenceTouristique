@@ -100,7 +100,6 @@ public class AgenceViewModel extends ViewModel {
 
     public void chargerVoyages(String filtreType, List<Float> filtreBudget, String filtreDestination, LocalDate filtreDate) {
         try {
-            //FIXME: Pourquoi ne pas filtrer destination et date dans VoyageDAO, comme pour type et budget? ~AF
             VoyageDao.getVoyages(filtreType, filtreBudget, new EcouteurDeDonnees() {
                 @Override
                 public void onDataLoaded(Object data) {
