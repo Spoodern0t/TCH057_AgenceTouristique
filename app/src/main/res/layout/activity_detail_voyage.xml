@@ -160,7 +160,8 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/spinner_background"
             android:minHeight="48dp"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+            android:padding="5dp"/>
 
         <TextView
             android:id="@+id/tv_places_disponibles_detail"
