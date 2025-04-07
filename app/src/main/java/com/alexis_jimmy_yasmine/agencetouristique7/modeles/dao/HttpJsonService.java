@@ -8,7 +8,6 @@ import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,7 +23,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class HttpJsonService {
 
@@ -60,9 +58,9 @@ public class HttpJsonService {
                     if (!jsonStr.equals("[]")) {
                         ObjectMapper mapper = new ObjectMapper();
                         try {
-                            List<Client> client = Arrays.asList(mapper.readValue(jsonStr, Client[].class));
-
-                            if (Objects.equals(mdp, client.get(0).getMdp())) {
+                            List<Client> clients = Arrays.asList(mapper.readValue(jsonStr, Client[].class));
+                            Client client = clients.get(0);
+                            if (Objects.equals(mdp, client.getMdp())) {
                                 chargeurDeDonnees.onDataLoaded(client);
                             } else {
                                 chargeurDeDonnees.onError("Le mot de passe est incorrect !");
@@ -88,9 +86,6 @@ public class HttpJsonService {
 
 
     public void postClient(Client client, EcouteurDeDonnees chargeurDeDonnees) throws JSONException {
-
-        // Variable ByRef (pointeur) Devient false si le email est déjà inscrit
-        final boolean[] emailUnique = {true};
 
         OkHttpClient okHttpClient = new OkHttpClient();
 
@@ -158,21 +153,21 @@ public class HttpJsonService {
     }
 
 
-    public void getVoyages(String filtreType, int[] filtreBudget, String filtreDestination, EcouteurDeDonnees chargeurDeDonnees)
+    public void getVoyages(String filtreType, List<Float> filtreBudget, EcouteurDeDonnees chargeurDeDonnees)
             throws IOException, JSONException {
 
-        String path = "";
+        String path = "?";
 
         if (!(filtreType == null))
             path += "type_de_voyage=" + filtreType + "&";
 
-        if (!(filtreDestination == null))
-            path += "destination=" + filtreDestination + "&";
-
-        if (!path.isEmpty()) {
-            path = "?" + path;
-            path.substring(0, path.length() - 1);
+        if (!(filtreBudget == null)) {
+            path += "prix_gte=" + filtreBudget.get(0) + "&";
+            path += "prix_lte=" + filtreBudget.get(1) + "&";
         }
+
+        // Enlève le symbole dernier symbole de path (soit "&" ou "?")
+        path = path.substring(0, path.length() - 1);
 
 
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -193,6 +188,7 @@ public class HttpJsonService {
                     if (!jsonStr.isEmpty()) {
                         ObjectMapper mapper = new ObjectMapper();
                         try {
+
                             List<Voyage> voyages = Arrays.asList(mapper.readValue(jsonStr, Voyage[].class));
                             chargeurDeDonnees.onDataLoaded(voyages);
                         } catch (JsonProcessingException e) {

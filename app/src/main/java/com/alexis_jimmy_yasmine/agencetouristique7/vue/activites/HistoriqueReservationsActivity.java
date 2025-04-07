@@ -12,18 +12,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
-import com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao.ReservationDao;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
-import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.ReservationsAdaptateur;
-
-import java.util.List;
 
 public class HistoriqueReservationsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AgenceViewModel modelView;
     private ListView listViewReservationsHistorique;
-    private ReservationDao reservationDao;
     private ImageButton bottomNavHome, bottomNavHistorique, bottomNavLogout;
     private ReservationsAdaptateur adaptateur;
 
@@ -32,10 +27,7 @@ public class HistoriqueReservationsActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historique_reservations);
 
-        modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
-
         listViewReservationsHistorique = findViewById(R.id.listView_reservations_historique);
-        reservationDao = new ReservationDao(this);
 
         bottomNavHome = findViewById(R.id.buttonHome);
         bottomNavHistorique = findViewById(R.id.buttonHistorique);
@@ -45,47 +37,27 @@ public class HistoriqueReservationsActivity extends AppCompatActivity implements
         bottomNavHistorique.setOnClickListener(this);
         bottomNavLogout.setOnClickListener(this);
 
-        afficherHistoriqueReservations();
-    }
+        modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
+        modelView.getReservations().observe(this, reservations -> {
+            if (reservations.isEmpty())
+                Toast.makeText(this, "Aucune réservation enregistrée.", Toast.LENGTH_SHORT).show();
 
-    private void afficherHistoriqueReservations() {
-
-        List<Reservation> reservations = reservationDao.getAllReservations();
-
-        if (reservations.isEmpty()) {
-            Toast.makeText(this, "Aucune réservation enregistrée.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(HistoriqueReservationsActivity.this, AccueilActivity.class);
-            startActivity(intent);
-        } else {
             adaptateur = new ReservationsAdaptateur(this, R.layout.layout_reservation_historique_item, reservations, this);
             listViewReservationsHistorique.setAdapter(adaptateur);
-        }
+        });
+        modelView.chargerReservations(this);
     }
 
-    public void deleteReservation(Reservation reservationToDelete) {
-        ReservationDao reservationDao = new ReservationDao(this);
-        boolean succes = reservationDao.supprimerReservation(reservationToDelete.getId());
 
-        String voyageId = reservationToDelete.getVoyageId();
-        String voyageDate = reservationToDelete.getDateVoyage();
-        int nbPlacesCancelees = reservationToDelete.getNbPersonnes();
-
-        Voyage voyage = modelView.getVoyageById(voyageId);
-
-        for (Voyage.Trip trip: voyage.getTrips()) {
-            if (trip.getDate().equals(voyageDate)) {
-                trip.augmenterNbPlaces(nbPlacesCancelees);
-                break;
-            }
-        }
-
-        modelView.updateTripAvailability(voyage);
-
-        if (succes) {
+    public void annulerReservation(Reservation reservation) {
+        int resultat = modelView.annulerReservation(this, reservation);
+        if (resultat > 0) {
             Toast.makeText(this, "Réservation supprimée!", Toast.LENGTH_SHORT).show();
-            afficherHistoriqueReservations();
+            modelView.chargerReservations(this);
+        } else if (resultat == 0) {
+            Toast.makeText(this, "Le voyage est déjà annulé!", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Erreur lors de la suppression de la réservation.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Un erreur s'est produit!", Toast.LENGTH_SHORT).show();
         }
     }
 

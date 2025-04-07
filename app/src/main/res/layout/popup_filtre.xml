@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:minWidth="280dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#EAFAF1"
     android:orientation="vertical"
     android:padding="16dp">
@@ -16,113 +18,76 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="222dp"
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/type_label"
-            android:textColor="@color/black_text"
-            android:textSize="16sp" />
-
-        <Spinner
-            android:id="@+id/popupTypeSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/spinner_background"
-            android:entries="@array/type_options"
-            android:minHeight="48dp"
-            android:prompt="@string/type_filter"
-            android:spinnerMode="dropdown" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="224dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/budget_label"
-            android:textColor="@color/black_text"
-            android:textSize="16sp" />
-
-        <Spinner
-            android:id="@+id/popupBudgetSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/spinner_background"
-            android:entries="@array/budget_options"
-            android:minHeight="48dp"
-            android:prompt="@string/budget_filter"
-            android:spinnerMode="dropdown" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/destination_label"
-            android:textColor="@color/black_text"
-            android:textSize="16sp"
-            android:layout_marginBottom="4dp"/>
-
-        <Spinner
-            android:id="@+id/popupDestinationSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:entries="@array/destination_options"
-            android:prompt="@string/pays_filter"
-            android:spinnerMode="dropdown"
-            android:background="@drawable/spinner_background"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/date_label"
-            android:textColor="@color/black_text"
-            android:textSize="16sp"
-            android:layout_marginBottom="4dp"/>
-
-        <Spinner
-            android:id="@+id/popupDateSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:entries="@array/date_options"
-            android:prompt="@string/date_filter"
-            android:spinnerMode="dropdown"
-            android:background="@drawable/spinner_background"/>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/popupFilterButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="@string/appliquer_filtres"
-        android:textColor="#FFFFFF"
+        android:layout_marginBottom="4dp"
+        android:text="@string/type_label"
+        android:textColor="@color/black_text"
         android:textSize="16sp" />
+
+    <Spinner
+        android:id="@+id/popupTypeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_background"
+        android:entries="@array/type_options"
+        android:minHeight="48dp"
+        android:prompt="@string/type_filter"
+        android:spinnerMode="dropdown" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/budget_label"
+        android:textColor="@color/black_text"
+        android:textSize="16sp" />
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/popupBudgetSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stepSize="100.0"
+        android:valueFrom="0.0"
+        android:valueTo="2000.0"
+        app:values="@array/slider_values" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/destination_label"
+        android:textColor="@color/black_text"
+        android:textSize="16sp"
+        android:layout_marginBottom="4dp"/>
+
+    <Spinner
+        android:id="@+id/popupDestinationSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:prompt="@string/pays_filter"
+        android:spinnerMode="dropdown"
+        android:background="@drawable/spinner_background"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/popupDateSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="@string/choisir_date_depart"
+        app:switchPadding="10dp"
+        android:checked="false"/>
+
+    <DatePicker
+        android:id="@+id/popupDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
+        android:minDate="today" />
 
 </LinearLayout>

@@ -15,15 +15,15 @@ public class ReservationDao {
         dbHelper = new ReservationDatabaseHelper(context);
     }
 
-    public List<Reservation> getAllReservations() {
-        return dbHelper.getAllReservations();
+    public List<Reservation> chargerReservations(String userId) {
+        return dbHelper.chargerReservations(userId);
     }
 
-    public boolean ajouterReservation(Reservation reservation) {
+    public long ajouterReservation(Reservation reservation) {
         return dbHelper.ajouterReservation(reservation);
     }
 
-    public boolean supprimerReservation(int reservationId) {
-        return dbHelper.supprimerReservation(reservationId);
+    public int supprimerReservation(String userId, String voyageId) {
+        return dbHelper.annulerReservation(userId, voyageId);
     }
 }

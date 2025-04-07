@@ -73,5 +73,6 @@
     <string name="supprimer">Supprimer</string>
     <string name="image_de_reservation">Image de réservation</string>
     <string name="supprimer_la_r_servation">Supprimer la réservation</string>
+    <string name="choisir_date_depart">Choisir une date de départ </string>
 
 </resources>
