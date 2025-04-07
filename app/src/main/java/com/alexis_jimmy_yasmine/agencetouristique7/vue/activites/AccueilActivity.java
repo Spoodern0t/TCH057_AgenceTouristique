@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 
@@ -74,7 +73,6 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
                     // Aucun resultat attendu
                 }
         );
-
 
         // Observer la liste des voyages
         modelView = new ViewModelProvider(this).get(AgenceViewModel.class);

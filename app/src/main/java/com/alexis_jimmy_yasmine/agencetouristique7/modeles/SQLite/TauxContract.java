@@ -1,14 +1,11 @@
 package com.alexis_jimmy_yasmine.agencetouristique7.modeles.SQLite;
 
-import android.provider.BaseColumns;
-
 public class TauxContract {
     public static final String DATABASE_NAME = "AgenceTouristiqueDB";
     public static final int DATABASE_VERSION = 2;
     public static final String TABLE_NAME = "reservations";
 
     public static class Colonnes {
-        public static final String ID = BaseColumns._ID;
         public static final String USER_ID = "user_id";
         public static final String VOYAGE_ID = "voyage_id";
         public static final String DESTINATION = "destination";

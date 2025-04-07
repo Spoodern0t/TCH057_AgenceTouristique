@@ -8,13 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
-import com.alexis_jimmy_yasmine.agencetouristique7.modeles.dao.ReservationDao;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.activites.HistoriqueReservationsActivity;
 import com.squareup.picasso.Picasso;
@@ -55,11 +53,11 @@ public class ReservationsAdaptateur extends ArrayAdapter<Reservation> {
             destinationTextView.setText("Destination: " + reservation.getDestination());
             dateTextView.setText("Date du voyage: " + reservation.getDateVoyage());
             prixTextView.setText("Montant payé: " + String.format("%.2f $", reservation.getMontantPaye()));
-            nbPersonnesTextView.setText("Nombre de personnes: " + String.valueOf(reservation.getNbPersonnes()));
+            nbPersonnesTextView.setText("Nombre de personnes: " + reservation.getNbPersonnes());
             statutTextView.setText("Statut: " + reservation.getStatut());
 
             deleteButton.setOnClickListener(v -> {
-                historiqueActivity.deleteReservation(reservation);
+                historiqueActivity.annulerReservation(reservation);
             });
         }
 

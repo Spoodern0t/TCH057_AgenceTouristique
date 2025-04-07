@@ -2,7 +2,6 @@ package com.alexis_jimmy_yasmine.agencetouristique7.vue.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,17 +58,16 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
 
         modelView.getVoyages().observe(this, voyages -> {
-            // Update places available
-            updatePlacesAvailable(voyage.getTrips());
+            Voyage.Trip tripChoisi = (Voyage.Trip) spinDateDepart.getSelectedItem();
+            tPlacesDisponible.setText(String.valueOf(tripChoisi.getStrNbPlacesDisponibles()));
         });
-
 
         // Charger l'interface selon l'id du voyage cliqué
         chargerVoyage(voyage);
 
         spinDateDepart.setOnItemSelectedListener(this);
-
-        btnReserver.setOnClickListener(v -> handleReservation(voyage, spinDateDepart.getSelectedItem()));
+        btnReserver.setOnClickListener(v ->
+                handleReservation(voyage, spinDateDepart.getSelectedItem()));
     }
 
 
@@ -107,15 +105,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void updatePlacesAvailable(List<Voyage.Trip> trips) {
-        if (trips == null || trips.isEmpty() ) {
-            Voyage.Trip premierTrip = (Voyage.Trip) spinDateDepart.getSelectedItem();
-            tPlacesDisponible.setText(premierTrip.getStrNbPlacesDisponibles());
-
-        } else {
-            tPlacesDisponible.setText("No trips available");
-        }
-    }
 
     private void handleReservation(Voyage voyage, Object selectedItem) {
 
@@ -148,9 +137,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-        boolean succes = modelView.ajouteReservation(this, voyage, tripChoisi, nbPlacesReserveesInt);
+        long resultat = modelView.ajouterReservation(this, voyage, tripChoisi, nbPlacesReserveesInt);
 
-        if (succes) {
+        if (resultat > 0) {
             Toast.makeText(DetailActivity.this, "Réservation enregistrée avec succès!", Toast.LENGTH_SHORT).show();
 
             tripChoisi.diminuerNbPlaces(nbPlacesReserveesInt);
@@ -158,9 +147,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             modelView.updateTripAvailability(voyage);
 
             //After success, simply end.
-            setResult(RESULT_OK);
-            finish();
+            //setResult(RESULT_OK);
+            //finish();
 
+        } else if (resultat == -1) {
+            Toast.makeText(DetailActivity.this, "Vous avez déjà réservé ce voyage.", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(DetailActivity.this, "Erreur lors de l'enregistrement de la réservation.", Toast.LENGTH_LONG).show();
         }

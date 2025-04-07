@@ -29,6 +29,7 @@ public class AgenceViewModel extends ViewModel {
     private final MutableLiveData<Boolean> connexionLiveData = new MutableLiveData<>();
     private final MutableLiveData<Client> inscriptionLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Voyage>> voyagesLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Reservation>> reservationsLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> erreurLiveData = new MutableLiveData<>();
 
     private final Modele modele;
@@ -49,6 +50,10 @@ public class AgenceViewModel extends ViewModel {
         return voyagesLiveData;
     }
 
+    public LiveData<List<Reservation>> getReservations() {
+        return reservationsLiveData;
+    }
+
     public LiveData<String> getErreur() {
         return erreurLiveData;
     }
@@ -58,6 +63,7 @@ public class AgenceViewModel extends ViewModel {
             ClientDao.postConnexion(email, mdp, new EcouteurDeDonnees() {
                 @Override
                 public void onDataLoaded(Object data) {
+                    modele.setClient((Client) data);
                     connexionLiveData.postValue(true);
                 }
 
@@ -167,15 +173,43 @@ public class AgenceViewModel extends ViewModel {
         }
     }
 
-    public boolean ajouteReservation(Context context, Voyage voyage, Voyage.Trip tripChoisi, int nbPlacesReservees) {
+    public void chargerReservations(Context contexte) {
+        ReservationDao reservationDao = new ReservationDao(contexte);
+        List<Reservation> reservations = reservationDao.chargerReservations(modele.getClient().getId());
+        reservationsLiveData.postValue(reservations);
+    }
 
-        Reservation reservation = new Reservation(0, null, voyage.getId(),
-                voyage.getDestination(), tripChoisi.getDate(),
-                voyage.getPrix() * nbPlacesReservees,
+    public long ajouterReservation(Context contexte, Voyage voyage, Voyage.Trip tripChoisi, int nbPlacesReservees) {
+
+        Reservation reservation = new Reservation(modele.getClient().getId(),
+                voyage.getId(), voyage.getDestination(),
+                tripChoisi.getDate(), voyage.getPrix() * nbPlacesReservees,
                 "Confirmée", nbPlacesReservees, voyage.getImageUrls().get(0));
 
-        ReservationDao reservationDao = new ReservationDao(context);
+        ReservationDao reservationDao = new ReservationDao(contexte);
         return reservationDao.ajouterReservation(reservation);
+    }
+
+    public int annulerReservation(Context contexte, Reservation reservationToDelete) {
+        ReservationDao reservationDao = new ReservationDao(contexte);
+        String userId = reservationToDelete.getUserId();
+        String voyageId = reservationToDelete.getVoyageId();
+        int resultat = reservationDao.supprimerReservation(userId, voyageId);
+
+        String voyageDate = reservationToDelete.getDateVoyage();
+        int nbPlacesCancelees = reservationToDelete.getNbPersonnes();
+
+        if (resultat >= 1) {
+            Voyage voyage = getVoyageById(voyageId);
+            for (Voyage.Trip trip: voyage.getTrips()) {
+                if (trip.getDate().equals(voyageDate)) {
+                    trip.augmenterNbPlaces(nbPlacesCancelees);
+                    break;
+                }
+            }
+            updateTripAvailability(voyage);
+        }
+        return resultat;
     }
 
     public void regexVoyages(Pattern regexPattern) {

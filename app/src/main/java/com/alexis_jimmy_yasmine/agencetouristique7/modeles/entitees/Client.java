@@ -26,7 +26,7 @@ public class Client {
     }
 
     public String getId() {
-        return id;
+        return String.valueOf(id.hashCode());
     }
 
     public void setId(String id) {

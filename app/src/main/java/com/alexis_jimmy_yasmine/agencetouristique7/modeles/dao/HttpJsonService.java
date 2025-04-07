@@ -58,9 +58,9 @@ public class HttpJsonService {
                     if (!jsonStr.equals("[]")) {
                         ObjectMapper mapper = new ObjectMapper();
                         try {
-                            List<Client> client = Arrays.asList(mapper.readValue(jsonStr, Client[].class));
-
-                            if (Objects.equals(mdp, client.get(0).getMdp())) {
+                            List<Client> clients = Arrays.asList(mapper.readValue(jsonStr, Client[].class));
+                            Client client = clients.get(0);
+                            if (Objects.equals(mdp, client.getMdp())) {
                                 chargeurDeDonnees.onDataLoaded(client);
                             } else {
                                 chargeurDeDonnees.onError("Le mot de passe est incorrect !");
