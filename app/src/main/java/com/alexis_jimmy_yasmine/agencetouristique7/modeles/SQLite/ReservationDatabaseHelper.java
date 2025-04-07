@@ -14,31 +14,31 @@ import java.util.List;
 public class ReservationDatabaseHelper extends SQLiteOpenHelper {
 
     public ReservationDatabaseHelper(Context context) {
-        super(context, TauxContract.DATABASE_NAME, null, TauxContract.DATABASE_VERSION);
+        super(context, ReservationContract.DATABASE_NAME, null, ReservationContract.DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_RESERVATIONS_TABLE = "CREATE TABLE " +TauxContract.TABLE_NAME + " (" +
-                        TauxContract.Colonnes.USER_ID + " text," +
-                        TauxContract.Colonnes.VOYAGE_ID + " text," +
-                        TauxContract.Colonnes.DESTINATION + " text," +
-                        TauxContract.Colonnes.DATE_VOYAGE + " text," +
-                        TauxContract.Colonnes.MONTANT_PAYE + " double," +
-                        TauxContract.Colonnes.STATUT + " text," +
-                        TauxContract.Colonnes.NB_PERSONNES + " text," +
-                        TauxContract.Colonnes.IMAGE_URL + " integer," +
+        String CREATE_RESERVATIONS_TABLE = "CREATE TABLE " + ReservationContract.TABLE_NAME + " (" +
+                        ReservationContract.Colonnes.USER_ID + " text," +
+                        ReservationContract.Colonnes.VOYAGE_ID + " text," +
+                        ReservationContract.Colonnes.DESTINATION + " text," +
+                        ReservationContract.Colonnes.DATE_VOYAGE + " text," +
+                        ReservationContract.Colonnes.MONTANT_PAYE + " double," +
+                        ReservationContract.Colonnes.STATUT + " text," +
+                        ReservationContract.Colonnes.NB_PERSONNES + " text," +
+                        ReservationContract.Colonnes.IMAGE_URL + " integer," +
                         String.format("PRIMARY KEY (%s, %s, %s))",
-                                TauxContract.Colonnes.USER_ID,
-                                TauxContract.Colonnes.VOYAGE_ID,
-                                TauxContract.Colonnes.DATE_VOYAGE);
+                                ReservationContract.Colonnes.USER_ID,
+                                ReservationContract.Colonnes.VOYAGE_ID,
+                                ReservationContract.Colonnes.DATE_VOYAGE);
         db.execSQL(CREATE_RESERVATIONS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String requeteSuppressionTable = String.format("drop table if exists %s ",
-                TauxContract.TABLE_NAME);
+                ReservationContract.TABLE_NAME);
         db.execSQL(requeteSuppressionTable);
         onCreate(db);
     }
@@ -48,16 +48,16 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
         long resultat = 0;
         try (SQLiteDatabase db = this.getWritableDatabase()) {
             ContentValues values = new ContentValues();
-            values.put(TauxContract.Colonnes.USER_ID, reservation.getUserId());
-            values.put(TauxContract.Colonnes.VOYAGE_ID, reservation.getVoyageId());
-            values.put(TauxContract.Colonnes.DESTINATION, reservation.getDestination());
-            values.put(TauxContract.Colonnes.DATE_VOYAGE, reservation.getDateVoyage());
-            values.put(TauxContract.Colonnes.MONTANT_PAYE, reservation.getMontantPaye());
-            values.put(TauxContract.Colonnes.STATUT, reservation.getStatut());
-            values.put(TauxContract.Colonnes.NB_PERSONNES, reservation.getNbPersonnes());
-            values.put(TauxContract.Colonnes.IMAGE_URL, reservation.getImageUrl());
+            values.put(ReservationContract.Colonnes.USER_ID, reservation.getUserId());
+            values.put(ReservationContract.Colonnes.VOYAGE_ID, reservation.getVoyageId());
+            values.put(ReservationContract.Colonnes.DESTINATION, reservation.getDestination());
+            values.put(ReservationContract.Colonnes.DATE_VOYAGE, reservation.getDateVoyage());
+            values.put(ReservationContract.Colonnes.MONTANT_PAYE, reservation.getMontantPaye());
+            values.put(ReservationContract.Colonnes.STATUT, reservation.getStatut());
+            values.put(ReservationContract.Colonnes.NB_PERSONNES, reservation.getNbPersonnes());
+            values.put(ReservationContract.Colonnes.IMAGE_URL, reservation.getImageUrl());
 
-            return db.insert(TauxContract.TABLE_NAME, null, values);
+            return db.insert(ReservationContract.TABLE_NAME, null, values);
         } catch (Exception e) {
             return resultat;
         }
@@ -67,9 +67,9 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
     public List<Reservation> chargerReservations(String userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Reservation> listeReservations = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TauxContract.TABLE_NAME + " WHERE " +
-                TauxContract.Colonnes.USER_ID + " = " + userId +
-                " ORDER BY " + TauxContract.Colonnes.DATE_VOYAGE;
+        String selectQuery = "SELECT  * FROM " + ReservationContract.TABLE_NAME + " WHERE " +
+                ReservationContract.Colonnes.USER_ID + " = " + userId +
+                " ORDER BY " + ReservationContract.Colonnes.DATE_VOYAGE;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -87,6 +87,7 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
                 listeReservations.add(reservation);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return listeReservations;
     }
 
@@ -94,12 +95,12 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
         try (SQLiteDatabase db = this.getWritableDatabase()) {
             // Empecher l'utilisateur de supprimé une réservation après la date du voyage
             ContentValues donnees = new ContentValues();
-            donnees.put(TauxContract.Colonnes.STATUT, "Annulée");
-            String selection = TauxContract.Colonnes.USER_ID + " = ? AND " +
-                    TauxContract.Colonnes.VOYAGE_ID + " = ? AND " +
-                    TauxContract.Colonnes.STATUT + " = ?";
+            donnees.put(ReservationContract.Colonnes.STATUT, "Annulée");
+            String selection = ReservationContract.Colonnes.USER_ID + " = ? AND " +
+                    ReservationContract.Colonnes.VOYAGE_ID + " = ? AND " +
+                    ReservationContract.Colonnes.STATUT + " = ?";
             String[] selectionArgs = {userId, voyageId, "Confirmée"};
-            return db.updateWithOnConflict(TauxContract.TABLE_NAME, donnees, selection, selectionArgs, SQLiteDatabase.CONFLICT_ABORT);
+            return db.updateWithOnConflict(ReservationContract.TABLE_NAME, donnees, selection, selectionArgs, SQLiteDatabase.CONFLICT_ABORT);
         } catch (Exception e) {
             return -1;
         }
