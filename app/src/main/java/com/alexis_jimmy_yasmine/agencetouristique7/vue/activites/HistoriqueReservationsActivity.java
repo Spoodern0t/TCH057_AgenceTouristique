@@ -54,6 +54,10 @@ public class HistoriqueReservationsActivity extends AppCompatActivity implements
             listViewReservationsHistorique.setAdapter(adaptateur);
         });
         reservationViewModel.getReservation().observe(this, reservation -> {
+            Voyage.Trip trip = voyageViewModel.getTripOfVoyage(reservation.getVoyageId(), reservation.getDateVoyage());
+            trip.augmenterNbPlaces(reservation.getNbPersonnes());
+            Voyage voyage = voyageViewModel.getVoyageById(reservation.getVoyageId());
+            voyageViewModel.updateTripAvailability(voyage);
             Toast.makeText(this, "Réservation annulée.", Toast.LENGTH_SHORT).show();
         });
         reservationViewModel.getErreur().observe(this, message -> {
@@ -66,8 +70,6 @@ public class HistoriqueReservationsActivity extends AppCompatActivity implements
     }
 
     public void annulerReservation(Reservation reservation) {
-        Voyage.Trip trip = voyageViewModel.getTripOfVoyage(reservation.getVoyageId(), reservation.getDateVoyage());
-        trip.augmenterNbPlaces(reservation.getNbPersonnes());
         reservationViewModel.annulerReservation(reservation);
     }
 

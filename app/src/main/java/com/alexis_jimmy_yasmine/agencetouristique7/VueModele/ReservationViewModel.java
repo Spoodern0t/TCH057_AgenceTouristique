@@ -57,13 +57,7 @@ public class ReservationViewModel extends ViewModel {
     }
 
     public void ajouterReservation(Voyage voyage, Voyage.Trip tripChoisi, int nbPlacesReservees) {
-
-        Reservation reservation = new Reservation(ClientDao.getInstance().getClient().getId(),
-                voyage.getId(), voyage.getDestination(),
-                tripChoisi.getDate(), voyage.getPrix() * nbPlacesReservees,
-                "Confirmée", nbPlacesReservees, voyage.getImageUrls().get(0), voyage, tripChoisi);
-
-        reservationDao.ajouterReservation(reservation, new EcouteurDeDonnees() {
+        reservationDao.ajouterReservation(voyage, tripChoisi, nbPlacesReservees, new EcouteurDeDonnees() {
             @Override
             public void onDataLoaded(Object data) {
                 reservationLiveData.postValue((Reservation) data);

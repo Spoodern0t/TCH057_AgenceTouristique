@@ -5,6 +5,7 @@ import android.content.Context;
 import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.EcouteurDeDonnees;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.SQLite.ReservationDatabaseHelper;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 
 public class ReservationDao {
 
@@ -26,7 +27,11 @@ public class ReservationDao {
         dbHelper.chargerReservations(userId, ecouteurDeDonnees);
     }
 
-    public void ajouterReservation(Reservation reservation, EcouteurDeDonnees ecouteurDeDonnees) {
+    public void ajouterReservation(Voyage voyage, Voyage.Trip tripChoisi, int nbPlacesReservees, EcouteurDeDonnees ecouteurDeDonnees) {
+        Reservation reservation = new Reservation(ClientDao.getInstance().getClient().getId(),
+                voyage.getId(), voyage.getDestination(),
+                tripChoisi.getDate(), voyage.getPrix() * nbPlacesReservees,
+                "Confirmée", nbPlacesReservees, voyage.getImageUrls().get(0), voyage, tripChoisi);
         dbHelper.ajouterReservation(reservation, ecouteurDeDonnees);
     }
 
