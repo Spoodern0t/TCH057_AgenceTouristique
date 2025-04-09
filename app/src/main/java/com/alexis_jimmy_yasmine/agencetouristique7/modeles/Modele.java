@@ -44,16 +44,5 @@ public class Modele {
 
     public Client getClient() { return client; }
 
-    public List<String> getVoyagesDestinations() {
-        List<String> voyagesDestinations = new ArrayList<>();
-        voyagesDestinations.add("Toutes les destinations");
-        for (Voyage voyage : voyages) {
-            String[] destinations = voyage.getDestination().split(",");
-            String destination = destinations[destinations.length - 1].trim();
-            if (!voyagesDestinations.contains(destination)) {
-                voyagesDestinations.add(destination);
-            }
-        }
-        return voyagesDestinations;
-    }
+
 }

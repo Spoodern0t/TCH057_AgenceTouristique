@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonFormat(shape = JsonFormat.Shape.STRING)
-public class Voyage {
+public class Voyage implements Serializable {
     @JsonProperty("id")
     private String id;
 
@@ -96,7 +97,7 @@ public class Voyage {
     }
 
     public String getId() {
-        return String.valueOf(id.hashCode());
+        return id;
     }
 
     public void setId(String id) {

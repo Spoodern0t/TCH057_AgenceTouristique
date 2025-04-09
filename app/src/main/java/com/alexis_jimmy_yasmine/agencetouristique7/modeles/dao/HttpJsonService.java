@@ -30,7 +30,7 @@ public class HttpJsonService {
     private final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private final MediaType JSON_PARSE = MediaType.parse("application/json");
 
-    public void postConnexion(String email, String mdp, EcouteurDeDonnees chargeurDeDonnees)
+    public void postConnexion(String email, String mdp, EcouteurDeDonnees ecouteurDeDonnees)
             throws IOException, JSONException {
 
         String path = "";
@@ -61,31 +61,31 @@ public class HttpJsonService {
                             List<Client> clients = Arrays.asList(mapper.readValue(jsonStr, Client[].class));
                             Client client = clients.get(0);
                             if (Objects.equals(mdp, client.getMdp())) {
-                                chargeurDeDonnees.onDataLoaded(client);
+                                ecouteurDeDonnees.onDataLoaded(client);
                             } else {
-                                chargeurDeDonnees.onError("Le mot de passe est incorrect !");
+                                ecouteurDeDonnees.onError("Le mot de passe est incorrect !");
                                 call.cancel();
                             }
                         } catch (JsonProcessingException e) {
-                            chargeurDeDonnees.onError("Problème de JSON dans le client reçu !");
+                            ecouteurDeDonnees.onError("Problème de JSON dans le client reçu !");
                             call.cancel();
                         }
                     } else {
-                        chargeurDeDonnees.onError("L'email est incorrect !");
+                        ecouteurDeDonnees.onError("L'email est incorrect !");
                         call.cancel();
                     }
                 }
             }
             @Override
             public void onFailure(@NonNull Call call, IOException e) {
-                chargeurDeDonnees.onError("Problème de connexion au serveur !");
+                ecouteurDeDonnees.onError("Problème de connexion au serveur !");
                 call.cancel();
             }
         });
     }
 
 
-    public void postClient(Client client, EcouteurDeDonnees chargeurDeDonnees) throws JSONException {
+    public void postClient(Client client, EcouteurDeDonnees ecouteurDeDonnees) throws JSONException {
 
         OkHttpClient okHttpClient = new OkHttpClient();
 
@@ -102,7 +102,7 @@ public class HttpJsonService {
 
                     //Traitement de la réponse ici
                     if (!jsonStr.equals("[]")) {
-                        chargeurDeDonnees.onError("Un compte est déjà inscrit avec cet email !");
+                        ecouteurDeDonnees.onError("Un compte est déjà inscrit avec cet email !");
                         call.cancel();
                     } else {
 
@@ -128,17 +128,17 @@ public class HttpJsonService {
                             okHttpClient.newCall(postRequete).enqueue(new Callback() {
                                 @Override
                                 public void onResponse(@NonNull Call call, @NonNull Response response) {
-                                    chargeurDeDonnees.onDataLoaded(client);
+                                    ecouteurDeDonnees.onDataLoaded(client);
                                 }
 
                                 @Override
                                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                                    chargeurDeDonnees.onError("Problème de connexion au serveur !");
+                                    ecouteurDeDonnees.onError("Problème de connexion au serveur !");
                                     call.cancel();
                                 }
                             });
                         } catch (JSONException e) {
-                            chargeurDeDonnees.onError("Problème de JSON Object !");
+                            ecouteurDeDonnees.onError("Problème de JSON Object !");
                             call.cancel();
                         }
                     }
@@ -146,14 +146,14 @@ public class HttpJsonService {
             }
             @Override
             public void onFailure(@NonNull Call call, IOException e) {
-                chargeurDeDonnees.onError("Problème de connexion au serveur !");
+                ecouteurDeDonnees.onError("Problème de connexion au serveur !");
                 call.cancel();
             }
         });
     }
 
 
-    public void getVoyages(String filtreType, List<Float> filtreBudget, EcouteurDeDonnees chargeurDeDonnees)
+    public void getVoyages(String filtreType, List<Float> filtreBudget, EcouteurDeDonnees ecouteurDeDonnees)
             throws IOException, JSONException {
 
         String path = "?";
@@ -190,9 +190,9 @@ public class HttpJsonService {
                         try {
 
                             List<Voyage> voyages = Arrays.asList(mapper.readValue(jsonStr, Voyage[].class));
-                            chargeurDeDonnees.onDataLoaded(voyages);
+                            ecouteurDeDonnees.onDataLoaded(voyages);
                         } catch (JsonProcessingException e) {
-                            chargeurDeDonnees.onError("Problème du JSON dans les voyages reçus");
+                            ecouteurDeDonnees.onError("Problème du JSON dans les voyages reçus");
                             call.cancel();
                         }
                     }
@@ -200,13 +200,92 @@ public class HttpJsonService {
             }
             @Override
             public void onFailure(@NonNull Call call, IOException e) {
-                chargeurDeDonnees.onError("Problème de connexion au serveur !");
+                ecouteurDeDonnees.onError("Problème de connexion au serveur !");
                 call.cancel();
             }
         });
     }
 
-    public void updateTripAvailability(Voyage voyage, int position, EcouteurDeDonnees chargeurDeDonnees)
+
+    public void getVoyages(EcouteurDeDonnees ecouteurDeDonnees)
+            throws IOException, JSONException {
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+
+        Request request = new Request.Builder()
+                .url(URL_POINT_ENTREE + "/voyages/")
+                .build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                final String jsonStr;
+                if (response.body() != null) {
+                    jsonStr = response.body().string();
+
+                    //Traitement de la réponse ici
+                    if (!jsonStr.isEmpty()) {
+                        ObjectMapper mapper = new ObjectMapper();
+                        try {
+
+                            List<Voyage> voyages = Arrays.asList(mapper.readValue(jsonStr, Voyage[].class));
+                            ecouteurDeDonnees.onDataLoaded(voyages);
+                        } catch (JsonProcessingException e) {
+                            ecouteurDeDonnees.onError("Problème du JSON dans les voyages reçus");
+                            call.cancel();
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call call, IOException e) {
+                ecouteurDeDonnees.onError("Problème de connexion au serveur !");
+                call.cancel();
+            }
+        });
+    }
+
+
+    public void getVoyageById(String voyageId, EcouteurDeDonnees ecouteurDeDonnees)
+            throws IOException, JSONException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+
+        Request request = new Request.Builder()
+                .url(URL_POINT_ENTREE + "/voyages/"+ voyageId)
+                .build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                final String jsonStr;
+                if (response.body() != null) {
+                    jsonStr = response.body().string();
+
+                    //Traitement de la réponse ici
+                    if (!jsonStr.isEmpty()) {
+                        ObjectMapper mapper = new ObjectMapper();
+                        try {
+
+                            Voyage voyages = mapper.readValue(jsonStr, Voyage.class);
+                            ecouteurDeDonnees.onDataLoaded(voyages);
+                        } catch (JsonProcessingException e) {
+                            ecouteurDeDonnees.onError("Problème du JSON dans le voyage reçu");
+                            call.cancel();
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call call, IOException e) {
+                ecouteurDeDonnees.onError("Problème de connexion au serveur !");
+                call.cancel();
+            }
+        });
+    }
+
+    public void updateTripAvailability(Voyage voyage, EcouteurDeDonnees ecouteurDeDonnees)
         throws IOException, JSONException {
 
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -216,7 +295,7 @@ public class HttpJsonService {
         try {
             jsonObj = mapper.writeValueAsString(voyage);
         } catch (JsonProcessingException e) {
-            chargeurDeDonnees.onError("Problème pour Mapper le voyage");
+            ecouteurDeDonnees.onError("Problème pour Mapper le voyage");
             return;
         }
 
@@ -224,7 +303,7 @@ public class HttpJsonService {
         RequestBody corpsPutRequete = RequestBody.create(jsonObj, JSON_PARSE);
 
         Request putRequest = new Request.Builder()
-                .url(URL_POINT_ENTREE + "/voyages/" + position)
+                .url(URL_POINT_ENTREE + "/voyages/" + voyage.getId())
                 .put(corpsPutRequete)
                 .build();
 
@@ -232,12 +311,12 @@ public class HttpJsonService {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
 
-                chargeurDeDonnees.onDataLoaded(null);
+                ecouteurDeDonnees.onDataLoaded(null);
             }
 
             @Override
             public void onFailure(@NonNull Call call, IOException e) {
-                chargeurDeDonnees.onError("Problème de connexion au serveur !");
+                ecouteurDeDonnees.onError("Problème de connexion au serveur !");
                 call.cancel();
             }
         });

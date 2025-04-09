@@ -11,19 +11,14 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
-import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
-import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
-import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.VoyagesAdaptateur;
-
-import org.json.JSONException;
+import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ClientViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AgenceViewModel modelView;
+    private ClientViewModel clientViewModel;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private Button buttonSignIn;
@@ -60,15 +55,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Observer la connexion
-        modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
-        modelView.getConnexion().observe(this, succes -> {
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        clientViewModel.getConnexion().observe(this, succes -> {
             Toast.makeText(this, "Connexion !", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, AccueilActivity.class);
             startActivity(intent);
         });
 
         // Observer l'erreur
-        modelView.getErreur().observe(this, message -> {
+        clientViewModel.getErreur().observe(this, message -> {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         });
 
@@ -101,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             if (email.isEmpty() || mdp.isEmpty()) {
                 Toast.makeText(this, "Veuillez remplir tous les champs !", Toast.LENGTH_SHORT).show();
             } else {
-                modelView.postConnexion(email, mdp);
+                clientViewModel.postConnexion(email, mdp);
             }
         });
 
