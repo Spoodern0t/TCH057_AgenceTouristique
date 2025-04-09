@@ -49,7 +49,7 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
         try (SQLiteDatabase db = this.getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(ReservationContract.Colonnes.USER_ID, "s" + reservation.getUserId());
-            values.put(ReservationContract.Colonnes.VOYAGE_ID, "s" + reservation.getVoyageId());
+            values.put(ReservationContract.Colonnes.VOYAGE_ID, reservation.getVoyageId());
             values.put(ReservationContract.Colonnes.DESTINATION, reservation.getDestination());
             values.put(ReservationContract.Colonnes.DATE_VOYAGE, reservation.getDateVoyage());
             values.put(ReservationContract.Colonnes.MONTANT_PAYE, reservation.getMontantPaye());
@@ -109,7 +109,7 @@ public class ReservationDatabaseHelper extends SQLiteOpenHelper {
             String selection = ReservationContract.Colonnes.USER_ID + " = ? AND " +
                     ReservationContract.Colonnes.VOYAGE_ID + " = ? AND " +
                     ReservationContract.Colonnes.STATUT + " = ?";
-            String[] selectionArgs = {"s" + userId, "s" + voyageId, "Confirmée"};
+            String[] selectionArgs = {userId, voyageId, "Confirmée"};
             long resultat = db.updateWithOnConflict(ReservationContract.TABLE_NAME, donnees, selection, selectionArgs, SQLiteDatabase.CONFLICT_ABORT);
             if (resultat > 0) {
                 ecouteurDeDonnees.onDataLoaded(reservation);
