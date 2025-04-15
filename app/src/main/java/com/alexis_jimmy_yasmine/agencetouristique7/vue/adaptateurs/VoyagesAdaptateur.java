@@ -15,14 +15,16 @@ import com.alexis_jimmy_yasmine.agencetouristique7.R;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
 
-    private Voyage[] voyages;
+    private List<Voyage> voyages;
     private Context contexte;
     private int viewResourceId;
     private Resources resources;
 
-    public VoyagesAdaptateur(@NonNull Context context, int viewResourceId, @NonNull Voyage[] voyages) {
+    public VoyagesAdaptateur(@NonNull Context context, int viewResourceId, @NonNull List<Voyage> voyages) {
         super(context, viewResourceId, voyages);
         this.contexte = context;
         this.viewResourceId = viewResourceId;
@@ -32,7 +34,7 @@ public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
 
     @Override
     public int getCount() {
-        return this.voyages.length;
+        return this.voyages.size();
     }
 
     @NonNull
@@ -46,14 +48,14 @@ public class VoyagesAdaptateur extends ArrayAdapter<Voyage> {
             view = layoutInflater.inflate(this.viewResourceId, parent, false);
         }
 
-        final Voyage voyage = this.voyages[position];
+        final Voyage voyage = this.voyages.get(position);
 
         if (voyage != null) {
-            final ImageView tvImage = (ImageView) view.findViewById(R.id.lvVoyageImage);
-            final TextView tvNomVoyage = (TextView) view.findViewById(R.id.lvNomVoyage);
-            final TextView tvDestination = (TextView) view.findViewById(R.id.lvVoyageDestination);
-            final TextView tvResume = (TextView) view.findViewById(R.id.lvVoyageDescription);
-            final TextView tvPrix = (TextView) view.findViewById(R.id.lvVoyagePrix);
+            final ImageView tvImage = view.findViewById(R.id.lvVoyageImage);
+            final TextView tvNomVoyage = view.findViewById(R.id.lvNomVoyage);
+            final TextView tvDestination = view.findViewById(R.id.lvVoyageDestination);
+            final TextView tvResume = view.findViewById(R.id.lvVoyageDescription);
+            final TextView tvPrix = view.findViewById(R.id.lvVoyagePrix);
 
             String imageUrlToLoad = voyage.getImageUrls().get(0);
 

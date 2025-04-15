@@ -10,14 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
-import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
+import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ClientViewModel;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Client;
 
 public class InscriptionActivity extends AppCompatActivity {
 
     private final String FORMAT_EMAIL = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-    private AgenceViewModel modelView;
+    private ClientViewModel clientViewModel;
     private EditText editFirstName, editLastName, editAge, editPhone, editAddress,
             editCity, editProvince, editEmail, editPassword;
     private Button btnSignUp, btnAnnuler;
@@ -48,8 +48,8 @@ public class InscriptionActivity extends AppCompatActivity {
 
 
         // Observer l'inscription
-        modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
-        modelView.getInscription().observe(this, client -> {
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
+        clientViewModel.getInscription().observe(this, client -> {
 
             Toast.makeText(this, "Inscrit !", Toast.LENGTH_SHORT).show();
             // Renvoyer l'email et le mot de passe
@@ -61,7 +61,7 @@ public class InscriptionActivity extends AppCompatActivity {
         });
 
         // Observer l'erreur
-        modelView.getErreur().observe(this, message -> {
+        clientViewModel.getErreur().observe(this, message -> {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         });
 
@@ -93,7 +93,7 @@ public class InscriptionActivity extends AppCompatActivity {
                 String adresse = address + ", " + city + ", " + province;
 
                 Client client = new Client(null, lastName, firstName, email, password, age, phone, adresse);
-                modelView.postClient(client);
+                clientViewModel.postClient(client);
             }
         });
 

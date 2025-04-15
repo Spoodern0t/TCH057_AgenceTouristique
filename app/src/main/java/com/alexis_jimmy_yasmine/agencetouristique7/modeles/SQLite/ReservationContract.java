@@ -2,7 +2,7 @@ package com.alexis_jimmy_yasmine.agencetouristique7.modeles.SQLite;
 
 public class ReservationContract {
     public static final String DATABASE_NAME = "AgenceTouristiqueDB";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String TABLE_NAME = "reservations";
 
     public static class Colonnes {

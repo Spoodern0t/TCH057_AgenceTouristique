@@ -14,7 +14,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
-import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
+import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.VoyageViewModel;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.VoyagesAdaptateur;
 import com.google.android.material.slider.RangeSlider;
@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 public class AccueilActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, TextWatcher {
 
-    private AgenceViewModel modelView;
+    private VoyageViewModel voyageViewModel;
     private EditText searchEditText;
     private ListView voyagesListView;
     private ImageButton btnHome, btnHistorique, btnLogout, btnFilter;
@@ -75,22 +75,26 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
         );
 
         // Observer la liste des voyages
-        modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
-        modelView.getVoyages().observe(this, voyages -> {
-            Voyage[] tabVoyages = new Voyage[voyages.size()];
-            voyages.toArray(tabVoyages);
+        voyageViewModel = new ViewModelProvider(this).get(VoyageViewModel.class);
+        voyageViewModel.getVoyages().observe(this, voyages -> {
 
             // Singleton pour la liste de destinations du filtre
             if (destinationListe.isEmpty()) {
-                destinationListe = modelView.getVoyagesDestinations();
-                ArrayAdapter<String> destinationAdaptateur = new ArrayAdapter<>(this,
-                        android.R.layout.simple_spinner_dropdown_item, destinationListe);
-                popupDestinationSpinner.setAdapter(destinationAdaptateur);
+                destinationListe = voyageViewModel.getVoyagesDestinations();
+                if (destinationListe != null) {
+                    ArrayAdapter<String> destinationAdaptateur = new ArrayAdapter<>(this,
+                            android.R.layout.simple_spinner_dropdown_item, destinationListe);
+                    popupDestinationSpinner.setAdapter(destinationAdaptateur);
+                }
             }
 
-            voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, tabVoyages));
+            voyagesListView.setAdapter(new VoyagesAdaptateur(AccueilActivity.this, R.layout.layout_voyage, voyages));
         });
-        modelView.chargerVoyages(null, null, null, null);
+        voyageViewModel.getErreur().observe(this, message -> {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        });
+
+        voyageViewModel.chargerVoyages(null, null, null, null);
         creerPopUpFiltre();
     }
 
@@ -162,7 +166,7 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
                 int annee = popupDatePicker.getYear();
                 filtreDate = LocalDate.of(annee, mois, jour);
             }
-            modelView.chargerVoyages(filtreType, filtreBudget, filtreDestination, filtreDate);
+            voyageViewModel.chargerVoyages(filtreType, filtreBudget, filtreDestination, filtreDate);
         }
     }
 
@@ -178,12 +182,8 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         String nomLike = String.valueOf(s);
-        if (!nomLike.isEmpty()) {
-            Pattern regex = Pattern.compile(nomLike, Pattern.CASE_INSENSITIVE);
-            modelView.regexVoyages(regex);
-        } else {
-            modelView.regexVoyages(null);
-        }
+        Pattern regex = Pattern.compile(nomLike, Pattern.CASE_INSENSITIVE);
+        voyageViewModel.regexVoyages(regex);
     }
 
     @Override

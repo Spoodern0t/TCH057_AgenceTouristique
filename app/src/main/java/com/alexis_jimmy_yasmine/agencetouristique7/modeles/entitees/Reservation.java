@@ -10,11 +10,13 @@ public class Reservation {
     private String statut;
     private int nbPersonnes;
     private String imageUrl;
+    private Voyage voyage;
+    private Voyage.Trip trip;
 
     public Reservation() {
     }
 
-    public Reservation(String userId, String voyagId, String destination, String dateVoyage, double montantPaye, String statut, int nbPersonnes, String imageUrl) {
+    public Reservation(String userId, String voyagId, String destination, String dateVoyage, double montantPaye, String statut, int nbPersonnes, String imageUrl, Voyage voyage, Voyage.Trip trip) {
         this.userId = userId;
         this.voyageId = voyagId;
         this.destination = destination;
@@ -23,6 +25,8 @@ public class Reservation {
         this.statut = statut;
         this.nbPersonnes = nbPersonnes;
         this.imageUrl = imageUrl;
+        this.voyage = voyage;
+        this.trip = trip;
     }
 
     public String getDestination() {
@@ -87,5 +91,21 @@ public class Reservation {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Voyage getVoyage() {
+        return voyage;
+    }
+
+    public void setVoyage(Voyage voyage) {
+        this.voyage = voyage;
+    }
+
+    public Voyage.Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Voyage.Trip trip) {
+        this.trip = trip;
     }
 }

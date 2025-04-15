@@ -11,13 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexis_jimmy_yasmine.agencetouristique7.R;
-import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.AgenceViewModel;
+import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.ReservationViewModel;
+import com.alexis_jimmy_yasmine.agencetouristique7.VueModele.VoyageViewModel;
 import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Reservation;
+import com.alexis_jimmy_yasmine.agencetouristique7.modeles.entitees.Voyage;
 import com.alexis_jimmy_yasmine.agencetouristique7.vue.adaptateurs.ReservationsAdaptateur;
 
 public class HistoriqueReservationsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private AgenceViewModel modelView;
+    private VoyageViewModel voyageViewModel;
+    private ReservationViewModel reservationViewModel;
     private ListView listViewReservationsHistorique;
     private ImageButton bottomNavHome, bottomNavHistorique, bottomNavLogout;
     private ReservationsAdaptateur adaptateur;
@@ -37,28 +40,37 @@ public class HistoriqueReservationsActivity extends AppCompatActivity implements
         bottomNavHistorique.setOnClickListener(this);
         bottomNavLogout.setOnClickListener(this);
 
-        modelView = new ViewModelProvider(this).get(AgenceViewModel.class);
-        modelView.getReservations().observe(this, reservations -> {
+        voyageViewModel = new ViewModelProvider(this).get(VoyageViewModel.class);
+        voyageViewModel.getVoyages().observe(this, voyages -> {
+
+        });
+
+        reservationViewModel = new ViewModelProvider(this).get(ReservationViewModel.class);
+        reservationViewModel.getReservations().observe(this, reservations -> {
             if (reservations.isEmpty())
                 Toast.makeText(this, "Aucune réservation enregistrée.", Toast.LENGTH_SHORT).show();
 
             adaptateur = new ReservationsAdaptateur(this, R.layout.layout_reservation_historique_item, reservations, this);
             listViewReservationsHistorique.setAdapter(adaptateur);
         });
-        modelView.chargerReservations(this);
+        reservationViewModel.getReservation().observe(this, reservation -> {
+            Voyage.Trip trip = voyageViewModel.getTripOfVoyage(reservation.getVoyageId(), reservation.getDateVoyage());
+            trip.augmenterNbPlaces(reservation.getNbPersonnes());
+            Voyage voyage = voyageViewModel.getVoyageById(reservation.getVoyageId());
+            voyageViewModel.updateTripAvailability(voyage);
+            Toast.makeText(this, "Réservation annulée.", Toast.LENGTH_SHORT).show();
+        });
+        reservationViewModel.getErreur().observe(this, message -> {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        });
+
+        reservationViewModel.setConnexionBD(this);
+
+        reservationViewModel.chargerReservations();
     }
 
-
     public void annulerReservation(Reservation reservation) {
-        int resultat = modelView.annulerReservation(this, reservation);
-        if (resultat > 0) {
-            Toast.makeText(this, "Réservation supprimée!", Toast.LENGTH_SHORT).show();
-            modelView.chargerReservations(this);
-        } else if (resultat == 0) {
-            Toast.makeText(this, "Le voyage est déjà annulé!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Un erreur s'est produit!", Toast.LENGTH_SHORT).show();
-        }
+        reservationViewModel.annulerReservation(reservation);
     }
 
 
