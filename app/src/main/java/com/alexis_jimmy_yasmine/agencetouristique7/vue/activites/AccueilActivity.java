@@ -182,12 +182,8 @@ public class AccueilActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         String nomLike = String.valueOf(s);
-        if (!nomLike.isEmpty()) {
-            Pattern regex = Pattern.compile(nomLike, Pattern.CASE_INSENSITIVE);
-            voyageViewModel.regexVoyages(regex);
-        } else {
-            voyageViewModel.regexVoyages(null);
-        }
+        Pattern regex = Pattern.compile(nomLike, Pattern.CASE_INSENSITIVE);
+        voyageViewModel.regexVoyages(regex);
     }
 
     @Override

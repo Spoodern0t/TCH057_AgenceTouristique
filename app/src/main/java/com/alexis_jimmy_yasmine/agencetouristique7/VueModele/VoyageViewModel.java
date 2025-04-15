@@ -118,8 +118,8 @@ public class VoyageViewModel extends ViewModel {
     }
 
     public void regexVoyages(Pattern regexPattern) {
-        List<Voyage> voyages =  voyagesLiveData.getValue();
-        if (regexPattern != null && voyages != null) {
+        List<Voyage> voyages =  voyageDao.getVoyages();
+        if (regexPattern != null && !voyages.isEmpty()) {
             List<Voyage> voyagesFiltres = new ArrayList<>();
             for (Voyage voyage : voyages) {
                 // Tester le regex et ajouter la la liste filtrée si ca renvoie vrai

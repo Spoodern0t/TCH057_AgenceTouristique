@@ -29,11 +29,6 @@ public class VoyageDao {
         new HttpJsonService().getVoyages(filtreType, filtreBudget, ecouteurDeDonnees);
     }
 
-    public static void getVoyages(EcouteurDeDonnees ecouteurDeDonnees)
-            throws JSONException, IOException {
-        new HttpJsonService().getVoyages(ecouteurDeDonnees);
-    }
-
     public static void updateTripAvailability(Voyage voyage,
                                               EcouteurDeDonnees ecouteurDeDonnees)
             throws JSONException, IOException {
