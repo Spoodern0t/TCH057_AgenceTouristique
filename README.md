@@ -69,6 +69,6 @@ Pour installer et exécuter l'application mobile Agence Touristique, vous aurez 
 *   **Architecture :** Respect de l'architecture par packages enseignée (activités, modèles, adaptateurs, dao, etc.)
 *   **Outils :** Git, GitHub
 
-## Link Fiigma de l'Application Mobile
+## Link Figma de l'Application Mobile
 
 https://www.figma.com/design/qwjoJRvwe32phCkAzhGR6f/PLANED?node-id=17-2&t=c1Tm3MkrLkeEDjk1-1
